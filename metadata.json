@@ -1,0 +1,8 @@
+
+{
+  "name": "TS Custom Screen Printing",
+  "description": "Premium industrial screen printing and apparel solutions.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
