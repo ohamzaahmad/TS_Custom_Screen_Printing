@@ -12,7 +12,8 @@ export const BRAND_COLORS = {
 export const Logo: React.FC<{ className?: string }> = ({ className = "h-12" }) => (
   <div className={`flex items-center justify-center transition-transform duration-300 hover:scale-105 group select-none ${className}`}>
     <svg 
-      viewBox="0 0 1100 450" 
+      viewBox="0 0 1200 450" 
+      preserveAspectRatio="xMidYMid meet"
       className="w-auto h-full drop-shadow-lg"
       fill="none" 
       xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +49,7 @@ export const Logo: React.FC<{ className?: string }> = ({ className = "h-12" }) =
 
       {/* TEXT: CUSTOM SCREEN - Positioned horizontally in front of the logo */}
       <text 
-        x="420" 
+        x="380" 
         y="180" 
         textAnchor="start" 
         className="font-black" 
@@ -59,7 +60,7 @@ export const Logo: React.FC<{ className?: string }> = ({ className = "h-12" }) =
 
       {/* TEXT: PRINTING - Positioned horizontally in front of the logo */}
       <text 
-        x="420" 
+        x="380" 
         y="280" 
         textAnchor="start" 
         className="font-black" 

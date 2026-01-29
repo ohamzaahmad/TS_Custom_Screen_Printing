@@ -39,10 +39,10 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
         <div className="flex justify-between items-center">
           {/* Logo Area */}
           <div 
-            className={`flex items-center cursor-pointer transition-colors duration-500 ${isDarkBg ? 'text-white' : 'text-slate-900'}`} 
+            className={`flex items-center cursor-pointer transition-colors duration-500 pr-4 ${isDarkBg ? 'text-white' : 'text-slate-900'}`} 
             onClick={() => onNavigate('home')}
           >
-            <Logo className="h-10 md:h-12" />
+            <Logo className="h-10 md:h-12 pr-2" />
           </div>
 
           {/* Desktop Nav */}

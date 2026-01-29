@@ -14,8 +14,8 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-purple-600/10 blur-[200px] rounded-full"></div>
           <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] bg-orange-600/10 blur-[200px] rounded-full"></div>
           <img 
-            src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=2000" 
-            alt="TS Brand Atmosphere"
+            src="https://images.unsplash.com/photo-1520975911533-8e6262b8a3c4?auto=format&fit=crop&q=80&w=2000" 
+            alt="Male model wearing a screen-printed t-shirt"
             className="w-full h-full object-cover opacity-20 mix-blend-screen scale-110 motion-safe:animate-[pulse_12s_ease-in-out_infinite]"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/70 to-black"></div>
@@ -68,9 +68,9 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             <div className="relative group">
               <div className="aspect-[4/5] bg-slate-100 rounded-[4rem] overflow-hidden relative border border-slate-100 shadow-2xl">
                 <img 
-                  src="https://images.unsplash.com/photo-1562183241-b937e95585b6?auto=format&fit=crop&q=80&w=800" 
+                  src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&q=80&w=800" 
                   className="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105" 
-                  alt="The Process"
+                  alt="Detail of a screen-printed t-shirt on a male model"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                 <div className="absolute bottom-12 left-12 right-12">
@@ -110,6 +110,80 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Operational Features */}
+      <section className="py-16 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-6">
+          <h3 className="text-3xl font-black text-slate-900 mb-8">What We Do</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 bg-white rounded-lg border border-slate-100 shadow-sm">
+              <h4 className="text-xl font-black mb-2">Screen Printing</h4>
+              <p className="text-slate-500 text-sm">High-solid inks, expert separations, and consistent registration across high-volume runs.</p>
+            </div>
+            <div className="p-6 bg-white rounded-lg border border-slate-100 shadow-sm">
+              <h4 className="text-xl font-black mb-2">Production Management</h4>
+              <p className="text-slate-500 text-sm">Job tracking, QC checkpoints, and automated curing for repeatable results.</p>
+            </div>
+            <div className="p-6 bg-white rounded-lg border border-slate-100 shadow-sm">
+              <h4 className="text-xl font-black mb-2">Fulfillment & Logistics</h4>
+              <p className="text-slate-500 text-sm">Kitting, bagging, and global shipping options to simplify post-production.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Recent Projects Gallery */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-2xl font-black">Recent Projects</h3>
+            <button onClick={() => onNavigate('quote')} className="text-sm bg-orange-500 text-white px-4 py-2 rounded-md font-black">Start A Project</button>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {[1,2,3].map(i => (
+              <div key={i} className="rounded-xl overflow-hidden border border-slate-100 shadow-sm">
+                <img src={`https://images.unsplash.com/photo-1520975911533-8e6262b8a3c4?auto=format&fit=crop&q=60&w=800&ixid=${i}`} alt={`Screen printed t-shirt project ${i}`} className="w-full h-48 object-cover" />
+                <div className="p-4 bg-white">
+                  <h5 className="font-black mb-1">Screen Print Project #{i}</h5>
+                  <p className="text-sm text-slate-500">A recent screen print run showcasing pigment and texture on blanks.</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-16 bg-slate-50">
+        <div className="max-w-5xl mx-auto px-6">
+          <h3 className="text-2xl font-black mb-6">What clients say</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { quote: 'Fast turnaround and flawless print.', by: 'Creative Studio' },
+              { quote: 'Outstanding consistency across sizes.', by: 'Retail Brand' },
+              { quote: 'They understood our brand instincts.', by: 'Agency Partner' },
+            ].map((t, idx) => (
+              <div key={idx} className="p-6 bg-white rounded-lg border border-slate-100">
+                <p className="text-slate-700 mb-4">“{t.quote}”</p>
+                <div className="text-sm font-black text-slate-500">{t.by}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Strip */}
+      <section className="py-12 bg-gradient-to-r from-orange-400 to-orange-600">
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          <div>
+            <h4 className="text-white font-black text-2xl">Ready to make something permanent?</h4>
+            <p className="text-white/90 text-sm mt-2">Start your project and get a predictable production timeline.</p>
+          </div>
+          <div>
+            <button onClick={() => onNavigate('quote')} className="bg-white text-orange-500 px-5 py-3 rounded-full font-black">Request A Quote</button>
           </div>
         </div>
       </section>

@@ -65,9 +65,20 @@ const Quote: React.FC<QuoteProps> = ({ initialProduct = '' }) => {
   };
 
   return (
-    <div className="min-h-screen bg-white pt-24 md:pt-28 lg:pt-32 px-4 md:px-6">
-      <div className="max-w-4xl mx-auto">
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md border border-slate-100">
+    <div className="relative min-h-screen bg-black pt-24 md:pt-28 lg:pt-32 px-4 md:px-6">
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-purple-600/10 blur-[180px] rounded-full"></div>
+        <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-orange-600/10 blur-[180px] rounded-full"></div>
+        <img
+          src="https://images.unsplash.com/photo-1520975911533-8e6262b8a3c4?auto=format&fit=crop&q=80&w=2000"
+          alt="background"
+          className="w-full h-full object-cover opacity-20 mix-blend-screen"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-black"></div>
+      </div>
+
+      <div className="max-w-4xl mx-auto relative z-10">
+        <form onSubmit={handleSubmit} className="bg-white/95 p-6 rounded-lg shadow-md border border-slate-100">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div className="flex gap-3">
               <input
