@@ -90,7 +90,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                 Start A Project
               </button>
               <button 
-                onClick={() => window.location.href = 'https://www.google.com'}
+                onClick={() => window.location.href = 'https://www.sportswearcollection.com/?site='}
                 className="glass-dark text-white px-6 py-3 rounded-full font-black text-sm hover:bg-white/10 transition-all uppercase tracking-widest border border-white/10 active:scale-95"
               >
                 Browse Catalog

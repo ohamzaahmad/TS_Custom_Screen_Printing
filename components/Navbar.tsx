@@ -80,7 +80,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
 
   const navItems = [
     { label: 'Home', id: 'home' },
-    { label: 'Catalogue', id: 'catalogue', external: 'https://www.sportswearcollection.com/?site=' },
+    { label: 'catalog', id: 'catalogue', external: 'https://www.sportswearcollection.com/?site=' },
     { label: 'Contact', id: 'contact' },
   ];
 
