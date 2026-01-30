@@ -65,7 +65,7 @@ const Quote: React.FC<QuoteProps> = ({ initialProduct = '' }) => {
   };
 
   return (
-    <div className="relative min-h-screen pt-24 md:pt-28 lg:pt-32 px-4 md:px-6">
+    <div className="relative min-h-screen flex flex-col pt-24 md:pt-28 lg:pt-32 px-4 md:px-6 pb-32">
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-orange-50 to-white"></div>
 
       {/* Subtle halftone / screen-print pattern */}
@@ -83,8 +83,8 @@ const Quote: React.FC<QuoteProps> = ({ initialProduct = '' }) => {
         <rect width="100%" height="100%" fill="url(#fade)" />
       </svg>
 
-      <div className="max-w-4xl mx-auto relative z-10">
-        <form onSubmit={handleSubmit} className="bg-white/95 p-6 rounded-lg shadow-md border border-slate-100">
+      <div className="max-w-4xl mx-auto relative z-10 mb-12">
+        <form onSubmit={handleSubmit} className="bg-white/95 p-6 rounded-lg shadow-md border border-slate-100 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div className="flex gap-3">
               <input

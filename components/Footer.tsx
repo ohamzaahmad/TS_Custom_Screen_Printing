@@ -9,12 +9,14 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-[#0A0015] text-white pt-12 pb-8 border-t border-white/5">
+    <footer className="bg-[#0A0015] text-white pt-12 pb-8 border-t border-white/5 relative z-30">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
           <div className="col-span-1 md:col-span-1">
-            <div className="bg-white rounded-2xl p-3 inline-block mb-6 shadow-lg">
-              <Logo className="h-10" />
+            <div className="flex flex-col items-start mb-6">
+              <div className="bg-black rounded-2xl p-3 inline-block shadow-lg">
+                <Logo className="h-10" subtitleAlwaysVisible />
+              </div>
             </div>
             <p className="text-white/40 text-sm leading-relaxed font-medium">
               High-fidelity apparel solutions for modern brands. We combine architectural precision with industrial-grade screen printing.

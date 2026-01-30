@@ -71,6 +71,107 @@ body {
   background-clip: text;
 }
 
+/* Logo subtitle (small descriptor after logo) */
+.logo-subtitle{
+  display: none; /* hidden on small screens; shown at md+ via utilities or media query */
+  margin-left: 0.4rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  line-height: 1;
+}
+
+@media (min-width: 768px) {
+  .logo-subtitle {
+    display: inline-block;
+    font-size: 10px;
+    background: linear-gradient(90deg, var(--brand-purple) 0%, var(--brand-orange) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* Dark mode: prefer light text on dark backgrounds */
+@media (prefers-color-scheme: dark) {
+  .logo-subtitle {
+    background: none;
+    -webkit-text-fill-color: white;
+    color: white;
+  }
+}
+
+/* Support Tailwind 'dark' class on root */
+.dark .logo-subtitle {
+  background: none;
+  -webkit-text-fill-color: white;
+  color: white;
+}
+
+/* Two-line subtitle variants */
+.logo-subtitle-top,
+.logo-subtitle-bottom {
+  display: block;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Top line: purple gradient */
+.logo-subtitle-top {
+  font-size: 11px;
+  background: linear-gradient(90deg, #BD00FF 0%, #8B00CC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Bottom line: orange gradient */
+.logo-subtitle-bottom {
+  font-size: 12px;
+  background: linear-gradient(90deg, #FF8A00 0%, #FFA500 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Dark-mode and parent color fallbacks: inherit readable color when parent sets `text-white` or in dark scheme */
+@media (prefers-color-scheme: dark) {
+  .logo-subtitle-top,
+  .logo-subtitle-bottom {
+    background: none !important;
+    -webkit-text-fill-color: white !important;
+    color: white !important;
+    text-shadow: none;
+  }
+}
+
+.dark .logo-subtitle-top,
+.dark .logo-subtitle-bottom {
+  background: none !important;
+  -webkit-text-fill-color: white !important;
+  color: white !important;
+  text-shadow: none;
+}
+
+/* Respect parent text utilities like `text-white` or `text-slate-900` */
+.text-white .logo-subtitle-top,
+.text-white .logo-subtitle-bottom,
+.text-slate-900 .logo-subtitle-top,
+.text-slate-900 .logo-subtitle-bottom {
+  background: none !important;
+  -webkit-text-fill-color: currentColor !important;
+  color: currentColor !important;
+  text-shadow: none;
+}
+
+/* When a parent applies a text color utility (e.g. text-white or text-slate-900),
+   make the subtitle inherit that color instead of using the gradient. */
+.text-white .logo-subtitle,
+.text-slate-900 .logo-subtitle {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: currentColor;
+}
 /* Custom gradient background */
 .bg-gradient-brand {
   background: linear-gradient(135deg, #BD00FF 0%, #2E005C 100%);

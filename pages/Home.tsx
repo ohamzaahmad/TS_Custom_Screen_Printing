@@ -49,21 +49,15 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       {/* Cinematic Hero - Brand Entry */}
       <section className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden bg-black">
           <div className="absolute inset-0 z-0">
-          <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-purple-600/10 blur-[200px] rounded-full"></div>
-          <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] bg-orange-600/10 blur-[200px] rounded-full"></div>
-          <video
+          <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-purple-600/10 blur-200 rounded-full"></div>
+          <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] bg-orange-600/10 blur-200 rounded-full"></div>
+          <img
+            src="/loop.gif"
+            alt="Screen printing loop animation"
             className="w-full h-full object-cover opacity-40 mix-blend-screen scale-110 motion-safe:animate-[pulse_12s_ease-in-out_infinite]"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            poster="/1.jpg"
             aria-hidden="true"
-          >
-            <source src="/loop.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black"></div>
+          />
+          <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/50 to-black"></div>
         </div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-12 w-full pt-8 md:pt-16">
@@ -111,16 +105,16 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
             <div className="relative group">
-              <div className="aspect-[4/5] bg-slate-100 rounded-[4rem] overflow-hidden relative border border-slate-100 shadow-2xl">
+              <div className="aspect-4/5 bg-slate-100 rounded-4rem overflow-hidden relative border border-slate-100 shadow-2xl">
                 <img 
                   src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&q=80&w=800" 
                   className="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105" 
                   alt="Detail of a screen-printed t-shirt on a male model"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
                 <div className="absolute bottom-12 left-12 right-12">
                    <div className="glass px-8 py-6 rounded-3xl border border-white/20">
-                      <span className="text-[10px] text-white font-black uppercase tracking-[0.4em] mb-2 block text-purple-600">Our DNA</span>
+                      <span className="text-[10px] font-black uppercase tracking-[0.4em] mb-2 block text-purple-600">Our DNA</span>
                       <p className="text-white font-bold leading-relaxed">Every screen is exposed with surgical precision to capture the finest halftone details.</p>
                    </div>
                 </div>
@@ -241,7 +235,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       </section>
 
       {/* CTA Strip */}
-      <section className="py-12 bg-gradient-to-r from-orange-400 to-orange-600">
+      <section className="py-12 bg-linear-to-r from-orange-400 to-orange-600">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <div>
             <h4 className="text-white font-black text-2xl">Ready to make something permanent?</h4>
