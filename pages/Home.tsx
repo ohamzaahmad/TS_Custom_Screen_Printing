@@ -1,24 +1,69 @@
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface HomeProps {
   onNavigate: (page: string) => void;
 }
 
 const Home: React.FC<HomeProps> = ({ onNavigate }) => {
+  const images = ["/1.jpg","/2.jpg","/3.png","/4.png","/5.jpg","/6.jpg"];
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const lastActiveElementRef = useRef<HTMLElement | null>(null);
+  const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+
+  const openLightbox = (index: number) => {
+    lastActiveElementRef.current = document.activeElement as HTMLElement | null;
+    setActiveIndex(index);
+    setLightboxOpen(true);
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+    if (lastActiveElementRef.current && typeof lastActiveElementRef.current.focus === 'function') {
+      lastActiveElementRef.current.focus();
+    }
+  };
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!lightboxOpen) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') setActiveIndex(i => (i - 1 + images.length) % images.length);
+      if (e.key === 'ArrowRight') setActiveIndex(i => (i + 1) % images.length);
+    };
+    if (lightboxOpen) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', onKey);
+      // focus the close button when opened
+      setTimeout(() => closeBtnRef.current?.focus(), 0);
+    }
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [lightboxOpen, images.length]);
+
   return (
     <div className="animate-in">
       {/* Cinematic Hero - Brand Entry */}
       <section className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden bg-black">
-        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 z-0">
           <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-purple-600/10 blur-[200px] rounded-full"></div>
           <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] bg-orange-600/10 blur-[200px] rounded-full"></div>
-          <img 
-            src="https://images.unsplash.com/photo-1520975911533-8e6262b8a3c4?auto=format&fit=crop&q=80&w=2000" 
-            alt="Male model wearing a screen-printed t-shirt"
-            className="w-full h-full object-cover opacity-20 mix-blend-screen scale-110 motion-safe:animate-[pulse_12s_ease-in-out_infinite]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/70 to-black"></div>
+          <video
+            className="w-full h-full object-cover opacity-40 mix-blend-screen scale-110 motion-safe:animate-[pulse_12s_ease-in-out_infinite]"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster="/1.jpg"
+            aria-hidden="true"
+          >
+            <source src="/loop.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black"></div>
         </div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-12 w-full pt-8 md:pt-16">
@@ -28,7 +73,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               EST. 2018 | THE GOLD STANDARD
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-black text-white leading-tight mb-8 tracking-tight uppercase select-none">
+            <h1 className="fluid-h1 text-white leading-tight mb-8 tracking-tight uppercase select-none">
               A CULTURE OF<br />
               <span className="text-gradient-orange italic font-extrabold">PRECISION.</span>
             </h1>
@@ -88,7 +133,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             <div className="space-y-12">
               <div>
                 <span className="text-purple-600 font-black uppercase tracking-[0.4em] text-[10px] mb-4 block">Our Philosophy</span>
-                <h2 className="text-6xl font-black text-slate-900 leading-[0.9] tracking-tighter uppercase mb-8">
+                <h2 className="fluid-h2 text-slate-900 leading-[0.95] tracking-tighter uppercase mb-8">
                   WE BELIEVE IN THE<br /><span className="text-purple-600 italic">PERMANENT.</span>
                 </h2>
                 <p className="text-xl text-slate-500 font-medium leading-relaxed mb-8">
@@ -142,19 +187,39 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             <h3 className="text-2xl font-black">Recent Projects</h3>
             <button onClick={() => onNavigate('quote')} className="text-sm bg-orange-500 text-white px-4 py-2 rounded-md font-black">Start A Project</button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {[1,2,3].map(i => (
-              <div key={i} className="rounded-xl overflow-hidden border border-slate-100 shadow-sm">
-                <img src={`https://images.unsplash.com/photo-1520975911533-8e6262b8a3c4?auto=format&fit=crop&q=60&w=800&ixid=${i}`} alt={`Screen printed t-shirt project ${i}`} className="w-full h-48 object-cover" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {images.map((src, idx) => (
+              <button key={src} onClick={() => openLightbox(idx)} className="text-left rounded-xl overflow-hidden border border-slate-100 shadow-sm focus:outline-none focus:ring-4 focus:ring-orange-300">
+                <img src={src} alt={`Screen printed project ${idx+1}`} className="w-full h-48 object-cover" />
                 <div className="p-4 bg-white">
-                  <h5 className="font-black mb-1">Screen Print Project #{i}</h5>
+                  <h5 className="font-black mb-1">Screen Print Project #{idx+1}</h5>
                   <p className="text-sm text-slate-500">A recent screen print run showcasing pigment and texture on blanks.</p>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Lightbox Modal */}
+      {lightboxOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-6" role="dialog" aria-modal="true" aria-label="Project image lightbox">
+          <div className="relative max-w-4xl w-full rounded-lg overflow-hidden">
+            <button ref={closeBtnRef} onClick={closeLightbox} className="absolute top-3 right-3 z-20 bg-white/90 text-black rounded-full p-2 shadow-md focus:outline-none" aria-label="Close lightbox">✕</button>
+            <button onClick={() => setActiveIndex(i => (i - 1 + images.length) % images.length)} className="absolute left-3 top-1/2 -translate-y-1/2 z-20 bg-white/90 text-black rounded-full p-2 shadow-md">‹</button>
+            <button onClick={() => setActiveIndex(i => (i + 1) % images.length)} className="absolute right-3 top-1/2 -translate-y-1/2 z-20 bg-white/90 text-black rounded-full p-2 shadow-md">›</button>
+
+            <div className="bg-black flex items-center justify-center">
+              <img src={images[activeIndex]} alt={`Project ${activeIndex+1}`} className="max-h-[80vh] w-auto object-contain mx-auto" />
+            </div>
+
+            <div className="p-4 bg-white text-center">
+              <h5 className="font-black">Screen Print Project #{activeIndex+1}</h5>
+              <p className="text-sm text-slate-500">A recent screen print run showcasing pigment and texture on blanks.</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Testimonials */}
       <section className="py-16 bg-slate-50">

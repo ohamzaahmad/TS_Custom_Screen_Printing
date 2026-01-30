@@ -65,17 +65,23 @@ const Quote: React.FC<QuoteProps> = ({ initialProduct = '' }) => {
   };
 
   return (
-    <div className="relative min-h-screen bg-black pt-24 md:pt-28 lg:pt-32 px-4 md:px-6">
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-purple-600/10 blur-[180px] rounded-full"></div>
-        <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-orange-600/10 blur-[180px] rounded-full"></div>
-        <img
-          src="https://images.unsplash.com/photo-1520975911533-8e6262b8a3c4?auto=format&fit=crop&q=80&w=2000"
-          alt="background"
-          className="w-full h-full object-cover opacity-20 mix-blend-screen"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-black"></div>
-      </div>
+    <div className="relative min-h-screen pt-24 md:pt-28 lg:pt-32 px-4 md:px-6">
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-orange-50 to-white"></div>
+
+      {/* Subtle halftone / screen-print pattern */}
+      <svg className="absolute inset-0 w-full h-full z-0 opacity-8 pointer-events-none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 100 100" aria-hidden="true">
+        <defs>
+          <pattern id="dots" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+            <circle cx="1" cy="1" r="0.6" fill="#f97316" />
+          </pattern>
+          <linearGradient id="fade" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.0" />
+            <stop offset="100%" stopColor="#ffffff" stopOpacity="0.85" />
+          </linearGradient>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#dots)" />
+        <rect width="100%" height="100%" fill="url(#fade)" />
+      </svg>
 
       <div className="max-w-4xl mx-auto relative z-10">
         <form onSubmit={handleSubmit} className="bg-white/95 p-6 rounded-lg shadow-md border border-slate-100">

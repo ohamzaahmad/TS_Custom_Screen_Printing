@@ -1,0 +1,583 @@
+/* Global responsive helpers for TS Custom Screen Printing
+   This uses Tailwind CSS v4 with custom theme configuration
+*/
+
+@import "tailwindcss";
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+@theme {
+  /* Custom color palette */
+  --color-brand-purple: #BD00FF;
+  --color-brand-orange: #FF8A00;
+  --color-brand-dark: #0A0015;
+  
+  --color-purple-500: #a855f7;
+  --color-purple-600: #BD00FF;
+  --color-orange-400: #FF8A00;
+  --color-orange-500: #FF8A00;
+  --color-orange-600: #FF8A00;
+  
+  /* Font sizes */
+  --font-size-7: 7px;
+  --font-size-9: 9px;
+  --font-size-10: 10px;
+  --font-size-11: 11px;
+  --font-size-13: 13px;
+  
+  /* Letter spacing */
+  --letter-spacing-0\.1em: 0.1em;
+  --letter-spacing-0\.25em: 0.25em;
+  --letter-spacing-0\.3em: 0.3em;
+  --letter-spacing-0\.35em: 0.35em;
+  --letter-spacing-0\.4em: 0.4em;
+  --letter-spacing-0\.5em: 0.5em;
+  
+  /* Border radius */
+  --radius-2rem: 2rem;
+  --radius-3rem: 3rem;
+  --radius-4rem: 4rem;
+  
+  /* Blur effects */
+  --blur-180: 180px;
+  --blur-200: 200px;
+  
+  /* Aspect ratios */
+  --aspect-ratio-4\/5: 4 / 5;
+  
+  /* Font family */
+  --font-family-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+:root{
+  --max-content-width: 1200px;
+  --brand-purple: #BD00FF;
+  --brand-orange: #FF8A00;
+  --brand-dark: #0A0015;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  background-color: #fcfcfc;
+  color: var(--brand-dark);
+}
+
+/* Custom gradient text */
+.text-gradient-orange {
+  background: linear-gradient(to right, #BD00FF, #FF8A00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Custom gradient background */
+.bg-gradient-brand {
+  background: linear-gradient(135deg, #BD00FF 0%, #2E005C 100%);
+}
+
+/* Backdrop blur effects */
+.nav-blur {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Grain texture overlay */
+.bg-grain {
+  position: relative;
+}
+.bg-grain::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.015;
+  z-index: 1000;
+  pointer-events: none;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+}
+
+/* Animation utilities */
+.animate-in {
+  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.btn-pulse {
+  animation: soft-pulse 3s infinite;
+}
+
+/* Selection color */
+::selection {
+  background: var(--brand-purple);
+  color: white;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes soft-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(189, 0, 255, 0.4);
+  }
+  70% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 15px rgba(189, 0, 255, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(189, 0, 255, 0);
+  }
+}
+
+/* Make main container center and fluid */
+.container{
+  width:100%;
+  max-width:var(--max-content-width);
+  margin-left:auto;
+  margin-right:auto;
+  padding-left:1rem;
+  padding-right:1rem;
+}
+
+/* Ensure images and media scale down */
+img, video, svg {
+  max-width:100%;
+  height:auto;
+  display:block;
+}
+
+/* Force site logo to a reasonable max height so it never overflows layout */
+.site-logo {
+  max-height: 32px; /* ~h-8 */
+  height: auto;
+  width: auto;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .site-logo { max-height: 40px; } /* ~h-10 */
+}
+
+@media (min-width: 1024px) {
+  .site-logo { max-height: 48px; } /* slightly larger on wide screens */
+}
+
+/* Responsive typography scale */n
+html{
+  font-size:16px;
+}
+
+@media (max-width:1024px){
+  html{ font-size:15px; }
+}
+@media (max-width:768px){
+  html{ font-size:14px; }
+}
+@media (max-width:425px){
+  html{ font-size:13px; }
+}
+
+/* Utility: limit very wide elements inside grids */
+.responsive-card{
+  width:100%;
+  max-width:100%;
+}
+
+/* Forms and inputs should be fluid */
+input, textarea, select, button{
+  max-width:100%;
+}
+
+/* Tables: make horizontally scrollable on small screens */
+.table-responsive{
+  width:100%;
+  overflow-x:auto;
+}
+
+/* Accessibility: increase hit area on small touch devices */
+.button-touch-friendly{
+  padding:0.75rem 1rem;
+}
+
+/* Minor layout tweaks for the nav mobile overlay from Navbar.tsx */
+nav .glass{
+  /* Ensure overlay covers content and uses safe-area for iOS */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Utility to help with long words and texts */
+.text-break{
+  word-break:break-word;
+  overflow-wrap:break-word;
+}
+
+/* Reduce large rounded corners on very small devices */
+@media (max-width:420px){
+  [class*="rounded-"] {
+    border-radius: 1rem !important;
+  }
+}
+
+/* Hide any potential horizontal overflow from large elements */
+html, body{
+  overflow-x:hidden;
+}
+
+/* Support for arbitrary background colors used in the project */
+.bg-\[\#0A0015\] {
+  background-color: #0A0015;
+}
+
+.bg-\[\#E9F3F8\] {
+  background-color: #E9F3F8;
+}
+
+/* Arbitrary positioning values */
+.top-\[-20\%\] {
+  top: -20%;
+}
+
+.left-\[-10\%\] {
+  left: -10%;
+}
+
+.bottom-\[-20\%\] {
+  bottom: -20%;
+}
+
+.right-\[-10\%\] {
+  right: -10%;
+}
+
+/* Arbitrary width/height percentages */
+.w-\[60\%\],
+.w-\[70\%\] {
+  width: var(--tw-width, 60%);
+}
+
+.w-\[70\%\] {
+  --tw-width: 70%;
+}
+
+.h-\[60\%\],
+.h-\[70\%\] {
+  height: var(--tw-height, 60%);
+}
+
+.h-\[70\%\] {
+  --tw-height: 70%;
+}
+
+.max-w-\[200px\] {
+  max-width: 200px;
+}
+
+/* Arbitrary border widths */
+.border-\[1\.5px\] {
+  border-width: 1.5px;
+}
+
+.border-\[3px\] {
+  border-width: 3px;
+}
+
+/* Z-index values */
+.z-\[100\] {
+  z-index: 100;
+}
+
+/* Shadow utilities */
+.shadow-\[0_40px_80px_rgba\(0\,0\,0\,0\.3\)\] {
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+}
+
+/* Font size utilities for arbitrary values */
+.text-\[7px\] {
+  font-size: 7px;
+}
+
+.text-\[8px\] {
+  font-size: 8px;
+}
+
+.text-\[9px\] {
+  font-size: 9px;
+}
+
+.text-\[10px\] {
+  font-size: 10px;
+}
+
+.text-\[11px\] {
+  font-size: 11px;
+}
+
+.text-\[13px\] {
+  font-size: 13px;
+}
+
+/* Letter spacing utilities */
+.tracking-\[0\.1em\] {
+  letter-spacing: 0.1em;
+}
+
+.tracking-\[0\.25em\] {
+  letter-spacing: 0.25em;
+}
+
+.tracking-\[0\.3em\] {
+  letter-spacing: 0.3em;
+}
+
+.tracking-\[0\.35em\] {
+  letter-spacing: 0.35em;
+}
+
+.tracking-\[0\.4em\] {
+  letter-spacing: 0.4em;
+}
+
+.tracking-\[0\.5em\] {
+  letter-spacing: 0.5em;
+}
+
+/* Border radius utilities */
+.rounded-\[2rem\] {
+  border-radius: 2rem;
+}
+
+.rounded-\[3rem\] {
+  border-radius: 3rem;
+}
+
+.rounded-\[4rem\] {
+  border-radius: 4rem;
+}
+
+/* Blur utilities */
+.blur-\[180px\] {
+  filter: blur(180px);
+}
+
+.blur-\[200px\] {
+  filter: blur(200px);
+}
+
+/* Aspect ratio utilities */
+.aspect-\[4\/5\] {
+  aspect-ratio: 4 / 5;
+}
+
+/* Scale utilities */
+.hover\:scale-\[1\.01\]:hover {
+  transform: scale(1.01);
+}
+
+.hover\:scale-\[1\.02\]:hover {
+  transform: scale(1.02);
+}
+
+.scale-102 {
+  transform: scale(1.02);
+}
+
+/* Min height utilities */
+.min-h-\[280px\] {
+  min-height: 280px;
+}
+
+/* Line height utilities */
+.leading-\[0\.9\] {
+  line-height: 0.9;
+}
+
+.leading-\[0\.95\] {
+  line-height: 0.95;
+}
+
+/* Translate utilities */
+.-translate-x-2 {
+  transform: translateX(-0.5rem);
+}
+
+.group:hover .group-hover\:translate-x-0 {
+  transform: translateX(0);
+}
+
+.-translate-y-1\.5 {
+  transform: translateY(-0.375rem);
+}
+
+.-translate-y-0\.5 {
+  transform: translateY(-0.125rem);
+}
+
+.-translate-y-4 {
+  transform: translateY(-1rem);
+}
+
+.hover\:-translate-y-4:hover {
+  transform: translateY(-1rem);
+}
+
+.-translate-y-1\/2 {
+  transform: translateY(-50%);
+}
+
+.-translate-x-1\/2 {
+  transform: translateX(-50%);
+}
+
+/* Width and height percentages */
+.w-\[95\%\] {
+  width: 95%;
+}
+
+.h-\[95\%\] {
+  height: 95%;
+}
+
+/* Additional blur values */
+.blur-\[250px\] {
+  filter: blur(250px);
+}
+
+/* Shadow utilities */
+.shadow-2xl {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.shadow-3xl {
+  box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+}
+
+.hover\:shadow-3xl:hover {
+  box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+}
+
+.hover\:shadow-purple-100:hover {
+  --tw-shadow-color: rgb(243 232 255);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+/* Hover scale utilities */
+.hover\:scale-110:hover {
+  transform: scale(1.1);
+}
+
+/* Height utilities with bracket notation */
+.h-\[2px\] {
+  height: 2px;
+}
+
+.h-\[1\.5px\] {
+  height: 1.5px;
+}
+
+/* Bottom spacing utilities */
+.-bottom-1\.5 {
+  bottom: -0.375rem;
+}
+
+/* Rotate utilities */
+.rotate-45 {
+  transform: rotate(45deg);
+}
+
+.-rotate-45 {
+  transform: rotate(-45deg);
+}
+
+/* Combined rotate and translate utilities for hamburger menu */
+.rotate-45.translate-y-1\.5 {
+  transform: rotate(45deg) translateY(0.375rem);
+}
+
+.-rotate-45.-translate-y-1\.5 {
+  transform: rotate(-45deg) translateY(-0.375rem);
+}
+
+/* Translate on Y axis */
+.translate-y-1\.5 {
+  transform: translateY(0.375rem);
+}
+
+.translate-y-0 {
+  transform: translateY(0);
+}
+
+/* Active state utilities */
+.active\:translate-y-0:active {
+  transform: translateY(0);
+}
+
+.active\:scale-95:active {
+  transform: scale(0.95);
+}
+
+/* Motion-safe animation */
+@media (prefers-reduced-motion: no-preference) {
+  .motion-safe\:animate-\[pulse_12s_ease-in-out_infinite\] {
+    animation: pulse 12s ease-in-out infinite;
+  }
+}
+
+/* Pulse animation if not already defined */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* helper to lock scrolling (used by mobile nav) */
+.no-scroll {
+  height: 100vh;
+  overflow: hidden !important;
+}
+
+/* Fluid typography utilities */
+.fluid-h1 {
+  font-weight: 900;
+  line-height: 1.02;
+  font-size: clamp(2rem, 4vw + 0.5rem, 4.5rem);
+}
+.fluid-h2 {
+  font-weight: 900;
+  line-height: 1.05;
+  font-size: clamp(1.5rem, 3vw + 0.25rem, 3rem);
+}
+.fluid-h3 {
+  font-weight: 800;
+  line-height: 1.15;
+  font-size: clamp(1.125rem, 2.2vw + 0.1rem, 1.75rem);
+}
+.lead {
+  font-size: clamp(1rem, 0.8vw + 0.9rem, 1.125rem);
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+/* Harmonize section padding on small devices */
+section { padding-left: 1rem; padding-right: 1rem; }

@@ -163,7 +163,7 @@ const PrintGuide: React.FC = () => {
     <div className="min-h-screen pt-32 pb-24 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-20 text-center">
-          <h1 className="text-5xl md:text-8xl font-black text-slate-900 mb-6 leading-none tracking-tighter uppercase">
+          <h1 className="fluid-h1 font-black text-slate-900 mb-6 leading-none tracking-tighter uppercase">
             PLACEMENT <span className="text-gradient-orange">BLUEPRINT</span>
           </h1>
           <p className="text-xl text-slate-500 font-medium max-w-3xl mx-auto">

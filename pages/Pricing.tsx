@@ -13,7 +13,7 @@ const Pricing: React.FC = () => {
     <div className="min-h-screen pt-32 pb-24 bg-white animate-in">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12">
-          <h1 className="text-6xl md:text-8xl font-black text-slate-900 leading-none tracking-tighter uppercase mb-2">
+          <h1 className="fluid-h1 font-black text-slate-900 leading-none tracking-tighter uppercase mb-2">
             SCREEN PRINT <span className="text-gradient-orange">PRICING 2025</span>
           </h1>
           <h2 className="text-xl font-black text-slate-400 uppercase tracking-[0.3em]">PLASTISOL BASED INKS</h2>

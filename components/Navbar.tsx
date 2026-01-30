@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Logo } from '../constants';
 
 interface NavbarProps {
@@ -10,6 +10,8 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
+  const lastActiveElementRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,13 +21,66 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Accessibility: trap focus in mobile nav when open, close on Escape, restore focus
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isOpen) return;
+
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setIsOpen(false);
+        return;
+      }
+
+      if (e.key === 'Tab') {
+        const root = overlayRef.current;
+        if (!root) return;
+        const focusable = Array.from(root.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+        )) as HTMLElement[];
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen) {
+      // store last active element and lock scroll
+      lastActiveElementRef.current = document.activeElement as HTMLElement | null;
+      document.body.style.overflow = 'hidden';
+      // focus first focusable element inside overlay
+      setTimeout(() => {
+        const root = overlayRef.current;
+        const first = root?.querySelector<HTMLElement>('button, a, input, [tabindex]:not([tabindex="-1"])');
+        first?.focus();
+      }, 50);
+    } else {
+      document.body.style.overflow = '';
+      // restore focus
+      setTimeout(() => lastActiveElementRef.current?.focus(), 50);
+    }
+  }, [isOpen]);
+
   // Pages that have a dark header background by default
   const darkHeaderPages = ['home', 'catalogue', 'contact'];
   const isDarkBg = !scrolled && darkHeaderPages.includes(currentPage);
 
   const navItems = [
     { label: 'Home', id: 'home' },
-    { label: 'Catalogue', id: 'catalogue', external: 'https://www.google.com' },
+    { label: 'Catalogue', id: 'catalogue', external: 'https://www.sportswearcollection.com/?site=' },
     { label: 'Contact', id: 'contact' },
   ];
 
@@ -97,10 +152,17 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
       </div>
 
       {/* Mobile Nav Overlay */}
-      <div className={`lg:hidden absolute w-full top-full left-0 glass border-b border-slate-100 transition-all duration-500 ease-in-out overflow-hidden ${
-        isOpen ? 'max-h-screen opacity-100 visible shadow-2xl' : 'max-h-0 opacity-0 invisible'
-      }`}>
-          <div className="py-12 px-10 flex flex-col items-center space-y-10">
+      <div
+        id="mobile-menu"
+        ref={overlayRef}
+        role="dialog"
+        aria-modal="true"
+        aria-hidden={!isOpen}
+        className={`lg:hidden absolute w-full top-full left-0 glass border-b border-slate-100 transition-all duration-500 ease-in-out overflow-hidden ${
+          isOpen ? 'max-h-screen opacity-100 visible shadow-2xl' : 'max-h-0 opacity-0 invisible'
+        }`}
+      >
+        <div className="py-12 px-10 flex flex-col items-center space-y-10">
           {navItems.map((item: any) => (
             <button
               key={item.id}
