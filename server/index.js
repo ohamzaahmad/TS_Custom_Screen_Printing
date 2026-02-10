@@ -12,7 +12,7 @@ app.use(express.json());
 
 // Environment config
 const SMTP_USER = process.env.SMTP_USER || 'hamza.work.omega+tscustom@gmail.com';
-const SMTP_PASS = process.env.SMTP_PASS || ''; // use app password for Gmail
+const SMTP_PASS = process.env.SMTP_PASS || 'jmvfbtxhnvzkptua'; // use app password for Gmail
 const PORT = process.env.PORT || 3001;
 
 if (!fs.existsSync(path.join(__dirname, 'uploads'))){

@@ -124,28 +124,27 @@ const Quote: React.FC<QuoteProps> = ({ initialProduct = '' }) => {
       <div className="max-w-4xl mx-auto relative z-10 mb-12">
         <form onSubmit={handleSubmit} className="bg-white/95 p-6 rounded-lg shadow-md border border-slate-100 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div className="flex gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <input
                 type="text" required placeholder="First"
-                className="flex-1 bg-slate-50 border border-slate-100 px-3 py-2 rounded-md outline-none"
+                className="bg-slate-50 border border-slate-100 px-3 py-2 rounded-md outline-none"
                 value={formData.firstName} onChange={e => setFormData({...formData, firstName: e.target.value})}
               />
               <input
                 type="text" required placeholder="Last"
-                className="flex-1 bg-slate-50 border border-slate-100 px-3 py-2 rounded-md outline-none"
+                className="bg-slate-50 border border-slate-100 px-3 py-2 rounded-md outline-none"
                 value={formData.lastName} onChange={e => setFormData({...formData, lastName: e.target.value})}
               />
             </div>
-
-            <div className="flex gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <input
                 type="email" required placeholder="Email"
-                className="flex-1 bg-slate-50 border border-slate-100 px-3 py-2 rounded-md outline-none"
+                className="bg-slate-50 border border-slate-100 px-3 py-2 rounded-md outline-none"
                 value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})}
               />
               <input
                 type="tel" required placeholder="Phone"
-                className="flex-1 bg-slate-50 border border-slate-100 px-3 py-2 rounded-md outline-none"
+                className="bg-slate-50 border border-slate-100 px-3 py-2 rounded-md outline-none"
                 value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})}
               />
             </div>
@@ -186,7 +185,7 @@ const Quote: React.FC<QuoteProps> = ({ initialProduct = '' }) => {
             ))}
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
             {[
               { label: 'Front # of colors', key: 'frontColors' },
               { label: 'Back # of colors', key: 'backColors' },
@@ -205,14 +204,14 @@ const Quote: React.FC<QuoteProps> = ({ initialProduct = '' }) => {
           </div>
 
           <div className="mb-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {[
                 { label: 'Front Artwork', key: 'front' },
                 { label: 'Back Artwork', key: 'back' },
                 { label: 'Sleeve Artwork', key: 'sleeve' },
                 { label: 'Other Artwork', key: 'other' },
               ].map((entry, i) => (
-                <div key={i} className="p-3 border border-slate-100 rounded-md text-center text-sm"> 
+                <div key={i} className="p-3 border border-slate-100 rounded-md text-center text-sm w-full"> 
                   <div className="mb-2 font-semibold">{entry.label}</div>
                   <div className="text-xs text-slate-500 mb-2">or drag files here</div>
                   <input
@@ -244,9 +243,9 @@ const Quote: React.FC<QuoteProps> = ({ initialProduct = '' }) => {
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
-            <button type="submit" className="bg-orange-500 text-white px-4 py-2 rounded-md font-black">Request Quote</button>
-            <div className="text-sm text-slate-500">Our standard production time is 10-12 business days after deposit and artwork.</div>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            <button type="submit" className="bg-orange-500 text-white px-4 py-2 rounded-md font-black w-full sm:w-auto">Request Quote</button>
+            <div className="text-sm text-slate-500 text-center sm:text-left">Our standard production time is 10-12 business days after deposit and artwork.</div>
           </div>
         </form>
       </div>
