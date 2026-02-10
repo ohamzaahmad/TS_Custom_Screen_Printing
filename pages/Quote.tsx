@@ -78,7 +78,7 @@ const Quote: React.FC<QuoteProps> = ({ initialProduct = '' }) => {
       files.forEach((f, i) => payload.append(slot + (files.length>1?`_${i}`:''), f));
     });
 
-    fetch('http://localhost:3001/send', { method: 'POST', body: payload })
+    fetch(`${import.meta.env.VITE_SERVER_URL}/send`, { method: 'POST', body: payload })
       .then(res => {
         if (!res.ok) throw new Error('Network response was not ok');
         alert('Quote submitted — we will contact you shortly.');

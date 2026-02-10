@@ -32,7 +32,7 @@ const Contact: React.FC = () => {
     payload.append('subject', formData.subject);
     payload.append('message', formData.message);
 
-    fetch('http://localhost:3001/send', {
+    fetch(`${import.meta.env.VITE_SERVER_URL}/send`, {
       method: 'POST',
       body: payload,
     })
