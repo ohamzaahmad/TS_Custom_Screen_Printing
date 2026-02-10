@@ -272,18 +272,18 @@ img, video, svg {
 
 /* Force site logo to a reasonable max height so it never overflows layout */
 .site-logo {
-  max-height: 32px; /* ~h-8 */
+  max-height: 48px; /* increased for mobile */
   height: auto;
   width: auto;
   display: block;
 }
 
 @media (min-width: 768px) {
-  .site-logo { max-height: 40px; } /* ~h-10 */
+  .site-logo { max-height: 56px; }
 }
 
 @media (min-width: 1024px) {
-  .site-logo { max-height: 48px; } /* slightly larger on wide screens */
+  .site-logo { max-height: 64px; } /* larger on wide screens */
 }
 
 /* Responsive typography scale */n

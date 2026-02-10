@@ -88,11 +88,11 @@ const Footer: React.FC = () => {
             <ul className="space-y-4 text-white/40 text-[13px] font-medium leading-relaxed">
               <li className="flex items-start gap-4">
                 <i className="fas fa-map-marker-alt text-orange-500 mt-1"></i>
-                123 Print Blvd, Ink City, ST 90210
+                1 Bradshaw Drive, Manahawkin NJ 08050
               </li>
               <li className="flex items-center gap-4">
                 <i className="fas fa-phone-alt text-orange-500"></i>
-                (555) 123-4567
+                (905) 338-4034
               </li>
               <li className="flex items-center gap-4">
                 <i className="fas fa-envelope text-orange-500"></i>

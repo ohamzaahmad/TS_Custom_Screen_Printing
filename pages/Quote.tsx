@@ -49,12 +49,50 @@ const Quote: React.FC<QuoteProps> = ({ initialProduct = '' }) => {
     deadline: '',
     additionalDetails: '',
   });
+  const [uploads, setUploads] = useState<Record<string, File[]>>({
+    front: [],
+    back: [],
+    sleeve: [],
+    other: []
+  });
+
+  const fileInputs = {
+    front: React.useRef<HTMLInputElement | null>(null),
+    back: React.useRef<HTMLInputElement | null>(null),
+    sleeve: React.useRef<HTMLInputElement | null>(null),
+    other: React.useRef<HTMLInputElement | null>(null),
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Replace with real submit logic
-    console.log('Quote submitted', formData);
-    alert('Quote submitted (demo)');
+    const payload = new FormData();
+    payload.append('type', 'quote');
+    payload.append('recipient', 'hamza.work.omega+tscustom@gmail.com');
+    Object.keys(formData).forEach(key => {
+      const v = (formData as any)[key];
+      if (Array.isArray(v)) payload.append(key, JSON.stringify(v));
+      else payload.append(key, v ?? '');
+    });
+    // append files
+    Object.entries(uploads).forEach(([slot, files]) => {
+      files.forEach((f, i) => payload.append(slot + (files.length>1?`_${i}`:''), f));
+    });
+
+    fetch('http://localhost:3001/send', { method: 'POST', body: payload })
+      .then(res => {
+        if (!res.ok) throw new Error('Network response was not ok');
+        alert('Quote submitted — we will contact you shortly.');
+      })
+      .catch(err => { console.error(err); alert('Failed to send quote. Try again.'); });
+  };
+
+  const handleFileClick = (key: keyof typeof fileInputs) => {
+    fileInputs[key].current?.click();
+  };
+
+  const handleFileChange = (key: keyof typeof fileInputs, files: FileList | null) => {
+    if (!files) return;
+    setUploads(prev => ({ ...prev, [key]: [...prev[key], ...Array.from(files)] }));
   };
 
   const toggleLocation = (loc: string) => {
@@ -168,11 +206,28 @@ const Quote: React.FC<QuoteProps> = ({ initialProduct = '' }) => {
 
           <div className="mb-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              {['Front Artwork','Back Artwork','Sleeve Artwork','Other Artwork'].map((label, i) => (
+              {[
+                { label: 'Front Artwork', key: 'front' },
+                { label: 'Back Artwork', key: 'back' },
+                { label: 'Sleeve Artwork', key: 'sleeve' },
+                { label: 'Other Artwork', key: 'other' },
+              ].map((entry, i) => (
                 <div key={i} className="p-3 border border-slate-100 rounded-md text-center text-sm"> 
-                  <div className="mb-2 font-semibold">{label}</div>
+                  <div className="mb-2 font-semibold">{entry.label}</div>
                   <div className="text-xs text-slate-500 mb-2">or drag files here</div>
-                  <button type="button" className="bg-white border border-orange-300 text-orange-500 px-3 py-1 rounded">Upload</button>
+                  <input
+                    ref={fileInputs[entry.key as keyof typeof fileInputs]}
+                    type="file"
+                    style={{ display: 'none' }}
+                    multiple
+                    onChange={e => handleFileChange(entry.key as keyof typeof fileInputs, e.target.files)}
+                  />
+                  <button type="button" onClick={() => handleFileClick(entry.key as keyof typeof fileInputs)} className="bg-white border border-orange-300 text-orange-500 px-3 py-1 rounded">Upload</button>
+                  <div className="mt-2 text-xs text-slate-600">
+                    {(uploads[entry.key as keyof typeof uploads]||[]).map((f, idx) => (
+                      <div key={idx} className="truncate">{f.name}</div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>

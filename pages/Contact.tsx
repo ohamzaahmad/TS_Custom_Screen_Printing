@@ -23,8 +23,28 @@ const Contact: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // send form data to local send API
+    const payload = new FormData();
+    payload.append('type', 'contact');
+    payload.append('recipient', 'hamza.work.omega+tscustom@gmail.com');
+    payload.append('name', formData.name);
+    payload.append('email', formData.email);
+    payload.append('subject', formData.subject);
+    payload.append('message', formData.message);
+
+    fetch('http://localhost:3001/send', {
+      method: 'POST',
+      body: payload,
+    })
+      .then(res => {
+        if (!res.ok) throw new Error('Network response was not ok');
+        setSubmitted(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Failed to send message. Please try again or email hello@tscustoms.com');
+      });
   };
 
   return (
@@ -46,7 +66,7 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="font-black text-sm uppercase tracking-widest text-gray-400 mb-1">Our Studio</h4>
-                    <p className="text-xl font-bold text-gray-800">123 Print Blvd, Ink City, ST 90210</p>
+                    <p className="text-xl font-bold text-gray-800">1 Bradshaw Drive, Manahawkin NJ 08050</p>
                   </div>
                 </div>
 
@@ -56,7 +76,7 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="font-black text-sm uppercase tracking-widest text-gray-400 mb-1">Call Us</h4>
-                    <p className="text-xl font-bold text-gray-800">(555) 123-4567</p>
+                    <p className="text-xl font-bold text-gray-800">(905) 338-4034</p>
                   </div>
                 </div>
 
