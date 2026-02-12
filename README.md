@@ -2,8 +2,7 @@
 
 This project is a premium, high-fidelity eCommerce platform for an industrial screen printing brand. It is built using **React**, **TypeScript**, and **Tailwind CSS**.
 
-## 🏗 Project Architecture
-
+## 🏗 Project Architecture 
 ### Frontend Structure
 - **`App.tsx`**: The main router. It uses hash-based navigation (`window.location.hash`) to switch between pages without a backend server.
 - **`pages/`**: Contains the main views (Home, Catalogue, Quote, etc.).
