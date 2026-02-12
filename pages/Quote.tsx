@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface InputLabelProps {
   children?: React.ReactNode;
@@ -102,6 +102,23 @@ const Quote: React.FC<QuoteProps> = ({ initialProduct = '' }) => {
     });
   };
 
+  useEffect(() => {
+    const id = 'cognito-embed';
+    const container = document.getElementById(id);
+    if (!container) return;
+    const existing = container.querySelector('script[data-cognito]');
+    if (existing) existing.remove();
+    const script = document.createElement('script');
+    script.src = 'https://www.cognitoforms.com/f/seamless.js';
+    script.setAttribute('data-key', 'fN2nyGMLZEWa0pxEUnbs8A');
+    script.setAttribute('data-form', '3');
+    script.setAttribute('data-cognito', 'true');
+    container.appendChild(script);
+  }, []);
+
+  // Toggle this to `true` to re-enable the embedded "Request Quote" form.
+  const showForm = false;
+
   return (
     <div className="relative min-h-screen flex flex-col pt-24 md:pt-28 lg:pt-32 px-4 md:px-6 pb-32">
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-orange-50 to-white"></div>
@@ -122,6 +139,7 @@ const Quote: React.FC<QuoteProps> = ({ initialProduct = '' }) => {
       </svg>
 
       <div className="max-w-4xl mx-auto relative z-10 mb-12">
+        {showForm && (
         <form onSubmit={handleSubmit} className="bg-white/95 p-6 rounded-lg shadow-md border border-slate-100 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -248,6 +266,10 @@ const Quote: React.FC<QuoteProps> = ({ initialProduct = '' }) => {
             <div className="text-sm text-slate-500 text-center sm:text-left">Our standard production time is 10-12 business days after deposit and artwork.</div>
           </div>
         </form>
+        )}
+        <div id="cognito-embed" className="bg-white/95 p-6 rounded-lg shadow-md border border-slate-100">
+          {/* Cognito form will be injected here by the script */}
+        </div>
       </div>
     </div>
   );
