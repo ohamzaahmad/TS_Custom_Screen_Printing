@@ -74,11 +74,13 @@ const Quote: React.FC<QuoteProps> = ({ initialProduct = '' }) => {
       else payload.append(key, v ?? '');
     });
     // append files
-    Object.entries(uploads).forEach(([slot, files]) => {
-      files.forEach((f, i) => payload.append(slot + (files.length>1?`_${i}`:''), f));
+    // cast entries to preserve File[] typing for TypeScript
+    (Object.entries(uploads) as [string, File[]][]).forEach(([slot, files]) => {
+      files.forEach((f, i) => payload.append(slot + (files.length > 1 ? `_${i}` : ''), f));
     });
 
-    fetch(`${import.meta.env.VITE_SERVER_URL}/send`, { method: 'POST', body: payload })
+    // Vite's `import.meta.env` may not be typed in this project; cast to any for now
+    fetch(`${(import.meta as any).env?.VITE_SERVER_URL}/send`, { method: 'POST', body: payload })
       .then(res => {
         if (!res.ok) throw new Error('Network response was not ok');
         alert('Quote submitted — we will contact you shortly.');

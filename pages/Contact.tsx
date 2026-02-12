@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Fix: Make children optional to avoid JSX type mismatch where children are provided as content but expected in props
 interface InputLabelProps {
@@ -20,6 +20,23 @@ const Contact: React.FC = () => {
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
+
+  // Toggle this to `true` to re-enable the built-in contact form.
+  const showForm = false;
+
+  useEffect(() => {
+    const id = 'cognito-contact-embed';
+    const container = document.getElementById(id);
+    if (!container) return;
+    const existing = container.querySelector('script[data-cognito]');
+    if (existing) existing.remove();
+    const script = document.createElement('script');
+    script.src = 'https://www.cognitoforms.com/f/seamless.js';
+    script.setAttribute('data-key', 'fN2nyGMLZEWa0pxEUnbs8A');
+    script.setAttribute('data-form', '4');
+    script.setAttribute('data-cognito', 'true');
+    container.appendChild(script);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -117,7 +134,11 @@ const Contact: React.FC = () => {
           {/* Contact Form (compact) */}
           <div className="relative flex justify-center">
             <div className="w-full max-w-md">
-              {submitted ? (
+              {/* Cognito embedded contact form */}
+              <div id="cognito-contact-embed" className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 mb-6">
+                {/* Cognito form will be injected here by the script */}
+              </div>
+              {showForm && (submitted ? (
                 <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100 text-center animate-in">
                   <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xl mx-auto mb-4">
                     <i className="fas fa-paper-plane"></i>
@@ -174,7 +195,7 @@ const Contact: React.FC = () => {
                     </button>
                   </div>
                 </form>
-              )}
+              ))}
             </div>
           </div>
         </div>
