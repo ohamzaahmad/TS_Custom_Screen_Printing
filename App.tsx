@@ -1,56 +1,84 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Home from './pages/Home';
-import Quote from './pages/Quote';
-import Contact from './pages/Contact';
-import PrintGuide from './pages/PrintGuide';
-import ColorGuide from './pages/ColorGuide';
-import Pricing from './pages/Pricing';
-import AdminLogin from './pages/AdminLogin';
-import Dashboard from './pages/Dashboard';
+
+const Home = lazy(() => import('./pages/Home'));
+const Quote = lazy(() => import('./pages/Quote'));
+const Contact = lazy(() => import('./pages/Contact'));
+const PrintGuide = lazy(() => import('./pages/PrintGuide'));
+const ColorGuide = lazy(() => import('./pages/ColorGuide'));
+const Pricing = lazy(() => import('./pages/Pricing'));
+
+const PAGE_TO_PATH: Record<string, string> = {
+  home: '/',
+  quote: '/quote',
+  contact: '/contact',
+  guide: '/guide',
+  colors: '/colors',
+  pricing: '/pricing',
+  about: '/about',
+};
+
+const pathToPage = (pathname: string): string => {
+  const normalizedPath = pathname.replace(/\/+$/, '') || '/';
+  const match = Object.entries(PAGE_TO_PATH).find(([, path]) => path === normalizedPath);
+  return match ? match[0] : 'not-found';
+};
+
+const PageLoader: React.FC = () => (
+  <div className="min-h-[40vh] flex items-center justify-center px-6">
+    <div className="flex items-center gap-3 text-slate-500 font-bold text-sm uppercase tracking-[0.2em]">
+      <span className="w-3 h-3 rounded-full bg-orange-500 animate-pulse"></span>
+      Loading
+    </div>
+  </div>
+);
 
 const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState('home');
-  const [quoteInitialProduct, setQuoteInitialProduct] = useState('');
-  const [isAdminAuth, setIsAdminAuth] = useState(false);
+  const [currentPage, setCurrentPage] = useState(pathToPage(window.location.pathname));
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '') || 'home';
-      setCurrentPage(hash);
-      
-      const isAuth = localStorage.getItem('ts_admin_authenticated') === 'true';
-      setIsAdminAuth(isAuth);
+    const hashPage = window.location.hash.replace('#', '').trim();
+    if (hashPage && PAGE_TO_PATH[hashPage]) {
+      const targetPath = PAGE_TO_PATH[hashPage];
+      window.history.replaceState({}, '', targetPath);
+    }
+
+    const handleRouteChange = () => {
+      setCurrentPage(pathToPage(window.location.pathname));
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    handleHashChange(); 
+    window.addEventListener('popstate', handleRouteChange);
+    handleRouteChange();
 
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('popstate', handleRouteChange);
   }, []);
 
   const navigate = (page: string) => {
-    window.location.hash = page;
+    const targetPath = PAGE_TO_PATH[page] || '/';
+    if (window.location.pathname !== targetPath) {
+      window.history.pushState({}, '', targetPath);
+    }
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // `Catalogue` page removed; product quote flow handled from other pages
+  useEffect(() => {
+    if (currentPage !== 'not-found') {
+      document.title = `TS Custom Screen Printing`;
+    } else {
+      document.title = `Page Not Found | TS Custom Screen Printing`;
+    }
+  }, [currentPage]);
 
   const renderPage = () => {
-    if (currentPage === 'dashboard' && !isAdminAuth) {
-      navigate('admin');
-      return null;
-    }
-
     switch (currentPage) {
       case 'home':
         return <Home onNavigate={navigate} />;
       // catalogue route removed
       case 'quote':
-        return <Quote initialProduct={quoteInitialProduct} />;
+        return <Quote />;
       case 'contact':
         return <Contact />;
       case 'guide':
@@ -59,10 +87,6 @@ const App: React.FC = () => {
         return <ColorGuide />;
       case 'pricing':
         return <Pricing />;
-      case 'admin':
-        return <AdminLogin onLogin={() => navigate('dashboard')} />;
-      case 'dashboard':
-        return <Dashboard />;
       case 'about':
         return (
             <div className="min-h-screen pt-24 pb-16 max-w-4xl mx-auto px-6 animate-in">
@@ -73,11 +97,11 @@ const App: React.FC = () => {
                 Founded with a mission to eliminate the average. TS Custom Screen Printing combines architectural precision with industrial-grade production for high-fidelity apparel solutions.
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mt-20">
-                  <div className="bg-white border border-slate-100 p-12 rounded-[3rem] shadow-sm">
+                  <div className="bg-white border border-slate-100 p-12 rounded-3rem shadow-sm">
                       <h3 className="text-3xl font-black uppercase tracking-tight mb-6">Artisanal Scale</h3>
                       <p className="text-slate-500 font-medium">We don't just "print shirts." We manufacture tactical brand assets. Our team treats every ink deposit as a chemical equation for quality.</p>
                   </div>
-                  <div className="bg-slate-900 text-white p-12 rounded-[3rem] shadow-xl">
+                  <div className="bg-slate-900 text-white p-12 rounded-3rem shadow-xl">
                       <h3 className="text-3xl font-black uppercase tracking-tight mb-6">Industrial Truth</h3>
                       <p className="text-white/40 font-medium">Garments should survive the lifestyle of the wearer. Our forced-air curing processes guarantee structural ink integrity for the life of the cotton.</p>
                   </div>
@@ -85,18 +109,44 @@ const App: React.FC = () => {
             </div>
           </div>
         );
+      case 'not-found':
+        return (
+          <section className="min-h-screen pt-36 pb-20 px-6 bg-linear-to-b from-slate-50 to-white">
+            <div className="max-w-3xl mx-auto text-center">
+              <span className="text-orange-500 font-black uppercase tracking-[0.4em] text-[10px] block mb-4">404</span>
+              <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tight text-slate-900 mb-6">Page Not Found</h1>
+              <p className="text-slate-500 font-medium mb-10">The page you requested is unavailable. Use the actions below to continue browsing.</p>
+              <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <button
+                  onClick={() => navigate('home')}
+                  className="bg-slate-900 text-white px-7 py-3 rounded-full font-black uppercase tracking-[0.2em] text-xs"
+                >
+                  Back Home
+                </button>
+                <button
+                  onClick={() => navigate('quote')}
+                  className="bg-orange-500 text-white px-7 py-3 rounded-full font-black uppercase tracking-[0.2em] text-xs"
+                >
+                  Request Quote
+                </button>
+              </div>
+            </div>
+          </section>
+        );
       default:
         return <Home onNavigate={navigate} />;
     }
   };
 
-  const showNav = !['admin', 'dashboard'].includes(currentPage);
+  const showNav = !['not-found'].includes(currentPage);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#fcfcfc] selection:bg-purple-600 selection:text-white">
       {showNav && <Navbar currentPage={currentPage} onNavigate={navigate} />}
-      <main className="flex-grow">
-        {renderPage()}
+      <main key={currentPage} className="grow">
+        <Suspense fallback={<PageLoader />}>
+          {renderPage()}
+        </Suspense>
       </main>
       {showNav && <Footer />}
     </div>

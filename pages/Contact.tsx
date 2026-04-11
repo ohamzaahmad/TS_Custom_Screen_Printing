@@ -1,201 +1,61 @@
 
-import React, { useState, useEffect } from 'react';
-
-// Fix: Make children optional to avoid JSX type mismatch where children are provided as content but expected in props
-interface InputLabelProps {
-  children?: React.ReactNode;
-}
-
-const InputLabel = ({ children }: InputLabelProps) => (
-  <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1 mb-2 block">
-    {children}
-  </label>
-);
+import React, { useEffect } from 'react';
 
 const Contact: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-  const [submitted, setSubmitted] = useState(false);
-
-  // Toggle this to `true` to re-enable the built-in contact form.
-  const showForm = false;
-
   useEffect(() => {
     const id = 'cognito-contact-embed';
     const container = document.getElementById(id);
     if (!container) return;
     const existing = container.querySelector('script[data-cognito]');
     if (existing) existing.remove();
+
     const script = document.createElement('script');
     script.src = 'https://www.cognitoforms.com/f/seamless.js';
     script.setAttribute('data-key', 'fN2nyGMLZEWa0pxEUnbs8A');
     script.setAttribute('data-form', '4');
     script.setAttribute('data-cognito', 'true');
+    script.async = true;
     container.appendChild(script);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // send form data to local send API
-    const payload = new FormData();
-    payload.append('type', 'contact');
-    payload.append('recipient', 'hamza.work.omega+tscustom@gmail.com');
-    payload.append('name', formData.name);
-    payload.append('email', formData.email);
-    payload.append('subject', formData.subject);
-    payload.append('message', formData.message);
-
-    fetch(`${import.meta.env.VITE_SERVER_URL}/send`, {
-      method: 'POST',
-      body: payload,
-    })
-      .then(res => {
-        if (!res.ok) throw new Error('Network response was not ok');
-        setSubmitted(true);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      })
-      .catch(err => {
-        console.error(err);
-        alert('Failed to send message. Please try again or email hello@tscustoms.com');
-      });
-  };
-
   return (
     <div className="relative min-h-screen pb-24 bg-white animate-in pt-24 md:pt-28 lg:pt-32">
-      {/* dark stripe behind fixed navbar to avoid contrast issues */}
-      <div className="absolute top-0 left-0 w-full h-20 md:h-24 lg:h-28 bg-[#0A0015]" aria-hidden="true"></div>
-      {/* Header removed: showing contact form and footer only */}
+      <div className="absolute top-0 left-0 w-full h-20 md:h-24 lg:h-28 bg-brand-dark" aria-hidden="true"></div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
-          {/* Contact Info */}
-          <div className="space-y-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div className="space-y-10">
             <div>
-              <h2 className="text-3xl font-black mb-8 uppercase tracking-tight text-gray-900">GET IN TOUCH</h2>
-              <div className="space-y-8">
-                <div className="flex gap-6 items-start group">
-                  <div className="w-14 h-14 bg-white shadow-xl rounded-2xl flex items-center justify-center text-purple-600 text-xl group-hover:bg-purple-600 group-hover:text-white transition-all border border-gray-50">
-                    <i className="fas fa-map-marker-alt"></i>
-                  </div>
-                  <div>
-                    <h4 className="font-black text-sm uppercase tracking-widest text-gray-400 mb-1">Our Studio</h4>
-                    <p className="text-xl font-bold text-gray-800">1 Bradshaw Drive, Manahawkin NJ 08050</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-6 items-start group">
-                  <div className="w-14 h-14 bg-white shadow-xl rounded-2xl flex items-center justify-center text-orange-500 text-xl group-hover:bg-orange-500 group-hover:text-white transition-all border border-gray-50">
-                    <i className="fas fa-phone-alt"></i>
-                  </div>
-                  <div>
-                    <h4 className="font-black text-sm uppercase tracking-widest text-gray-400 mb-1">Call Us</h4>
-                    <p className="text-xl font-bold text-gray-800">(905) 338-4034</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-6 items-start group">
-                  <div className="w-14 h-14 bg-white shadow-xl rounded-2xl flex items-center justify-center text-purple-600 text-xl group-hover:bg-purple-600 group-hover:text-white transition-all border border-gray-50">
-                    <i className="fas fa-envelope"></i>
-                  </div>
-                  <div>
-                    <h4 className="font-black text-sm uppercase tracking-widest text-gray-400 mb-1">Email Us</h4>
-                    <p className="text-xl font-bold text-gray-800">hello@tscustoms.com</p>
-                  </div>
-                </div>
-              </div>
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-500 block mb-4">Contact</span>
+              <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-slate-900 mb-4">Let&apos;s Talk Production</h1>
+              <p className="text-slate-500 font-medium leading-relaxed max-w-lg">
+                Share your project requirements and our team will respond with timelines, recommendations, and next steps.
+              </p>
             </div>
 
-            <div className="bg-gray-900 rounded-[3rem] p-10 text-white overflow-hidden relative shadow-2xl">
-              <div className="relative z-10">
-                <h3 className="text-2xl font-black mb-8 uppercase tracking-tight">BUSINESS HOURS</h3>
-                <ul className="space-y-6 text-gray-400 font-medium">
-                  <li className="flex justify-between border-b border-white/10 pb-4">
-                    <span>Monday - Friday</span>
-                    <span className="text-white">9:00 AM - 6:00 PM</span>
-                  </li>
-                  <li className="flex justify-between border-b border-white/10 pb-4">
-                    <span>Saturday</span>
-                    <span className="text-white">10:00 AM - 4:00 PM</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Sunday</span>
-                    <span className="text-orange-500 font-black">CLOSED</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-purple-600/20 rounded-full blur-3xl"></div>
+            <div className="bg-slate-900 rounded-3rem p-8 text-white shadow-2xl">
+              <ul className="space-y-5 text-sm">
+                <li className="flex items-center justify-between border-b border-white/10 pb-4">
+                  <span className="text-white/60 uppercase tracking-[0.2em] text-[10px] font-black">Phone</span>
+                  <span className="font-bold">(905) 338-4034</span>
+                </li>
+                <li className="flex items-center justify-between border-b border-white/10 pb-4">
+                  <span className="text-white/60 uppercase tracking-[0.2em] text-[10px] font-black">Email</span>
+                  <span className="font-bold">hello@tscustoms.com</span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-white/60 uppercase tracking-[0.2em] text-[10px] font-black">Hours</span>
+                  <span className="font-bold">Mon-Sat</span>
+                </li>
+              </ul>
             </div>
           </div>
 
-          {/* Contact Form (compact) */}
-          <div className="relative flex justify-center">
-            <div className="w-full max-w-md">
-              {/* Cognito embedded contact form */}
-              <div id="cognito-contact-embed" className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 mb-6">
-                {/* Cognito form will be injected here by the script */}
+          <div className="w-full">
+            <div id="cognito-contact-embed" className="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-slate-100 min-h-105">
+              <div className="h-full flex items-center justify-center text-slate-400 text-sm font-semibold uppercase tracking-[0.2em]">
+                Loading Contact Form
               </div>
-              {showForm && (submitted ? (
-                <div className="bg-white p-8 rounded-2xl shadow-md border border-gray-100 text-center animate-in">
-                  <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xl mx-auto mb-4">
-                    <i className="fas fa-paper-plane"></i>
-                  </div>
-                  <h2 className="text-2xl font-black text-gray-900 mb-2 tracking-tight uppercase">Message Sent</h2>
-                  <p className="text-gray-500 mb-6 text-sm">We'll get back to you shortly.</p>
-                  <button 
-                    onClick={() => setSubmitted(false)}
-                    className="bg-gray-900 text-white px-6 py-2 rounded-md font-black uppercase tracking-wider text-sm"
-                  >
-                    Send Another
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
-                  <div className="space-y-4">
-                    <div className="space-y-1">
-                      <InputLabel>Full Name</InputLabel>
-                      <input 
-                        type="text" required placeholder="Enter your name"
-                        className="w-full bg-gray-50 border-0 px-4 py-3 rounded-lg focus:ring-2 focus:ring-purple-100 outline-none font-bold text-sm"
-                        value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})}
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <InputLabel>Email Address</InputLabel>
-                      <input 
-                        type="email" required placeholder="your@email.com"
-                        className="w-full bg-gray-50 border-0 px-4 py-3 rounded-lg focus:ring-2 focus:ring-purple-100 outline-none font-bold text-sm"
-                        value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})}
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <InputLabel>Subject</InputLabel>
-                      <input 
-                        type="text" required placeholder="How can we help?"
-                        className="w-full bg-gray-50 border-0 px-4 py-3 rounded-lg focus:ring-2 focus:ring-purple-100 outline-none font-bold text-sm"
-                        value={formData.subject} onChange={e => setFormData({...formData, subject: e.target.value})}
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <InputLabel>Your Message</InputLabel>
-                      <textarea 
-                        rows={4} required placeholder="Tell us more about your project or question..."
-                        className="w-full bg-gray-50 border-0 px-4 py-3 rounded-lg focus:ring-2 focus:ring-purple-100 outline-none font-medium text-sm resize-none"
-                        value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})}
-                      />
-                    </div>
-                    <button 
-                      type="submit"
-                      className="w-full bg-[#0A0015] text-white py-3 rounded-md font-black text-sm uppercase tracking-[0.1em] shadow-sm hover:scale-[1.01] transition-all duration-200"
-                    >
-                      Send Message
-                    </button>
-                  </div>
-                </form>
-              ))}
             </div>
           </div>
         </div>

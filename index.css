@@ -177,6 +177,113 @@ body {
   background: linear-gradient(135deg, #BD00FF 0%, #2E005C 100%);
 }
 
+/* Multicolor gradient text utility */
+.text-gradient-multi {
+  background: linear-gradient(90deg, #FF4EC0 0%, #BD00FF 30%, #00C2FF 65%, #B6FF00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Primary gradient button */
+.btn-gradient {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(90deg, #BD00FF 0%, #FF4EC0 28%, #FF8A00 62%);
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 9999px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  box-shadow: 0 8px 18px rgba(45, 0, 92, 0.10);
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: transform 180ms cubic-bezier(.2,.8,.2,1), box-shadow 180ms, opacity 180ms;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.08);
+  overflow: visible;
+}
+
+/* subtle white capsule behind the button like a shell (matches approved visual) */
+.btn-gradient::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  background: rgba(255,255,255,0.96);
+  opacity: 0.08;
+  filter: blur(6px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(45, 0, 92, 0.14);
+}
+.btn-gradient:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 12px rgba(45, 0, 92, 0.08);
+}
+.btn-gradient:focus {
+  outline: none;
+  box-shadow: 0 0 0 6px rgba(189, 0, 255, 0.06);
+}
+
+/* Decorative colorful blobs used in hero and footer */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.8;
+  mix-blend-mode: screen;
+  transform-origin: center;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+.blob-1 {
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle at 20% 30%, #FF4EC0 0%, #BD00FF 40%, transparent 60%);
+  left: -10%;
+  top: -10%;
+  z-index: 0;
+  animation: float 12s ease-in-out infinite;
+}
+
+.blob-2 {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle at 70% 20%, #00C2FF 0%, #00E6C3 35%, transparent 60%);
+  right: -6%;
+  top: 12%;
+  z-index: 0;
+  animation: float 10s ease-in-out infinite reverse;
+}
+
+.blob-3 {
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(circle at 30% 70%, #FF8A00 0%, #FFC700 40%, transparent 60%);
+  left: 12%;
+  bottom: -8%;
+  z-index: 0;
+  animation: float 14s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.03); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* Footer-specific blob variants */
+.footer-blob { position: absolute; z-index: 0; filter: blur(80px); opacity: 0.12; mix-blend-mode: screen; pointer-events: none; }
+.footer-blob-1 { width: 260px; height: 260px; right: -8%; top: -10%; background: radial-gradient(circle at 20% 30%, #FF4EC0 0%, #BD00FF 40%, transparent 60%); }
+.footer-blob-2 { width: 220px; height: 220px; left: -6%; bottom: -6%; background: radial-gradient(circle at 70% 20%, #00C2FF 0%, #00E6C3 35%, transparent 60%); }
+
 /* Backdrop blur effects */
 .nav-blur {
   backdrop-filter: blur(20px);
@@ -207,7 +314,7 @@ body {
   width: 100%;
   height: 100%;
   opacity: 0.015;
-  z-index: 1000;
+  z-index: 0;
   pointer-events: none;
   background-image: url("https://grainy-gradients.vercel.app/noise.svg");
 }
@@ -218,7 +325,8 @@ body {
 }
 
 .btn-pulse {
-  animation: soft-pulse 3s infinite;
+  animation: soft-pulse 6s ease-in-out infinite;
+  transform-origin: center;
 }
 
 /* Selection color */
@@ -241,11 +349,11 @@ body {
 @keyframes soft-pulse {
   0% {
     transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(189, 0, 255, 0.4);
+    box-shadow: 0 0 0 0 rgba(189, 0, 255, 0.12);
   }
-  70% {
-    transform: scale(1.02);
-    box-shadow: 0 0 0 15px rgba(189, 0, 255, 0);
+  50% {
+    transform: scale(1.01);
+    box-shadow: 0 12px 30px rgba(189, 0, 255, 0.06);
   }
   100% {
     transform: scale(1);

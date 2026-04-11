@@ -75,7 +75,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
   }, [isOpen]);
 
   // Pages that have a dark header background by default
-  const darkHeaderPages = ['home', 'catalogue', 'contact'];
+  const darkHeaderPages = ['home', 'contact'];
   const isDarkBg = !scrolled && darkHeaderPages.includes(currentPage);
 
   const navItems = [
@@ -107,11 +107,12 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
                 key={item.id}
                 onClick={() => {
                   if (item.external) {
-                    window.location.href = item.external;
+                    window.open(item.external, '_blank', 'noopener,noreferrer');
                   } else {
                     onNavigate(item.id);
                   }
                 }}
+                aria-label={item.external ? `${item.label} (opens in a new tab)` : item.label}
                 className={`text-[10px] uppercase tracking-[0.4em] font-black transition-all duration-300 relative group ${
                   isDarkBg 
                     ? (currentPage === item.id ? 'text-white' : 'text-white/60 hover:text-white')
@@ -139,12 +140,15 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
           <div className="lg:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? 'Close menu' : 'Open menu'}
+              aria-controls="mobile-menu"
+              aria-expanded={isOpen}
               className={`p-2 focus:outline-none transition-colors ${isDarkBg ? 'text-white' : 'text-slate-900'}`}
             >
               <div className="w-5 h-4 flex flex-col justify-between items-end">
-                <span className={`h-[2px] bg-current transition-all duration-300 ${isOpen ? 'w-5 rotate-45 translate-y-1.5' : 'w-5'}`}></span>
-                <span className={`h-[2px] bg-current transition-all duration-300 ${isOpen ? 'opacity-0' : 'w-3'}`}></span>
-                <span className={`h-[2px] bg-current transition-all duration-300 ${isOpen ? 'w-5 -rotate-45 -translate-y-1.5' : 'w-4'}`}></span>
+                <span className={`h-0.5 bg-current transition-all duration-300 ${isOpen ? 'w-5 rotate-45 translate-y-1.5' : 'w-5'}`}></span>
+                <span className={`h-0.5 bg-current transition-all duration-300 ${isOpen ? 'opacity-0' : 'w-3'}`}></span>
+                <span className={`h-0.5 bg-current transition-all duration-300 ${isOpen ? 'w-5 -rotate-45 -translate-y-1.5' : 'w-4'}`}></span>
               </div>
             </button>
           </div>
@@ -168,12 +172,13 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
               key={item.id}
               onClick={() => {
                 if (item.external) {
-                  window.location.href = item.external;
+                  window.open(item.external, '_blank', 'noopener,noreferrer');
                 } else {
                   onNavigate(item.id);
                 }
                 setIsOpen(false);
               }}
+              aria-label={item.external ? `${item.label} (opens in a new tab)` : item.label}
               className={`text-[11px] font-black uppercase tracking-[0.5em] transition-all ${
                 currentPage === item.id ? 'text-orange-500' : 'text-slate-400 hover:text-slate-900'
               }`}

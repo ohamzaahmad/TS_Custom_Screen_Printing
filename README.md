@@ -1,64 +1,148 @@
-# TS Custom Screen Printing - Project Documentation
+# TS Custom Screen Printing
 
-This project is a premium, high-fidelity eCommerce platform for an industrial screen printing brand. It is built using **React**, **TypeScript**, and **Tailwind CSS**.
+Production website for TS Custom Screen Printing, built with React + TypeScript (Vite) and external hosted form services for enquiries and quote requests.
 
-## 🏗 Project Architecture 
-### Frontend Structure
-- **`App.tsx`**: The main router. It uses hash-based navigation (`window.location.hash`) to switch between pages without a backend server.
-- **`pages/`**: Contains the main views (Home, Catalogue, Quote, etc.).
-- **`components/`**: Reusable UI elements like the Navbar and Footer.
-- **`services/dataService.ts`**: Manages data. Currently, it uses **localStorage** to simulate a database. When you add a product in the Admin Dashboard, it persists in your browser.
+## Overview
 
-### Styling & Aesthetics
-- **Tailwind CSS**: Used for the entire layout. 
-- **Glassmorphism**: Implemented via the `.glass` and `.glass-dark` classes in `index.html`.
-- **Animations**: Custom CSS animations (`animate-in`, `btn-pulse`) are defined in the global styles.
+- Frontend: React SPA with browser-history path routing.
+- Styling: Tailwind CSS.
+- Contact/Quote submissions: External hosted form platform (embedded).
 
----
+## Tech Stack
 
-## 🛠 How to Update the "Other Website" Showcase
-The **Catalogue** page features a "Live Showcase" designed to display other websites (like a brand's portfolio or a 3D mockup tool).
+- Node.js
+- React 19
+- TypeScript
+- Vite 6
+- Tailwind CSS 4
 
-### 1. The Implementation Logic
-In `pages/Catalogue.tsx`, there is a state called `showcaseUrl`. 
-```tsx
-const [showcaseUrl, setShowcaseUrl] = useState('https://example.com');
+## Repository Structure
+
+- `pages/` Main screens (Home, Quote, Contact, Pricing, Guides).
+- `components/` Shared UI (Navbar, Footer).
+- `services/dataService.ts` Frontend data service for catalogue/pricing/ink content.
+
+## Prerequisites
+
+- Node.js 20+ recommended
+- npm 10+ recommended
+
+## Environment Variables
+
+No mandatory environment variables are required for local development.
+
+## Installation
+
+Install frontend dependencies:
+
+```bash
+npm install
 ```
 
-### 2. How to change it:
-- Locate the `showcaseItems` array in `Catalogue.tsx`.
-- Update the `url` property to point to the website you want to show.
-- **Important Note:** Some websites (like Google, Amazon, or Facebook) block "iframing" for security using `X-Frame-Options`. To show your own other websites, ensure they do not have these headers enabled.
+## Run Locally
+
+Start frontend app (from project root):
+
+```bash
+npm run dev
+```
+
+Frontend default URL: `http://localhost:5173`
+
+## Build
+
+Build frontend production assets:
+
+```bash
+npm run build
+```
+
+Preview production build:
+
+```bash
+npm run preview
+```
+
+## Deployment (Hostinger Shared Hosting)
+
+1. Build the app: `npm run build`
+2. Upload all contents of `dist/` to your Hostinger `public_html/` directory.
+3. Upload `.htaccess` from project root into `public_html/`.
+4. Ensure `404.html` from `dist/` is uploaded (generated from `public/404.html`).
+
+Routing behavior:
+
+- The `.htaccess` rewrite rules route all non-file requests to `index.html`.
+- This enables direct access to SPA routes (for example: `/quote`, `/contact`) without 404 errors.
+- If a 404 is served by hosting configuration, `404.html` redirects visitors back to the app root.
+
+## Operational Notes
+
+- Admin panel and local backend have been removed from this codebase.
+- Contact and quote workflows are handled through embedded external forms.
+## Operational Notes
+
+- Frontend-only SPA: the local `server/` and any admin pages have been removed. This repository now contains only the frontend assets needed to run the public site.
+- Contact/Quote: submissions are handled by embedded external forms (see `pages/Contact.tsx` and `pages/Quote.tsx`).
+
+## Current Dependencies (high level)
+
+- `react`, `react-dom` — core UI
+- `framer-motion` — animations used on the Home page
+- Tailwind CSS + PostCSS for styling
+
+Note: previously present 3D libraries (`@react-three/fiber`, `three`) were removed because they were not used by the UI.
+
+## Security / Audit
+
+- We recommend running `npm audit` and `npm audit fix` before deploying to address any reported vulnerabilities.
+
+## Quick Developer Guide
+
+- Install dependencies:
+
+```bash
+npm install
+```
+
+- Run development server (hot reload):
+
+```bash
+npm run dev
+```
+
+- Build production assets:
+
+```bash
+npm run build
+```
+
+- Serve a local preview of the production build:
+
+```bash
+npm run preview
+```
+
+## Project Notes & Where to Edit
+
+- The main app shell and lazy routing live in `App.tsx`.
+- The landing / hero with motion is `pages/Home.tsx` (Framer Motion animations).
+- Contact and Quote embed logic is in `pages/Contact.tsx` and `pages/Quote.tsx`.
+- Theme colors and gradients live in `brandColors.ts` and `index.css` (see `.btn-gradient` for CTA styling).
+
+## Deployment
+
+- Build the app (`npm run build`) and upload the `dist/` folder to any static host (Netlify, Vercel, Hostinger, S3+CloudFront).
+- Ensure your host rewrites unknown paths to `index.html` so SPA routing works.
+
+## Questions / Handover
+
+If you want me to add a short script to deploy to a specific host or to pin dependencies, tell me which provider and I will add instructions.
+
+## Ownership
+
+For support or handover, use your internal engineering contact process.
 
 ---
 
-## 🚀 Future Backend Requirements
-To take this project from a "Simple Website" to a "Functional Business Tool," you will eventually need a backend.
-
-### 1. Database (The "Brain")
-- **Recommendation**: **Supabase** (PostgreSQL) or **Firebase**.
-- **What it will store**: Product inventory, pricing tables, and user quote requests.
-
-### 2. Authentication (The "Gatekeeper")
-- **Current**: A simple `admin/admin` check in `AdminLogin.tsx`.
-- **Future**: Use **NextAuth.js** or **Supabase Auth** to allow real admin accounts with secure passwords and multi-factor authentication.
-
-### 3. File Storage (The "Vault")
-- **Need**: When users "Start an Order," they need to upload high-resolution artwork (AI, PSD, PDF).
-- **Recommendation**: **AWS S3** or **Cloudinary**. You will need to update the `Quote.tsx` form to handle file uploads.
-
-### 4. API Layer
-- **Recommendation**: **Node.js (Express)** or **Next.js Server Actions**.
-- **Functions**:
-    - Sending email notifications when a quote is submitted (using **Resend** or **SendGrid**).
-    - Calculating real-time shipping costs via UPS/FedEx APIs.
-    - Processing payments via **Stripe**.
-
----
-
-## 🎨 Design Guidelines
-- **Typography**: Uses *Plus Jakarta Sans*. Keep headings `font-black` and `uppercase`.
-- **Colors**: 
-    - Purple: `#BD00FF` (The "T")
-    - Orange: `#FF8A00` (The "S")
-- **Spacing**: Use large paddings (`py-24`, `py-40`) to maintain a premium, editorial feel.
+For a complete, step-by-step Hostinger shared-hosting deployment guide, see `DEPLOY_HOSTINGER.md` in the project root.
