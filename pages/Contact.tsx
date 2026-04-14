@@ -11,8 +11,8 @@ const Contact: React.FC = () => {
 
     const script = document.createElement('script');
     script.src = 'https://www.cognitoforms.com/f/seamless.js';
-    script.setAttribute('data-key', 'fN2nyGMLZEWa0pxEUnbs8A');
-    script.setAttribute('data-form', '4');
+    script.setAttribute('data-key', 'gzpyeDOGH0GjzjW1uBxIDg');
+    script.setAttribute('data-form', '3');
     script.setAttribute('data-cognito', 'true');
     script.async = true;
     container.appendChild(script);
@@ -41,7 +41,7 @@ const Contact: React.FC = () => {
                 </li>
                 <li className="flex items-center justify-between border-b border-white/10 pb-4">
                   <span className="text-white/60 uppercase tracking-[0.2em] text-[10px] font-black">Email</span>
-                  <span className="font-bold">hello@tscustoms.com</span>
+                  <span className="font-bold">info@stcsprinting.com</span>
                 </li>
                 <li className="flex items-center justify-between">
                   <span className="text-white/60 uppercase tracking-[0.2em] text-[10px] font-black">Hours</span>

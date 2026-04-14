@@ -99,7 +99,7 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center gap-4">
                 <i className="fas fa-envelope text-orange-500"></i>
-                hello@tscustoms.com
+                info@stcsprinting.com
               </li>
             </ul>
           </div>

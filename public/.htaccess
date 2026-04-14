@@ -1,0 +1,61 @@
+############################################################
+# .htaccess — SPA-friendly, secure, and cache-optimized
+# - Serves existing files directly
+# - Routes unknown paths to index.html (SPA fallback)
+# - Adds 404 fallback, caching hints, and security headers
+############################################################
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Deny access to hidden files (dotfiles)
+  <FilesMatch "^\.">
+    Require all denied
+  </FilesMatch>
+
+  # Disable directory listing
+  Options -Indexes
+
+  # Ensure index.html is treated as the directory index
+  DirectoryIndex index.html
+
+  # Serve existing files and directories directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # SPA fallback — forward all other requests to index.html (preserve query)
+  RewriteRule ^ index.html [L,QSA]
+</IfModule>
+
+# If rewrite isn't available or a 404 occurs, return index.html for SPA
+ErrorDocument 404 /index.html
+
+# Caching: give browsers sensible defaults for static assets
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/gif "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType font/woff2 "access plus 1 month"
+  ExpiresByType font/woff "access plus 1 month"
+</IfModule>
+
+# Security-related headers
+<IfModule mod_headers.c>
+  Header unset ETag
+  FileETag None
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-XSS-Protection "1; mode=block"
+  Header always set Referrer-Policy "no-referrer-when-downgrade"
+  Header set Permissions-Policy "geolocation=(), microphone=()"
+</IfModule>
+
+# End of .htaccess

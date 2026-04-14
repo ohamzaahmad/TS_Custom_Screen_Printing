@@ -15,8 +15,8 @@ const Quote: React.FC<QuoteProps> = () => {
     if (existing) existing.remove();
     const script = document.createElement('script');
     script.src = 'https://www.cognitoforms.com/f/seamless.js';
-    script.setAttribute('data-key', 'fN2nyGMLZEWa0pxEUnbs8A');
-    script.setAttribute('data-form', '3');
+    script.setAttribute('data-key', 'gzpyeDOGH0GjzjW1uBxIDg');
+    script.setAttribute('data-form', '2');
     script.setAttribute('data-cognito', 'true');
     script.async = true;
     container.appendChild(script);

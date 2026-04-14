@@ -1,0 +1,7 @@
+# robots.txt for TS Custom Screen Printing
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://stcsprinting.com/sitemap.xml

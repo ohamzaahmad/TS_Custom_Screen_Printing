@@ -129,8 +129,8 @@ Received: 880
             - /url: tel:+19053384034
             - text: (905) 338-4034
           - link [ref=e132] [cursor=pointer]:
-            - /url: mailto:hello@tscustoms.com
-            - text: hello@tscustoms.com
+            - /url: mailto:info@stcsprinting.com
+            - text: info@stcsprinting.com
         - button [ref=e133]: Request A Quote
   - contentinfo [ref=e134]:
     - generic [ref=e135]:
@@ -182,7 +182,7 @@ Received: 880
               - text: (905) 338-4034
             - listitem [ref=e180]:
               - generic [ref=e181]: 
-              - text: hello@tscustoms.com
+              - text: info@stcsprinting.com
       - generic [ref=e182]:
         - paragraph [ref=e183]: © 2026 TS Custom Screen Printing. Precision Manufactured.
         - generic [ref=e184]:

@@ -1,12 +1,21 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { createPortal } from 'react-dom';
 
 interface HomeProps {
   onNavigate: (page: string) => void;
 }
 
 const PROJECT_IMAGES = ['/1.jpg', '/2.jpg', '/3.png', '/4.png', '/5.jpg', '/6.jpg'];
+const PROJECT_DETAILS = [
+  { label: 'Drop 01', title: 'Oversized Streetwear Set', subtitle: 'Soft-hand print with tight registration and consistent opacity.' },
+  { label: 'Drop 02', title: 'Athletic Club Series', subtitle: 'Durable team graphics engineered for repeat wash cycles.' },
+  { label: 'Drop 03', title: 'Tour Merch Capsule', subtitle: 'High-impact front and back prints built for launch day.' },
+  { label: 'Drop 04', title: 'Retail Essentials Batch', subtitle: 'Clean, minimal branding optimized for premium shelf presence.' },
+  { label: 'Drop 05', title: 'Festival Graphic Run', subtitle: 'Vibrant ink layering tuned for sharp detail under stage light.' },
+  { label: 'Drop 06', title: 'Core Logo Program', subtitle: 'Reliable brand consistency across multiple garment styles.' },
+];
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
@@ -16,6 +25,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const lastActiveElementRef = useRef<HTMLElement | null>(null);
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+  const lockedScrollYRef = useRef(0);
 
   const revealProps = reduceMotion
     ? {}
@@ -46,14 +56,33 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       if (e.key === 'ArrowLeft') setActiveIndex(i => (i - 1 + PROJECT_IMAGES.length) % PROJECT_IMAGES.length);
       if (e.key === 'ArrowRight') setActiveIndex(i => (i + 1) % PROJECT_IMAGES.length);
     };
+
+    const html = document.documentElement;
+    const body = document.body;
+
     if (lightboxOpen) {
-      document.body.style.overflow = 'hidden';
+      lockedScrollYRef.current = window.scrollY;
+      html.style.overflow = 'hidden';
+      body.style.overflow = 'hidden';
+      body.style.position = 'fixed';
+      body.style.top = `-${lockedScrollYRef.current}px`;
+      body.style.left = '0';
+      body.style.right = '0';
+      body.style.width = '100%';
       window.addEventListener('keydown', onKey);
       // focus the close button when opened
       setTimeout(() => closeBtnRef.current?.focus(), 0);
     }
+
     return () => {
-      document.body.style.overflow = '';
+      html.style.overflow = '';
+      body.style.overflow = '';
+      body.style.position = '';
+      body.style.top = '';
+      body.style.left = '';
+      body.style.right = '';
+      body.style.width = '';
+      window.scrollTo(0, lockedScrollYRef.current);
       window.removeEventListener('keydown', onKey);
     };
   }, [lightboxOpen]);
@@ -199,19 +228,37 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               <p className="text-slate-500 text-lg font-medium leading-relaxed mb-8">
                 Every order follows a focused production system designed to reduce errors, protect detail, and keep delivery predictable.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl">
                 <button
                   onClick={() => onNavigate('quote')}
-                  className="bg-slate-900 text-white px-6 py-3 rounded-full font-black uppercase tracking-[0.2em] text-xs"
+                  className="bg-slate-900 text-white px-6 py-3 rounded-full font-black uppercase tracking-[0.2em] text-xs border-2 border-slate-900 shadow-[3px_3px_0_#fb923c] hover:-translate-y-0.5 transition-transform"
                 >
                   Start Your Order
                 </button>
                 <button
                   onClick={() => onNavigate('guide')}
-                  className="bg-slate-100 text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.2em] text-xs"
+                  className="bg-slate-100 text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.2em] text-xs border-2 border-slate-200 hover:bg-slate-200 transition-colors"
                 >
                   Print Guide
                 </button>
+                <button
+                  onClick={() => onNavigate('pricing')}
+                  className="bg-white text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.2em] text-xs border-2 border-slate-900 hover:bg-slate-900 hover:text-white transition-colors"
+                >
+                  Pricing
+                </button>
+                <button
+                  onClick={() => onNavigate('colors')}
+                  className="bg-white text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.2em] text-xs border-2 border-orange-400 hover:bg-orange-400 hover:text-slate-950 transition-colors"
+                >
+                  Color Guide
+                </button>
+              </div>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-700 bg-slate-100 border border-slate-200 rounded-full px-3 py-1">Fast Turnarounds</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-700 bg-slate-100 border border-slate-200 rounded-full px-3 py-1">Color Consistency</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-700 bg-slate-100 border border-slate-200 rounded-full px-3 py-1">Quality Checks</span>
               </div>
             </div>
 
@@ -236,14 +283,14 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                 <motion.article
                   key={item.title}
                   whileHover={reduceMotion ? undefined : { y: -3 }}
-                  className="bg-slate-50 border border-slate-100 rounded-3rem p-6"
+                  className="bg-slate-50 border-2 border-slate-200 rounded-3rem p-6 shadow-[4px_4px_0_#e2e8f0] hover:shadow-[6px_6px_0_#cbd5e1] transition-all"
                 >
                   <div className="flex items-start justify-between gap-5">
                     <div>
                       <h3 className="text-xl font-black text-slate-900 tracking-tight mb-2">{item.title}</h3>
                       <p className="text-slate-500 font-medium leading-relaxed">{item.desc}</p>
                     </div>
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-500 whitespace-nowrap mt-1">{item.metric}</span>
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-500 whitespace-nowrap mt-1 border border-orange-300 bg-orange-50 rounded-full px-3 py-1">{item.metric}</span>
                   </div>
                 </motion.article>
               ))}
@@ -256,11 +303,19 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       <motion.section {...revealProps} className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-8">
-            <div>
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-purple-600 block mb-3">Curated Projects</span>
-              <h3 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">Recent Production Work</h3>
+            <div className="border-2 border-slate-900 bg-white rounded-3rem p-5 shadow-[6px_6px_0_#0f172a]">
+              <span className="inline-flex items-center border-2 border-slate-900 rounded-full px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.34em] text-slate-900 mb-3">
+                Curated Projects
+              </span>
+              <h3 className="text-4xl md:text-5xl font-black tracking-tight leading-[0.95] text-slate-950 uppercase">
+                Recent Production Work
+              </h3>
+              <div className="mt-4 flex items-center gap-2">
+                <span className="h-1.5 w-20 rounded-full bg-slate-900"></span>
+                <span className="h-1.5 w-14 rounded-full bg-orange-500"></span>
+              </div>
             </div>
-            <button onClick={() => openLightbox(0)} className="text-sm btn-gradient text-white px-5 py-3 rounded-full font-black uppercase tracking-[0.2em] w-full md:w-auto">
+            <button onClick={() => openLightbox(0)} className="text-sm bg-slate-950 text-white border-2 border-slate-950 px-5 py-3 rounded-full font-black uppercase tracking-[0.2em] w-full md:w-auto shadow-[4px_4px_0_#fb923c] hover:-translate-y-0.5 transition-transform">
               View Gallery
             </button>
           </div>
@@ -271,7 +326,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                 whileHover={reduceMotion ? undefined : { y: -3 }}
                 key={src}
                 onClick={() => openLightbox(idx)}
-                className={`group relative text-left overflow-hidden border border-slate-100 shadow-sm focus:outline-none focus:ring-4 focus:ring-orange-300 rounded-3rem ${idx === 0 ? 'lg:col-span-2 lg:row-span-2 h-96 lg:h-full' : 'h-64 lg:h-full'}`}
+                className={`group relative text-left overflow-hidden border-2 border-slate-900 shadow-[6px_6px_0_#0f172a] focus:outline-none focus:ring-4 focus:ring-orange-300 rounded-3rem bg-white transition-transform hover:-translate-y-1 ${idx === 0 ? 'lg:col-span-2 lg:row-span-2 h-96 lg:h-full' : 'h-64 lg:h-full'}`}
               >
                 <img
                   src={src}
@@ -280,10 +335,13 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-black/65 via-black/10 to-transparent"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/15 to-transparent"></div>
                 <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                  <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/70 mb-2">Project {idx + 1}</p>
-                  <p className="font-black text-lg">Premium Screen Print</p>
+                  <div className="inline-flex flex-col items-start border-2 border-white/75 bg-black/45 backdrop-blur-sm rounded-2xl px-3.5 py-3 shadow-[0_12px_24px_rgba(0,0,0,0.35)] max-w-[92%]">
+                    <p className="inline-block text-[10px] font-black uppercase tracking-[0.3em] text-white border border-white/70 bg-black/45 rounded-full px-3 py-1 mb-2">{PROJECT_DETAILS[idx]?.label ?? `Project ${idx + 1}`}</p>
+                    <p className="font-black text-xl leading-tight tracking-tight text-white [text-shadow:0_2px_10px_rgba(0,0,0,0.55)]">{PROJECT_DETAILS[idx]?.title ?? 'Premium Screen Print'}</p>
+                    <p className="text-[12px] text-white/95 font-bold mt-1.5 leading-relaxed [text-shadow:0_1px_6px_rgba(0,0,0,0.45)]">{PROJECT_DETAILS[idx]?.subtitle ?? 'A recent screen print run showcasing pigment and texture on blanks.'}</p>
+                  </div>
                 </div>
               </motion.button>
             ))}
@@ -292,23 +350,33 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       </motion.section>
 
       {/* Lightbox Modal */}
-      {lightboxOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/70 p-6" role="dialog" aria-modal="true" aria-label="Project image lightbox" style={{ zIndex: 9999 }}>
-          <div className="relative max-w-4xl w-full rounded-lg overflow-hidden" style={{ zIndex: 10000 }}>
-            <button ref={closeBtnRef} onClick={closeLightbox} className="absolute top-3 right-3 z-20 bg-white/90 text-black rounded-full p-2 shadow-md focus:outline-none" aria-label="Close lightbox">✕</button>
-            <button onClick={() => setActiveIndex(i => (i - 1 + PROJECT_IMAGES.length) % PROJECT_IMAGES.length)} className="absolute left-3 top-1/2 -translate-y-1/2 z-20 bg-white/90 text-black rounded-full p-2 shadow-md">‹</button>
-            <button onClick={() => setActiveIndex(i => (i + 1) % PROJECT_IMAGES.length)} className="absolute right-3 top-1/2 -translate-y-1/2 z-20 bg-white/90 text-black rounded-full p-2 shadow-md">›</button>
+      {lightboxOpen && typeof document !== 'undefined' && createPortal(
+        <div
+          className="fixed inset-0 overflow-hidden bg-black/80 backdrop-blur-sm p-4 md:p-8"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Project image lightbox"
+          style={{ zIndex: 2147483000 }}
+        >
+          <div className="min-h-full flex items-center justify-center">
+            <div className="relative max-w-5xl w-full rounded-3rem overflow-hidden border-2 border-white/75 bg-black shadow-[0_28px_80px_rgba(0,0,0,0.65)]">
+              <button ref={closeBtnRef} onClick={closeLightbox} className="absolute top-3 right-3 z-30 bg-white text-black border-2 border-slate-900 rounded-full w-11 h-11 shadow-[3px_3px_0_#0f172a] focus:outline-none" aria-label="Close lightbox">✕</button>
+              <button onClick={() => setActiveIndex(i => (i - 1 + PROJECT_IMAGES.length) % PROJECT_IMAGES.length)} className="absolute left-3 top-1/2 -translate-y-1/2 z-30 bg-white text-black border-2 border-slate-900 rounded-full w-11 h-11 shadow-[3px_3px_0_#0f172a]">‹</button>
+              <button onClick={() => setActiveIndex(i => (i + 1) % PROJECT_IMAGES.length)} className="absolute right-3 top-1/2 -translate-y-1/2 z-30 bg-white text-black border-2 border-slate-900 rounded-full w-11 h-11 shadow-[3px_3px_0_#0f172a]">›</button>
 
-            <div className="bg-black flex items-center justify-center">
-              <img src={PROJECT_IMAGES[activeIndex]} alt={`Project ${activeIndex+1}`} decoding="async" className="max-h-[80vh] w-auto object-contain mx-auto" />
-            </div>
+              <div className="bg-black flex items-center justify-center p-3 md:p-5 max-h-[calc(100vh-12rem)] overflow-hidden">
+                <img src={PROJECT_IMAGES[activeIndex]} alt={`Project ${activeIndex+1}`} decoding="async" className="max-h-[60vh] md:max-h-[68vh] w-auto object-contain mx-auto rounded-2xl border border-white/20" />
+              </div>
 
-            <div className="p-4 bg-white text-center">
-              <h5 className="font-black">Screen Print Project #{activeIndex+1}</h5>
-              <p className="text-sm text-slate-500">A recent screen print run showcasing pigment and texture on blanks.</p>
+              <div className="p-5 bg-white text-center border-t-2 border-slate-900">
+                <p className="inline-block text-[10px] font-black uppercase tracking-[0.25em] text-slate-700 border border-slate-300 rounded-full px-3 py-1 mb-2">{PROJECT_DETAILS[activeIndex]?.label ?? `Project ${activeIndex + 1}`}</p>
+                <h5 className="font-black text-2xl text-slate-950 tracking-tight">{PROJECT_DETAILS[activeIndex]?.title ?? `Screen Print Project #${activeIndex + 1}`}</h5>
+                <p className="text-sm text-slate-700 font-bold max-w-2xl mx-auto">{PROJECT_DETAILS[activeIndex]?.subtitle ?? 'A recent screen print run showcasing pigment and texture on blanks.'}</p>
+              </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Final CTA */}
@@ -327,7 +395,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
 
               <div className="flex flex-col sm:flex-row gap-3 mb-7">
                 <a href="tel:+19053384034" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-sm font-black">(905) 338-4034</a>
-                <a href="mailto:hello@tscustoms.com" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-sm font-black">hello@tscustoms.com</a>
+                <a href="mailto:info@stcsprinting.com" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-sm font-black">info@stcsprinting.com</a>
               </div>
 
               <button
