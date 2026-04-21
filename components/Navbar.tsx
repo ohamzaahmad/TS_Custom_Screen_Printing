@@ -90,14 +90,14 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
         ? 'py-3 bg-white/92 nav-blur border-b border-slate-100 shadow-sm' 
         : 'py-5 bg-transparent'
     }`}>
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12">
         <div className="flex justify-between items-center">
           {/* Logo Area */}
           <div 
-            className={`flex items-center cursor-pointer transition-colors duration-500 pr-4 ${isDarkBg ? 'text-white' : 'text-slate-900'}`} 
+            className={`flex items-center cursor-pointer transition-colors duration-500 pr-4 lg:pr-8 lg:[&_.logo-subtitle-top]:text-[24px]! lg:[&_.logo-subtitle-bottom]:text-[24px]! ${isDarkBg ? 'text-white' : 'text-slate-900'}`} 
             onClick={() => onNavigate('home')}
           >
-            <Logo className="h-10 md:h-12 pr-2" />
+            <Logo className="h-11 md:h-14 lg:h-16 pr-2 lg:pr-3" />
           </div>
 
           {/* Desktop Nav */}
@@ -118,7 +118,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
                     }
                   }}
                   aria-label={item.external ? `${item.label} (opens in a new tab)` : item.label}
-                  className={`px-4 py-2 rounded-full text-[10px] uppercase tracking-[0.24em] font-black transition-all duration-300 ${
+                  className={`px-4 py-2 rounded-full text-[10px] lg:text-[12px] uppercase tracking-[0.24em] font-black transition-all duration-300 ${
                     isDarkBg
                       ? (currentPage === item.id ? 'bg-white text-slate-900' : 'text-white/75 hover:text-white hover:bg-white/10')
                       : (currentPage === item.id ? 'bg-slate-900 text-white' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100')
@@ -131,7 +131,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
 
             <button 
               onClick={() => onNavigate('quote')}
-              className="bg-slate-950 text-white border-2 border-slate-950 px-6 py-2.5 rounded-full font-black text-xs uppercase tracking-[0.2em] shadow-[4px_4px_0_#fb923c] hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#fb923c] transition-all active:translate-y-0 active:scale-95"
+              className="bg-slate-950 text-white border-2 border-slate-950 px-6 py-2.5 rounded-full font-black text-[11px] lg:text-[13px] uppercase tracking-[0.2em] shadow-[4px_4px_0_#fb923c] hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#fb923c] transition-all active:translate-y-0 active:scale-95"
             >
               Start Order
             </button>

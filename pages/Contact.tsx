@@ -45,7 +45,7 @@ const Contact: React.FC = () => {
                 </li>
                 <li className="flex items-center justify-between">
                   <span className="text-white/60 uppercase tracking-[0.2em] text-[10px] font-black">Hours</span>
-                  <span className="font-bold">Mon-Sat</span>
+                  <span className="font-bold">Mon-Sat, 9am-6pm</span>
                 </li>
               </ul>
             </div>
