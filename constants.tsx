@@ -1,6 +1,3 @@
-
-
-
 import React from 'react';
 import { BRAND_COLORS } from './brandColors';
 

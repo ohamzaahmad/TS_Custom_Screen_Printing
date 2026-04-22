@@ -20,7 +20,7 @@ const Contact: React.FC = () => {
 
   return (
     <div className="relative min-h-screen pb-24 bg-white animate-in pt-24 md:pt-28 lg:pt-32">
-      <div className="absolute top-0 left-0 w-full h-20 md:h-24 lg:h-28 bg-brand-dark" aria-hidden="true"></div>
+      <div className="absolute top-0 left-0 w-full h-24 md:h-28 lg:h-32 bg-brand-dark" aria-hidden="true"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">

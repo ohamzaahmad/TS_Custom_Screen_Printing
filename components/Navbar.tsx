@@ -60,7 +60,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
     if (isOpen) {
       // store last active element and lock scroll
       lastActiveElementRef.current = document.activeElement as HTMLElement | null;
-      document.body.style.overflow = 'hidden';
+      document.body.classList.add('no-scroll');
       // focus first focusable element inside overlay
       setTimeout(() => {
         const root = overlayRef.current;
@@ -68,7 +68,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
         first?.focus();
       }, 50);
     } else {
-      document.body.style.overflow = '';
+      document.body.classList.remove('no-scroll');
       // restore focus
       setTimeout(() => lastActiveElementRef.current?.focus(), 50);
     }
@@ -87,17 +87,26 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
   return (
     <nav className={`fixed w-full top-0 z-50 transition-all duration-500 ${
       scrolled 
-        ? 'py-3 bg-white/92 nav-blur border-b border-slate-100 shadow-sm' 
+        ? 'py-3 bg-white/95 nav-blur border-b border-slate-100 shadow-lg' 
         : 'py-5 bg-transparent'
     }`}>
-      <div className="w-full px-6 sm:px-8 lg:px-10 xl:px-12">
+      {/* Mobile Backdrop Blur */}
+      <div 
+        className={`fixed inset-0 bg-slate-950/20 backdrop-blur-md transition-opacity duration-500 lg:hidden ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} 
+        onClick={() => setIsOpen(false)}
+      />
+
+      <div className="w-full px-6 sm:px-8 lg:px-12">
         <div className="flex justify-between items-center">
           {/* Logo Area */}
           <div 
-            className={`flex items-center cursor-pointer transition-colors duration-500 pr-4 lg:pr-8 lg:[&_.logo-subtitle-top]:text-[24px]! lg:[&_.logo-subtitle-bottom]:text-[24px]! ${isDarkBg ? 'text-white' : 'text-slate-900'}`} 
-            onClick={() => onNavigate('home')}
+            className={`flex items-center cursor-pointer transition-all duration-500 pr-4 lg:pr-8 lg:[&_.logo-subtitle-top]:text-[24px]! lg:[&_.logo-subtitle-bottom]:text-[24px]! hover:opacity-80 active:scale-95 ${isDarkBg ? 'text-white' : 'text-slate-900'}`} 
+            onClick={() => {
+              onNavigate('home');
+              setIsOpen(false);
+            }}
           >
-            <Logo className="h-11 md:h-14 lg:h-16 pr-2 lg:pr-3" />
+            <Logo className="h-[54px] md:h-[68px] lg:h-[80px] pr-2 lg:pr-3" />
           </div>
 
           {/* Desktop Nav */}
@@ -138,18 +147,24 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
           </div>
 
           {/* Mobile menu toggle */}
-          <div className="lg:hidden flex items-center">
+          <div className="lg:hidden flex items-center gap-4">
             <button
               onClick={() => setIsOpen(!isOpen)}
               aria-label={isOpen ? 'Close menu' : 'Open menu'}
               aria-controls="mobile-menu"
               aria-expanded={isOpen}
-              className={`p-2.5 rounded-xl border focus:outline-none transition-all ${isDarkBg ? 'text-white border-white/20 bg-white/5' : 'text-slate-900 border-slate-200 bg-white/90 shadow-[0_6px_16px_rgba(15,23,42,0.08)]'}`}
+              className={`relative z-80 w-12 h-12 flex items-center justify-center rounded-2xl border transition-all duration-300 ${
+                isOpen 
+                  ? 'bg-slate-950 border-slate-900 text-white rotate-90 shadow-xl' 
+                  : (isDarkBg 
+                      ? 'text-white border-white/20 bg-white/5 backdrop-blur-lg' 
+                      : 'text-slate-900 border-slate-200 bg-white shadow-[0_6px_16px_rgba(15,23,42,0.08)]')
+              }`}
             >
-              <div className="w-5 h-4 flex flex-col justify-between items-end">
-                <span className={`h-0.5 bg-current transition-all duration-300 ${isOpen ? 'w-5 rotate-45 translate-y-1.5' : 'w-5'}`}></span>
-                <span className={`h-0.5 bg-current transition-all duration-300 ${isOpen ? 'opacity-0' : 'w-3'}`}></span>
-                <span className={`h-0.5 bg-current transition-all duration-300 ${isOpen ? 'w-5 -rotate-45 -translate-y-1.5' : 'w-4'}`}></span>
+              <div className="w-6 h-5 flex flex-col justify-between items-center overflow-hidden">
+                <span className={`h-0.5 bg-current transition-all duration-500 ease-out ${isOpen ? 'w-6 rotate-45 translate-y-2.25' : 'w-6'}`}></span>
+                <span className={`h-0.5 bg-current transition-all duration-500 ease-out ${isOpen ? '-translate-x-10 opacity-0' : 'w-4 translate-x-1'}`}></span>
+                <span className={`h-0.5 bg-current transition-all duration-500 ease-out ${isOpen ? 'w-6 -rotate-45 -translate-y-2.25' : 'w-5 translate-x-0.5'}`}></span>
               </div>
             </button>
           </div>
@@ -163,42 +178,71 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
         role="dialog"
         aria-modal="true"
         aria-hidden={!isOpen}
-        className={`lg:hidden fixed left-4 right-4 top-21 rounded-3rem border border-slate-200/80 bg-white/95 backdrop-blur-xl transition-all duration-400 ease-out overflow-hidden z-70 ${
-          isOpen ? 'opacity-100 visible translate-y-0 shadow-[0_22px_60px_rgba(15,23,42,0.2)]' : 'opacity-0 invisible -translate-y-2 pointer-events-none'
+        className={`lg:hidden fixed right-4 left-4 top-24 rounded-[2.5rem] border border-slate-200/60 bg-white/98 backdrop-blur-2xl transition-all duration-500 cubic-bezier(0.3, 0, 0, 1) overflow-hidden z-70 ${
+          isOpen ? 'opacity-100 visible translate-y-0 shadow-[0_40px_100px_rgba(15,23,42,0.25)]' : 'opacity-0 invisible -translate-y-4 pointer-events-none'
         }`}
       >
-        <div className="py-8 px-6 flex flex-col gap-3">
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 px-2 pb-2">Navigation</p>
-          {navItems.map((item: any) => (
-            <button
-              key={item.id}
+        <div className="relative pt-10 pb-12 px-8 flex flex-col gap-8">
+          {/* Menu Branding Decoration */}
+          <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-48 h-48 bg-orange-500/10 blur-3xl rounded-full pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-48 h-48 bg-purple-500/10 blur-3xl rounded-full pointer-events-none"></div>
+
+          <div>
+            <p className={`text-[10px] font-black uppercase tracking-[0.4em] mb-6 transition-all duration-500 delay-100 ${isOpen ? 'opacity-40 translate-x-0' : 'opacity-0 -translate-x-4'}`}>
+              Navigation
+            </p>
+            <div className="flex flex-col gap-3">
+              {navItems.map((item: any, index: number) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    if (item.external) {
+                      window.open(item.external, '_blank', 'noopener,noreferrer');
+                    } else {
+                      onNavigate(item.id);
+                    }
+                    setIsOpen(false);
+                  }}
+                  className={`group w-full text-left flex items-center justify-between px-6 py-5 rounded-3xl text-[13px] font-black uppercase tracking-[0.22em] transition-all duration-500 border ${
+                    isOpen ? `menu-item-appear stagger-${index + 1}` : 'opacity-0'
+                  } ${
+                    currentPage === item.id
+                      ? 'text-slate-900 bg-slate-50 border-slate-200 shadow-sm'
+                      : 'text-slate-500 hover:text-slate-900 bg-white/50 border-transparent hover:border-slate-100'
+                  }`}
+                >
+                  <span className="flex items-center gap-3">
+                    {currentPage === item.id && <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span>}
+                    {item.label}
+                  </span>
+                  <i className={`fas fa-arrow-right text-[10px] transition-transform duration-300 group-hover:translate-x-1 ${currentPage === item.id ? 'opacity-100' : 'opacity-0'}`}></i>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className={`transition-all duration-700 delay-400 ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <button 
               onClick={() => {
-                if (item.external) {
-                  window.open(item.external, '_blank', 'noopener,noreferrer');
-                } else {
-                  onNavigate(item.id);
-                }
+                onNavigate('quote');
                 setIsOpen(false);
               }}
-              aria-label={item.external ? `${item.label} (opens in a new tab)` : item.label}
-              className={`w-full text-left px-4 py-3 rounded-2xl text-[11px] font-black uppercase tracking-[0.22em] transition-all border ${
-                currentPage === item.id
-                  ? 'text-slate-900 bg-orange-50 border-orange-300'
-                  : 'text-slate-500 hover:text-slate-900 bg-white border-slate-200 hover:border-slate-300'
-              }`}
+              className="w-full bg-slate-950 text-white border-2 border-slate-950 py-5 rounded-3xl font-black text-[12px] uppercase tracking-[0.3em] shadow-[6px_6px_0_#fb923c] transition-all hover:shadow-[8px_8px_0_#fb923c] active:translate-x-1 active:translate-y-1 active:shadow-none"
             >
-              {item.label}
+              Start Order
             </button>
-          ))}
-          <button 
-            onClick={() => {
-              onNavigate('quote');
-              setIsOpen(false);
-            }}
-            className="w-full mt-2 bg-slate-950 text-white border-2 border-slate-950 py-3 rounded-2xl font-black text-[11px] uppercase tracking-[0.24em] shadow-[4px_4px_0_#fb923c] transition-all hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#fb923c]"
-          >
-            Start Order
-          </button>
+          </div>
+
+          {/* Menu Footer */}
+          <div className={`mt-4 pt-8 border-t border-slate-100 flex flex-col gap-6 transition-all duration-700 delay-500 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
+            <div className="flex justify-between items-center px-2">
+              <div className="flex gap-6">
+                <a href="#" className="text-slate-400 hover:text-slate-900 transition-colors"><i className="fab fa-instagram text-lg"></i></a>
+                <a href="#" className="text-slate-400 hover:text-slate-900 transition-colors"><i className="fab fa-facebook text-lg"></i></a>
+              </div>
+              <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Manahawkin, NJ</p>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
