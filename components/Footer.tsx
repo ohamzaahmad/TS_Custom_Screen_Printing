@@ -95,7 +95,7 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center gap-4">
                 <i className="fas fa-phone-alt text-orange-500"></i>
-                (905) 338-4034
+                (732) 347-0101
               </li>
               <li className="flex items-center gap-4">
                 <i className="fas fa-envelope text-orange-500"></i>

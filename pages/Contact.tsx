@@ -37,7 +37,7 @@ const Contact: React.FC = () => {
               <ul className="space-y-5 text-sm">
                 <li className="flex items-center justify-between border-b border-white/10 pb-4">
                   <span className="text-white/60 uppercase tracking-[0.2em] text-[10px] font-black">Phone</span>
-                  <span className="font-bold">(905) 338-4034</span>
+                  <span className="font-bold">(732) 347-0101</span>
                 </li>
                 <li className="flex items-center justify-between border-b border-white/10 pb-4">
                   <span className="text-white/60 uppercase tracking-[0.2em] text-[10px] font-black">Email</span>

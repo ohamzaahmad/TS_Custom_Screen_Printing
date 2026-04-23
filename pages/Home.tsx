@@ -394,7 +394,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 mb-7">
-                <a href="tel:+19053384034" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-sm font-black">(905) 338-4034</a>
+                <a href="tel:+19053384034" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-sm font-black">(732) 347-0101</a>
                 <a href="mailto:info@stcsprinting.com" className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-sm font-black">info@stcsprinting.com</a>
               </div>
 
