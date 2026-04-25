@@ -2,6 +2,7 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Skeleton from './components/Skeleton';
 
 const Home = lazy(() => import('./pages/Home'));
 const Quote = lazy(() => import('./pages/Quote'));
@@ -27,10 +28,37 @@ const pathToPage = (pathname: string): string => {
 };
 
 const PageLoader: React.FC = () => (
-  <div className="min-h-[40vh] flex items-center justify-center px-6">
-    <div className="flex items-center gap-3 text-slate-500 font-bold text-sm uppercase tracking-[0.2em]">
-      <span className="w-3 h-3 rounded-full bg-orange-500 animate-pulse"></span>
-      Loading
+  <div className="relative min-h-screen bg-[#0A0015] animate-in">
+    <div className="pt-36 pb-20 px-6 sm:px-8 lg:px-12 max-w-7xl mx-auto">
+      <div className="space-y-16">
+        {/* Hero Section Skeleton */}
+        <div className="space-y-8">
+          <Skeleton className="h-6 w-32 rounded-full skeleton-dark" />
+          <div className="space-y-4">
+            <Skeleton className="h-16 md:h-24 w-3/4 lg:w-1/2 skeleton-dark" />
+            <Skeleton className="h-16 md:h-24 w-1/2 lg:w-1/3 skeleton-dark" />
+          </div>
+          <Skeleton className="h-24 w-full md:w-2/3 lg:w-1/2 rounded-3xl skeleton-dark" />
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Skeleton className="h-14 w-full sm:w-48 rounded-full skeleton-dark" />
+            <Skeleton className="h-14 w-full sm:w-48 rounded-full skeleton-dark" />
+          </div>
+        </div>
+        
+        {/* Grid Layout Skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="space-y-6">
+              <Skeleton className="h-64 w-full rounded-3rem shadow-sm skeleton-dark" />
+              <div className="space-y-3">
+                <Skeleton className="h-8 w-3/4 skeleton-dark" />
+                <Skeleton className="h-4 w-full skeleton-dark" />
+                <Skeleton className="h-4 w-5/6 skeleton-dark" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   </div>
 );

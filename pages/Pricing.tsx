@@ -1,12 +1,17 @@
 
 import React, { useState, useEffect } from 'react';
+import Skeleton from '../components/Skeleton';
 import { fetchPricing } from '../services/dataService';
 
 const Pricing: React.FC = () => {
   const [pricingData, setPricingData] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchPricing().then(setPricingData);
+    fetchPricing().then((data) => {
+      setPricingData(data);
+      setIsLoading(false);
+    });
   }, []);
 
   return (
@@ -33,17 +38,31 @@ const Pricing: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
-              {pricingData.map((row, idx) => (
-                <tr key={idx} className="hover:bg-slate-50 transition-colors">
-                  <td className="py-5 px-6 font-black text-slate-600">{row.qty}</td>
-                  <td className="py-5 px-6 font-bold text-slate-800">{row.c1 === '-' ? '-' : `$${row.c1}`}</td>
-                  <td className="py-5 px-6 font-bold text-slate-800">{row.c2 === '-' ? '-' : `$${row.c2}`}</td>
-                  <td className="py-5 px-6 font-bold text-slate-800">{row.c3 === '-' ? '-' : `$${row.c3}`}</td>
-                  <td className="py-5 px-6 font-bold text-slate-800">{row.c4 === '-' ? '-' : `$${row.c4}`}</td>
-                  <td className="py-5 px-6 font-bold text-slate-800">{row.c5 === '-' ? '-' : `$${row.c5}`}</td>
-                  <td className="py-5 px-6 font-bold text-slate-800">{row.c6 === '-' ? '-' : `$${row.c6}`}</td>
-                </tr>
-              ))}
+              {isLoading ? (
+                [...Array(6)].map((_, i) => (
+                  <tr key={i}>
+                    <td className="py-5 px-6"><Skeleton className="h-6 w-16" /></td>
+                    <td className="py-5 px-6"><Skeleton className="h-6 w-12" /></td>
+                    <td className="py-5 px-6"><Skeleton className="h-6 w-12" /></td>
+                    <td className="py-5 px-6"><Skeleton className="h-6 w-12" /></td>
+                    <td className="py-5 px-6"><Skeleton className="h-6 w-12" /></td>
+                    <td className="py-5 px-6"><Skeleton className="h-6 w-12" /></td>
+                    <td className="py-5 px-6"><Skeleton className="h-6 w-12" /></td>
+                  </tr>
+                ))
+              ) : (
+                pricingData.map((row, idx) => (
+                  <tr key={idx} className="hover:bg-slate-50 transition-colors">
+                    <td className="py-5 px-6 font-black text-slate-600">{row.qty}</td>
+                    <td className="py-5 px-6 font-bold text-slate-800">{row.c1 === '-' ? '-' : `$${row.c1}`}</td>
+                    <td className="py-5 px-6 font-bold text-slate-800">{row.c2 === '-' ? '-' : `$${row.c2}`}</td>
+                    <td className="py-5 px-6 font-bold text-slate-800">{row.c3 === '-' ? '-' : `$${row.c3}`}</td>
+                    <td className="py-5 px-6 font-bold text-slate-800">{row.c4 === '-' ? '-' : `$${row.c4}`}</td>
+                    <td className="py-5 px-6 font-bold text-slate-800">{row.c5 === '-' ? '-' : `$${row.c5}`}</td>
+                    <td className="py-5 px-6 font-bold text-slate-800">{row.c6 === '-' ? '-' : `$${row.c6}`}</td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

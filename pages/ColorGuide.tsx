@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import Skeleton from '../components/Skeleton';
 import { fetchInks } from '../services/dataService';
 
 interface ColorSwatchProps {
@@ -29,9 +30,13 @@ const ColorSwatch: React.FC<ColorSwatchProps> = ({ name, pantone, hex }) => {
 
 const ColorGuide: React.FC = () => {
   const [inks, setInks] = useState<any>({ stock: [], additional: [] });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchInks().then(setInks);
+    fetchInks().then((data) => {
+      setInks(data);
+      setIsLoading(false);
+    });
   }, []);
 
   return (
@@ -55,22 +60,34 @@ const ColorGuide: React.FC = () => {
             <div className="h-px flex-grow bg-slate-200"></div>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {inks.stock.map((c: any, i: number) => (
-              <ColorSwatch key={i} {...c} />
-            ))}
+            {isLoading ? (
+              [...Array(12)].map((_, i) => (
+                <Skeleton key={i} className="h-24 md:h-32 w-full shadow-sm" />
+              ))
+            ) : (
+              inks.stock.map((c: any, i: number) => (
+                <ColorSwatch key={i} {...c} />
+              ))
+            )}
           </div>
         </section>
 
-        {inks.additional.length > 0 && (
+        {(isLoading || inks.additional.length > 0) && (
           <section className="mb-24">
             <div className="flex items-center gap-6 mb-10">
               <h2 className="text-3xl font-black uppercase tracking-tighter text-slate-900">ADDITIONAL COLORS</h2>
               <div className="h-px flex-grow bg-slate-200"></div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {inks.additional.map((c: any, i: number) => (
-                <ColorSwatch key={i} {...c} />
-              ))}
+              {isLoading ? (
+                [...Array(8)].map((_, i) => (
+                  <Skeleton key={i} className="h-24 md:h-32 w-full shadow-sm" />
+                ))
+              ) : (
+                inks.additional.map((c: any, i: number) => (
+                  <ColorSwatch key={i} {...c} />
+                ))
+              )}
             </div>
           </section>
         )}
