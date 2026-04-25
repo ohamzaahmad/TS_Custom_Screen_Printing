@@ -116,9 +116,9 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-white/20 text-[10px] font-black uppercase tracking-[0.3em] gap-8">
           <p>&copy; {new Date().getFullYear()} TS Custom Screen Printing. Precision Manufactured.</p>
           <div className="flex space-x-8">
-            <a href="#" className="hover:text-white transition-colors"><i className="fab fa-instagram text-base"></i></a>
-            <a href="#" className="hover:text-white transition-colors"><i className="fab fa-twitter text-base"></i></a>
-            <a href="#" className="hover:text-white transition-colors"><i className="fab fa-vimeo-v text-base"></i></a>
+            <a href="#" aria-label="Follow us on Instagram" className="hover:text-white transition-colors"><i className="fab fa-instagram text-base"></i></a>
+            <a href="#" aria-label="Follow us on Twitter" className="hover:text-white transition-colors"><i className="fab fa-twitter text-base"></i></a>
+            <a href="#" aria-label="Follow us on Vimeo" className="hover:text-white transition-colors"><i className="fab fa-vimeo-v text-base"></i></a>
           </div>
         </div>
       </div>

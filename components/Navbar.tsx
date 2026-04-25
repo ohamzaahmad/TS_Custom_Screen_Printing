@@ -237,8 +237,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
           <div className={`mt-4 pt-8 border-t border-slate-100 flex flex-col gap-6 transition-all duration-700 delay-500 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
             <div className="flex justify-between items-center px-2">
               <div className="flex gap-6">
-                <a href="#" className="text-slate-400 hover:text-slate-900 transition-colors"><i className="fab fa-instagram text-lg"></i></a>
-                <a href="#" className="text-slate-400 hover:text-slate-900 transition-colors"><i className="fab fa-facebook text-lg"></i></a>
+                <a href="#" aria-label="Follow us on Instagram" className="text-slate-400 hover:text-slate-900 transition-colors"><i className="fab fa-instagram text-lg"></i></a>
+                <a href="#" aria-label="Follow us on Facebook" className="text-slate-400 hover:text-slate-900 transition-colors"><i className="fab fa-facebook text-lg"></i></a>
               </div>
               <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Manahawkin, NJ</p>
             </div>
