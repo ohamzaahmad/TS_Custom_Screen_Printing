@@ -148,7 +148,7 @@ const App: React.FC = () => {
           {renderPage()}
         </Suspense>
       </main>
-      {showNav && <Footer />}
+      {showNav && <Footer onNavigate={navigate} />}
     </div>
   );
 };

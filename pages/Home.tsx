@@ -120,17 +120,6 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                 <div className="blob blob-3" aria-hidden="true" />
               </>
             )}
-          <video
-            className="w-full h-full object-cover opacity-40 mix-blend-screen scale-110"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-hidden="true"
-          >
-            <source src="/loop.mp4" type="video/mp4" />
-          </video>
           <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/50 to-black"></div>
         </div>
 

@@ -2,9 +2,17 @@
 import React from 'react';
 import { Logo } from '../constants';
 
-const Footer: React.FC = () => {
-  const navigateTo = (path: string) => {
-    window.location.href = path;
+interface FooterProps {
+  onNavigate?: (page: string) => void;
+}
+
+const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+  const navigateTo = (path: string, pageId?: string) => {
+    if (onNavigate && pageId) {
+      onNavigate(pageId);
+    } else {
+      window.location.href = path;
+    }
   };
 
   return (
@@ -49,7 +57,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-4 text-white/60 text-sm font-bold uppercase tracking-widest">
               <li>
                 <button 
-                  onClick={() => window.location.href = 'https://www.google.com'} 
+                  onClick={() => navigateTo('https://www.sportswearcollection.com/?site=')} 
                   className="hover:text-white transition-colors text-left flex items-center gap-2 group"
                 >
                   <i className="fas fa-chevron-right text-[8px] opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0"></i>
@@ -58,7 +66,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <button 
-                  onClick={() => navigateTo('/pricing')} 
+                  onClick={() => navigateTo('/pricing', 'pricing')} 
                   className="hover:text-white transition-colors text-left flex items-center gap-2 group"
                 >
                   <i className="fas fa-chevron-right text-[8px] opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0"></i>
@@ -67,7 +75,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <button 
-                  onClick={() => navigateTo('/guide')} 
+                  onClick={() => navigateTo('/guide', 'guide')} 
                   className="hover:text-white transition-colors text-left flex items-center gap-2 group"
                 >
                   <i className="fas fa-chevron-right text-[8px] opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0"></i>
@@ -76,7 +84,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <button 
-                  onClick={() => navigateTo('/colors')} 
+                  onClick={() => navigateTo('/colors', 'colors')} 
                   className="hover:text-white transition-colors text-left flex items-center gap-2 group"
                 >
                   <i className="fas fa-chevron-right text-[8px] opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0"></i>
