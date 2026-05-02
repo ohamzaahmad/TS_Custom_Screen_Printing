@@ -75,12 +75,14 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
   }, [isOpen]);
 
   // Pages that have a dark header background by default
-  const darkHeaderPages = ['home', 'contact'];
+  const darkHeaderPages = ['home', 'contact', 'terms', 'refund', 'privacy'];
   const isDarkBg = !scrolled && darkHeaderPages.includes(currentPage);
 
   const navItems = [
     { label: 'Home', id: 'home' },
-    { label: 'catalog', id: 'catalogue', external: 'https://www.sportswearcollection.com/?site=' },
+    { label: 'About', id: 'about' },
+    { label: 'Gallery', id: 'gallery' },
+    { label: 'Catalogue', id: 'catalogue' },
     { label: 'Contact', id: 'contact' },
   ];
 
@@ -106,7 +108,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
               setIsOpen(false);
             }}
           >
-            <Logo className="h-[54px] md:h-[68px] lg:h-[80px] pr-2 lg:pr-3" />
+            <Logo className="h-13.5 md:h-17 lg:h-20 pr-2 lg:pr-3" />
           </div>
 
           {/* Desktop Nav */}

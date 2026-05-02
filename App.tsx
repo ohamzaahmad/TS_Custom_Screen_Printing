@@ -2,7 +2,15 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Skeleton from './components/Skeleton';
+import { 
+  HomePageLoader, 
+  FormPageLoader, 
+  GalleryPageLoader, 
+  CataloguePageLoader, 
+  AccordionPageLoader,
+  ColorGuidePageLoader,
+  PricingPageLoader
+} from './components/PageLoaders';
 
 const Home = lazy(() => import('./pages/Home'));
 const Quote = lazy(() => import('./pages/Quote'));
@@ -10,6 +18,12 @@ const Contact = lazy(() => import('./pages/Contact'));
 const PrintGuide = lazy(() => import('./pages/PrintGuide'));
 const ColorGuide = lazy(() => import('./pages/ColorGuide'));
 const Pricing = lazy(() => import('./pages/Pricing'));
+const About = lazy(() => import('./pages/About'));
+const Gallery = lazy(() => import('./pages/Gallery'));
+const Catalogue = lazy(() => import('./pages/Catalogue'));
+const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
+const RefundPolicy = lazy(() => import('./pages/RefundPolicy'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 
 const PAGE_TO_PATH: Record<string, string> = {
   home: '/',
@@ -19,6 +33,11 @@ const PAGE_TO_PATH: Record<string, string> = {
   colors: '/colors',
   pricing: '/pricing',
   about: '/about',
+  gallery: '/gallery',
+  catalogue: '/catalogue',
+  terms: '/terms',
+  refund: '/refund',
+  privacy: '/privacy',
 };
 
 const pathToPage = (pathname: string): string => {
@@ -27,41 +46,31 @@ const pathToPage = (pathname: string): string => {
   return match ? match[0] : 'not-found';
 };
 
-const PageLoader: React.FC = () => (
-  <div className="relative min-h-screen bg-[#0A0015] animate-in">
-    <div className="pt-36 pb-20 px-6 sm:px-8 lg:px-12 max-w-7xl mx-auto">
-      <div className="space-y-16">
-        {/* Hero Section Skeleton */}
-        <div className="space-y-8">
-          <Skeleton className="h-6 w-32 rounded-full skeleton-dark" />
-          <div className="space-y-4">
-            <Skeleton className="h-16 md:h-24 w-3/4 lg:w-1/2 skeleton-dark" />
-            <Skeleton className="h-16 md:h-24 w-1/2 lg:w-1/3 skeleton-dark" />
-          </div>
-          <Skeleton className="h-24 w-full md:w-2/3 lg:w-1/2 rounded-3xl skeleton-dark" />
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Skeleton className="h-14 w-full sm:w-48 rounded-full skeleton-dark" />
-            <Skeleton className="h-14 w-full sm:w-48 rounded-full skeleton-dark" />
-          </div>
-        </div>
-        
-        {/* Grid Layout Skeleton */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="space-y-6">
-              <Skeleton className="h-64 w-full rounded-3rem shadow-sm skeleton-dark" />
-              <div className="space-y-3">
-                <Skeleton className="h-8 w-3/4 skeleton-dark" />
-                <Skeleton className="h-4 w-full skeleton-dark" />
-                <Skeleton className="h-4 w-5/6 skeleton-dark" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </div>
-);
+const getPageLoader = (page: string) => {
+  switch (page) {
+    case 'home':
+      return HomePageLoader;
+    case 'quote':
+    case 'contact':
+      return FormPageLoader;
+    case 'gallery':
+      return GalleryPageLoader;
+    case 'catalogue':
+      return CataloguePageLoader;
+    case 'terms':
+    case 'refund':
+    case 'privacy':
+      return AccordionPageLoader;
+    case 'colors':
+      return ColorGuidePageLoader;
+    case 'pricing':
+      return PricingPageLoader;
+    case 'guide':
+      return FormPageLoader;
+    default:
+      return HomePageLoader;
+  }
+};
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(pathToPage(window.location.pathname));
@@ -104,7 +113,12 @@ const App: React.FC = () => {
     switch (currentPage) {
       case 'home':
         return <Home onNavigate={navigate} />;
-      // catalogue route removed
+      case 'about':
+        return <About onNavigate={navigate} />;
+      case 'gallery':
+        return <Gallery onNavigate={navigate} />;
+      case 'catalogue':
+        return <Catalogue onNavigate={navigate} />;
       case 'quote':
         return <Quote />;
       case 'contact':
@@ -115,28 +129,12 @@ const App: React.FC = () => {
         return <ColorGuide />;
       case 'pricing':
         return <Pricing />;
-      case 'about':
-        return (
-            <div className="min-h-screen pt-24 pb-16 max-w-4xl mx-auto px-6 animate-in">
-            <span className="text-orange-500 font-black uppercase tracking-[0.5em] text-[10px] mb-8 block">Our Manifest</span>
-            <h1 className="text-3xl md:text-4xl font-black mb-8 uppercase tracking-tight leading-tight">The TS<br /><span className="text-gradient-orange italic">Standard.</span></h1>
-            <div className="prose prose-lg prose-slate max-w-none">
-              <p className="text-lg text-slate-500 leading-relaxed font-medium mb-8 max-w-2xl">
-                Founded with a mission to eliminate the average. TS Custom Screen Printing combines architectural precision with industrial-grade production for high-fidelity apparel solutions.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mt-20">
-                  <div className="bg-white border border-slate-100 p-12 rounded-3rem shadow-sm">
-                      <h3 className="text-3xl font-black uppercase tracking-tight mb-6">Artisanal Scale</h3>
-                      <p className="text-slate-500 font-medium">We don't just "print shirts." We manufacture tactical brand assets. Our team treats every ink deposit as a chemical equation for quality.</p>
-                  </div>
-                  <div className="bg-slate-900 text-white p-12 rounded-3rem shadow-xl">
-                      <h3 className="text-3xl font-black uppercase tracking-tight mb-6">Industrial Truth</h3>
-                      <p className="text-white/40 font-medium">Garments should survive the lifestyle of the wearer. Our forced-air curing processes guarantee structural ink integrity for the life of the cotton.</p>
-                  </div>
-              </div>
-            </div>
-          </div>
-        );
+      case 'terms':
+        return <TermsAndConditions onNavigate={navigate} />;
+      case 'refund':
+        return <RefundPolicy onNavigate={navigate} />;
+      case 'privacy':
+        return <PrivacyPolicy onNavigate={navigate} />;
       case 'not-found':
         return (
           <section className="min-h-screen pt-36 pb-20 px-6 bg-linear-to-b from-slate-50 to-white">
@@ -172,7 +170,7 @@ const App: React.FC = () => {
     <div className="flex flex-col min-h-screen bg-[#fcfcfc] selection:bg-purple-600 selection:text-white">
       {showNav && <Navbar currentPage={currentPage} onNavigate={navigate} />}
       <main key={currentPage} className="grow">
-        <Suspense fallback={<PageLoader />}>
+        <Suspense fallback={React.createElement(getPageLoader(currentPage))}>
           {renderPage()}
         </Suspense>
       </main>
