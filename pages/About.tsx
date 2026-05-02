@@ -62,7 +62,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
               <div className="text-3xl md:text-4xl font-black text-purple-600 mb-2">5000+</div>
               <p className="text-slate-500 text-sm font-bold uppercase tracking-wide">Projects Completed</p>
             </div>
-            <div className="bg-gradient-to-br from-orange-500 to-purple-600 text-white rounded-3xl p-8">
+            <div className="bg-linear-to-br from-orange-500 to-purple-600 text-white rounded-3xl p-8">
               <div className="text-3xl md:text-4xl font-black text-white mb-2">DTF</div>
               <p className="text-white/80 text-sm font-bold uppercase tracking-wide">Advanced Printing</p>
             </div>
@@ -129,32 +129,56 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
               {
                 title: 'Screen Printing',
                 description: 'High-fidelity industrial-grade screen printing with precision registration and consistent opacity for maximum durability.',
-                icon: '🖨️',
+                icon: (
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                ),
               },
               {
                 title: 'DTF Printing',
                 description: 'Direct-to-film printing technology for complex designs with unlimited colors and exceptional detail preservation.',
-                icon: '🎨',
+                icon: (
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                  </svg>
+                ),
               },
               {
                 title: 'Specialty Finishes',
                 description: 'Raised printing, glitter finishes, and custom treatments that add unique character to your apparel.',
-                icon: '✨',
+                icon: (
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                ),
               },
               {
                 title: 'Custom Apparel',
                 description: 'Tailored solutions for T-shirts, sweatshirts, hoodies, trousers, bags, and specialty garments.',
-                icon: '👕',
+                icon: (
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7M5 8l7-7 7 7" />
+                  </svg>
+                ),
               },
               {
                 title: 'Volume Production',
                 description: 'Scalable capacity to handle everything from small runs to large-scale production with consistent quality.',
-                icon: '📦',
+                icon: (
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m0 0v10l8 4" />
+                  </svg>
+                ),
               },
               {
                 title: 'Fast Turnaround',
                 description: 'Reliable, expedited service without compromising on quality or precision of execution.',
-                icon: '⚡',
+                icon: (
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                ),
               },
             ].map((service, idx) => (
               <motion.div
@@ -165,7 +189,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
                 transition={{ duration: 0.6, delay: idx * 0.1, ease: EASE_OUT }}
                 className="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm hover:shadow-lg hover:border-orange-200 transition-all duration-300"
               >
-                <div className="text-4xl mb-4">{service.icon}</div>
+                <div className="text-orange-500 mb-4">{service.icon}</div>
                 <h3 className="text-lg font-black uppercase tracking-tight mb-4">
                   {service.title}
                 </h3>
@@ -228,7 +252,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
                 transition={{ duration: 0.6, delay: idx * 0.08, ease: EASE_OUT }}
                 className="flex gap-6"
               >
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                   <div className="flex items-center justify-center h-12 w-12 rounded-full bg-orange-500">
                     <svg
                       className="h-6 w-6 text-white"
@@ -305,7 +329,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
                 transition={{ duration: 0.6, delay: idx * 0.12, ease: EASE_OUT }}
                 className="relative"
               >
-                <div className="bg-gradient-to-br from-orange-50 to-purple-50 rounded-3xl p-8 border border-slate-200">
+                <div className="bg-linear-to-br from-orange-50 to-purple-50 rounded-3xl p-8 border border-slate-200">
                   <div className="text-5xl font-black text-slate-200 mb-6">{item.step}</div>
                   <h3 className="text-lg font-black uppercase tracking-tight mb-4">
                     {item.title}
