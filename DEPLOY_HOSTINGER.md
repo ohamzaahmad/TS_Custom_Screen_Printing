@@ -1,6 +1,6 @@
 # Deploying to Hostinger (Shared Hosting)
 
-This document explains step-by-step how to deploy the `TS Custom Screen Printing` frontend (Vite-built static site) to Hostinger Shared Hosting (hPanel / public_html). The app is frontend-only — build artifacts live in the `dist/` folder.
+This document explains step-by-step how to deploy the `ST Custom Screen Printing` frontend (Vite-built static site) to Hostinger Shared Hosting (hPanel / public_html). The app is frontend-only — build artifacts live in the `dist/` folder.
 
 ---
 

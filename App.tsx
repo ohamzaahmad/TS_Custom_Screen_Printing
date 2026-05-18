@@ -103,9 +103,9 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (currentPage !== 'not-found') {
-      document.title = `TS Custom Screen Printing`;
+      document.title = `ST Custom Screen Printing`;
     } else {
-      document.title = `Page Not Found | TS Custom Screen Printing`;
+      document.title = `Page Not Found | ST Custom Screen Printing`;
     }
   }, [currentPage]);
 

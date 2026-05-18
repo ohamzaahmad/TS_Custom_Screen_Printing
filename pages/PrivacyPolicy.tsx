@@ -23,7 +23,7 @@ const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onNavigate }) => {
   const sections = [
     {
       title: 'Privacy Policy Overview',
-      content: 'This Privacy Policy governs the manner in which TS Custom Screen Printing collects, uses, maintains and discloses information collected from users (each, a "User") of the TS Custom Screen Printing website ("Site"). This privacy policy applies to the Site and all products and services offered by TS Custom Screen Printing.'
+      content: 'This Privacy Policy governs the manner in which ST Custom Screen Printing collects, uses, maintains and discloses information collected from users (each, a "User") of the ST Custom Screen Printing website ("Site"). This privacy policy applies to the Site and all products and services offered by ST Custom Screen Printing.'
     },
     {
       title: 'Information We Collect',
@@ -39,7 +39,7 @@ const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onNavigate }) => {
     },
     {
       title: 'How We Use Your Information',
-      content: 'TS Custom Screen Printing collects and uses Users\' personal information for the following purposes: (1) To improve customer service - Your information helps us to more effectively respond to your customer service requests and support needs. (2) To personalize User experience - We may use information in the aggregate to understand how our Users as a group use the services and resources provided on our Site. (3) To improve our Site - We continually strive to improve our website offerings based on the information and feedback we receive from you. (4) To process transactions - We may use the information Users provide about themselves when placing an order only to provide service to that order. We do not share this information with outside parties except to the extent necessary to provide service. (5) To administer content, promotions, surveys or other Site features - To send Users information about topics we think will be of interest to them.'
+      content: 'ST Custom Screen Printing collects and uses Users\' personal information for the following purposes: (1) To improve customer service - Your information helps us to more effectively respond to your customer service requests and support needs. (2) To personalize User experience - We may use information in the aggregate to understand how our Users as a group use the services and resources provided on our Site. (3) To improve our Site - We continually strive to improve our website offerings based on the information and feedback we receive from you. (4) To process transactions - We may use the information Users provide about themselves when placing an order only to provide service to that order. We do not share this information with outside parties except to the extent necessary to provide service. (5) To administer content, promotions, surveys or other Site features - To send Users information about topics we think will be of interest to them.'
     },
     {
       title: 'Periodic Emails & Communications',
@@ -55,11 +55,11 @@ const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onNavigate }) => {
     },
     {
       title: 'Consent to Phone Messages',
-      content: 'By providing your phone number, you consent to receive text messages from TS Custom Screen Printing regarding your inquiry, updates, and other relevant information. Message frequency may vary. Message and data rates may apply. For assistance, reply HELP or contact info@stcsprinting.com. To stop receiving messages, reply STOP. No further messages will be sent. For details, see our Privacy Policy.'
+      content: 'By providing your phone number, you consent to receive text messages from ST Custom Screen Printing regarding your inquiry, updates, and other relevant information. Message frequency may vary. Message and data rates may apply. For assistance, reply HELP or contact info@stcsprinting.com. To stop receiving messages, reply STOP. No further messages will be sent. For details, see our Privacy Policy.'
     },
     {
       title: 'Changes to This Privacy Policy',
-      content: 'TS Custom Screen Printing has the discretion to update this privacy policy at any time. When we do, we will revise the updated date at the bottom of this page. We encourage Users to frequently check this page for any changes to stay informed about how we are helping to protect the personal information we collect. You acknowledge and agree that it is your responsibility to review this privacy policy periodically and become aware of modifications.'
+      content: 'ST Custom Screen Printing has the discretion to update this privacy policy at any time. When we do, we will revise the updated date at the bottom of this page. We encourage Users to frequently check this page for any changes to stay informed about how we are helping to protect the personal information we collect. You acknowledge and agree that it is your responsibility to review this privacy policy periodically and become aware of modifications.'
     },
     {
       title: 'Your Acceptance of These Terms',
@@ -217,7 +217,7 @@ const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onNavigate }) => {
           className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4"
         >
           <p className="text-white/40 text-xs font-black uppercase tracking-[0.3em]">
-            © {new Date().getFullYear()} TS Custom Screen Printing
+            © {new Date().getFullYear()} ST Custom Screen Printing
           </p>
           {onNavigate && (
             <button

@@ -225,7 +225,7 @@ const RefundPolicy: React.FC<RefundPolicyProps> = ({ onNavigate }) => {
           className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4"
         >
           <p className="text-white/40 text-xs font-black uppercase tracking-[0.3em]">
-            © {new Date().getFullYear()} TS Custom Screen Printing
+            © {new Date().getFullYear()} ST Custom Screen Printing
           </p>
           {onNavigate && (
             <button

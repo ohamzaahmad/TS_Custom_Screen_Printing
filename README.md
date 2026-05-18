@@ -1,6 +1,6 @@
-# TS Custom Screen Printing
+# ST Custom Screen Printing
 
-Production website for TS Custom Screen Printing, built with React + TypeScript (Vite) and external hosted form services for enquiries and quote requests.
+Production website for ST Custom Screen Printing, built with React + TypeScript (Vite) and external hosted form services for enquiries and quote requests.
 
 ## Overview
 

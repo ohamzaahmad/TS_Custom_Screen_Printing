@@ -184,7 +184,7 @@ Received: 880
               - generic [ref=e181]: 
               - text: info@stcsprinting.com
       - generic [ref=e182]:
-        - paragraph [ref=e183]: © 2026 TS Custom Screen Printing. Precision Manufactured.
+        - paragraph [ref=e183]: © 2026 ST Custom Screen Printing. Precision Manufactured.
         - generic [ref=e184]:
           - link [ref=e185] [cursor=pointer]:
             - /url: "#"

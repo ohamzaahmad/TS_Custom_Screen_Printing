@@ -24,23 +24,23 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ onNavigate }) =
   const sections = [
     {
       title: 'CONTENT',
-      content: `The information, materials and services contained in this website (the "Content") are provided on an "as is" basis without warranties of any kind, either express or implied. TS Custom Screen Printing makes no warranty that the Content is error-free or that access to the Content will be uninterrupted or error-free.`
+      content: `The information, materials and services contained in this website (the "Content") are provided on an "as is" basis without warranties of any kind, either express or implied. ST Custom Screen Printing makes no warranty that the Content is error-free or that access to the Content will be uninterrupted or error-free.`
     },
     {
       title: 'COPYRIGHT AND TRADEMARKS',
-      content: `The Content on this website, including all text, graphics, logos, images, and software is protected by copyright, trademark, and other intellectual property laws. You may not reproduce, distribute, transmit, display, or create derivative works from the Content without prior written permission from TS Custom Screen Printing or the respective copyright holder.`
+      content: `The Content on this website, including all text, graphics, logos, images, and software is protected by copyright, trademark, and other intellectual property laws. You may not reproduce, distribute, transmit, display, or create derivative works from the Content without prior written permission from ST Custom Screen Printing or the respective copyright holder.`
     },
     {
       title: 'HOLD HARMLESS',
-      content: `You agree to hold harmless and indemnify TS Custom Screen Printing, its owners, employees, and agents from any and all claims, damages, liabilities, costs, and expenses (including legal fees) arising from your use of this website or any Content therein, or from your violation of these Terms and Conditions.`
+      content: `You agree to hold harmless and indemnify ST Custom Screen Printing, its owners, employees, and agents from any and all claims, damages, liabilities, costs, and expenses (including legal fees) arising from your use of this website or any Content therein, or from your violation of these Terms and Conditions.`
     },
     {
       title: 'TURNAROUND TIME',
-      content: `Turnaround times are estimates only and not guaranteed. Rush orders may be available upon request with additional charges. TS Custom Screen Printing is not responsible for delays caused by factors beyond its control, including but not limited to material delays, equipment failures, or acts of God.`
+      content: `Turnaround times are estimates only and not guaranteed. Rush orders may be available upon request with additional charges. ST Custom Screen Printing is not responsible for delays caused by factors beyond its control, including but not limited to material delays, equipment failures, or acts of God.`
     },
     {
       title: 'LIABILITY WAIVER',
-      content: `To the fullest extent permitted by law, TS Custom Screen Printing shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of this website or any services provided.`
+      content: `To the fullest extent permitted by law, ST Custom Screen Printing shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of this website or any services provided.`
     },
     {
       title: 'PRICING AND PAYMENT',
@@ -48,7 +48,7 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ onNavigate }) =
     },
     {
       title: 'PRODUCT SPECIFICATIONS',
-      content: `TS Custom Screen Printing provides specifications and samples based on available materials. Color matching is approximate and subject to variations in materials and printing processes. Custom orders are non-refundable once production has begun.`
+      content: `ST Custom Screen Printing provides specifications and samples based on available materials. Color matching is approximate and subject to variations in materials and printing processes. Custom orders are non-refundable once production has begun.`
     },
     {
       title: 'USER CONDUCT',
@@ -56,19 +56,19 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ onNavigate }) =
     },
     {
       title: 'INTELLECTUAL PROPERTY',
-      content: `Any designs, artwork, or intellectual property you submit to TS Custom Screen Printing for production remain your property. However, you grant TS Custom Screen Printing a non-exclusive license to reproduce your work for fulfillment purposes and may authorize TS Custom Screen Printing to retain samples for portfolio or reference purposes.`
+      content: `Any designs, artwork, or intellectual property you submit to ST Custom Screen Printing for production remain your property. However, you grant ST Custom Screen Printing a non-exclusive license to reproduce your work for fulfillment purposes and may authorize ST Custom Screen Printing to retain samples for portfolio or reference purposes.`
     },
     {
       title: 'THIRD-PARTY LINKS',
-      content: `This website may contain links to third-party websites. TS Custom Screen Printing is not responsible for the content, accuracy, or practices of third-party websites. Your use of third-party websites is governed by their respective terms and conditions.`
+      content: `This website may contain links to third-party websites. ST Custom Screen Printing is not responsible for the content, accuracy, or practices of third-party websites. Your use of third-party websites is governed by their respective terms and conditions.`
     },
     {
       title: 'LIMITATION OF LIABILITY',
-      content: `In no event shall TS Custom Screen Printing's total liability exceed the amount paid by you for the product or service in question. This limitation applies even if TS Custom Screen Printing has been advised of the possibility of such damages.`
+      content: `In no event shall ST Custom Screen Printing's total liability exceed the amount paid by you for the product or service in question. This limitation applies even if ST Custom Screen Printing has been advised of the possibility of such damages.`
     },
     {
       title: 'MODIFICATIONS TO TERMS',
-      content: `TS Custom Screen Printing reserves the right to modify these Terms and Conditions at any time. Changes will be effective immediately upon posting to the website. Your continued use of the website constitutes acceptance of any modified terms.`
+      content: `ST Custom Screen Printing reserves the right to modify these Terms and Conditions at any time. Changes will be effective immediately upon posting to the website. Your continued use of the website constitutes acceptance of any modified terms.`
     },
     {
       title: 'DISPUTE RESOLUTION',
@@ -76,11 +76,11 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ onNavigate }) =
     },
     {
       title: 'CONFIDENTIALITY',
-      content: `TS Custom Screen Printing will maintain the confidentiality of any proprietary information or trade secrets you provide, except as required by law or as necessary to fulfill your order.`
+      content: `ST Custom Screen Printing will maintain the confidentiality of any proprietary information or trade secrets you provide, except as required by law or as necessary to fulfill your order.`
     },
     {
       title: 'WARRANTIES DISCLAIMER',
-      content: `EXCEPT AS EXPRESSLY STATED IN THESE TERMS AND CONDITIONS, TS CUSTOM SCREEN PRINTING MAKES NO OTHER WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.`
+      content: `EXCEPT AS EXPRESSLY STATED IN THESE TERMS AND CONDITIONS, ST Custom Screen Printing MAKES NO OTHER WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.`
     },
     {
       title: 'CANCELLATION POLICY',
@@ -88,7 +88,7 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ onNavigate }) =
     },
     {
       title: 'QUALITY ASSURANCE',
-      content: `TS Custom Screen Printing performs quality control checks on all products. Minor variations in color, placement, or print density may occur and are considered normal and acceptable. Claims must be submitted within 7 days of delivery.`
+      content: `ST Custom Screen Printing performs quality control checks on all products. Minor variations in color, placement, or print density may occur and are considered normal and acceptable. Claims must be submitted within 7 days of delivery.`
     },
     {
       title: 'RETURNS AND EXCHANGES',
@@ -96,11 +96,11 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ onNavigate }) =
     },
     {
       title: 'ENVIRONMENTAL COMPLIANCE',
-      content: `TS Custom Screen Printing is committed to environmentally responsible practices in our manufacturing processes. We comply with all applicable environmental regulations and encourage customers to properly dispose of packaging materials.`
+      content: `ST Custom Screen Printing is committed to environmentally responsible practices in our manufacturing processes. We comply with all applicable environmental regulations and encourage customers to properly dispose of packaging materials.`
     },
     {
       title: 'ACCESSIBILITY',
-      content: `TS Custom Screen Printing is committed to ensuring this website is accessible to all users. If you encounter accessibility issues, please contact us at info@stcsprinting.com or (732) 347-0101.`
+      content: `ST Custom Screen Printing is committed to ensuring this website is accessible to all users. If you encounter accessibility issues, please contact us at info@stcsprinting.com or (732) 347-0101.`
     },
     {
       title: 'BULK ORDERS',
@@ -108,11 +108,11 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ onNavigate }) =
     },
     {
       title: 'CUSTOM ARTWORK',
-      content: `TS Custom Screen Printing can assist with artwork creation and modification. Design services are quoted separately. Final artwork approval by the customer is required before production begins.`
+      content: `ST Custom Screen Printing can assist with artwork creation and modification. Design services are quoted separately. Final artwork approval by the customer is required before production begins.`
     },
     {
       title: 'SHIPPING',
-      content: `Shipping costs are calculated based on destination, weight, and service level selected. Delivery times are estimates only. TS Custom Screen Printing is not liable for delays or loss of shipments once handed off to carriers. Customers may purchase shipping insurance at checkout.`
+      content: `Shipping costs are calculated based on destination, weight, and service level selected. Delivery times are estimates only. ST Custom Screen Printing is not liable for delays or loss of shipments once handed off to carriers. Customers may purchase shipping insurance at checkout.`
     },
     {
       title: 'PRIVACY POLICY',
@@ -120,7 +120,7 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ onNavigate }) =
     },
     {
       title: 'CONTACT FOR DISPUTES',
-      content: `If you have questions or concerns about these Terms and Conditions, please contact TS Custom Screen Printing at info@stcsprinting.com or (732) 347-0101. We will make reasonable efforts to resolve any disputes promptly.`
+      content: `If you have questions or concerns about these Terms and Conditions, please contact ST Custom Screen Printing at info@stcsprinting.com or (732) 347-0101. We will make reasonable efforts to resolve any disputes promptly.`
     },
     {
       title: 'SEVERABILITY',
@@ -128,11 +128,11 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ onNavigate }) =
     },
     {
       title: 'ENTIRE AGREEMENT',
-      content: `These Terms and Conditions, along with any other agreements or policies referenced herein, constitute the entire agreement between you and TS Custom Screen Printing regarding your use of this website and services provided. Any prior negotiations, representations, or agreements are superseded by these Terms and Conditions.`
+      content: `These Terms and Conditions, along with any other agreements or policies referenced herein, constitute the entire agreement between you and ST Custom Screen Printing regarding your use of this website and services provided. Any prior negotiations, representations, or agreements are superseded by these Terms and Conditions.`
     },
     {
       title: 'FORCE MAJEURE',
-      content: `TS Custom Screen Printing shall not be held liable for any failure or delay in performance under these Terms and Conditions due to circumstances beyond its reasonable control, including acts of God, natural disasters, war, terrorism, labor strikes, or government action.`
+      content: `ST Custom Screen Printing shall not be held liable for any failure or delay in performance under these Terms and Conditions due to circumstances beyond its reasonable control, including acts of God, natural disasters, war, terrorism, labor strikes, or government action.`
     },
   ];
 
@@ -265,7 +265,7 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ onNavigate }) =
           className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4"
         >
           <p className="text-white/40 text-xs font-black uppercase tracking-[0.3em]">
-            © {new Date().getFullYear()} TS Custom Screen Printing
+            © {new Date().getFullYear()} ST Custom Screen Printing
           </p>
           {onNavigate && (
             <button

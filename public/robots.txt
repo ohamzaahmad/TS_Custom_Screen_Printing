@@ -1,4 +1,4 @@
-# robots.txt for TS Custom Screen Printing
+# robots.txt for ST Custom Screen Printing
 # Allow all crawlers
 User-agent: *
 Allow: /
