@@ -62,7 +62,7 @@ const Catalogue: React.FC<CatalogueProps> = ({ onNavigate }) => {
                   
                   <div className="space-y-4">
                     <motion.a
-                      href="https://www.companycasuals.com/stcsprinting/start.jsp"
+                      href="https://www.sportswearcollection.com/st-screen-printing"
                       target="_blank"
                       rel="noopener noreferrer"
                       whileHover={reduceMotion ? undefined : { scale: 1.03, y: -4 }}

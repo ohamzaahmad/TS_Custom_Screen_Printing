@@ -171,7 +171,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <ul className="space-y-4 text-white/60 text-sm font-bold uppercase tracking-widest">
               <li>
                 <button 
-                  onClick={() => navigateTo('https://www.companycasuals.com/stcsprinting/start.jsp')} 
+                  onClick={() => navigateTo('https://www.sportswearcollection.com/st-screen-printing')} 
                   className="hover:text-white transition-colors text-left flex items-center gap-2 group"
                 >
                   <i className="fas fa-chevron-right text-[8px] opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0"></i>
