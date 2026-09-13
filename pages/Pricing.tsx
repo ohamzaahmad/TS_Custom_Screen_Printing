@@ -19,7 +19,7 @@ const Pricing: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12">
           <h1 className="fluid-h1 font-black text-slate-900 leading-none tracking-tighter uppercase mb-2">
-            SCREEN PRINT <span className="text-gradient-orange">PRICING 2025</span>
+            SCREEN PRINT <span className="text-gradient-orange">PRICING 2026</span>
           </h1>
           <h2 className="text-xl font-black text-slate-400 uppercase tracking-[0.3em]">PLASTISOL BASED INKS</h2>
         </div>
@@ -76,7 +76,7 @@ const Pricing: React.FC = () => {
           <div className="space-y-6">
             <h3 className="text-4xl font-black uppercase tracking-tighter text-slate-900">DEPOSITS</h3>
             <div className="border-[3px] border-slate-900 p-10 md:p-14 min-h-[280px] flex flex-col justify-center">
-              <h4 className="text-2xl font-black mb-4 uppercase">EFFECTIVE 1/1/2025</h4>
+              <h4 className="text-2xl font-black mb-4 uppercase">EFFECTIVE 1/1/2026</h4>
               <p className="text-xl font-bold text-slate-600 leading-relaxed">
                 A minimum deposit of <span className="text-slate-900 font-black underline decoration-orange-500">100%</span> is required to start your order. No exceptions.
               </p>
@@ -88,17 +88,17 @@ const Pricing: React.FC = () => {
             <div className="border-[3px] border-slate-900 p-10 md:p-14 min-h-[280px]">
               <ul className="space-y-6 text-lg font-bold text-slate-600">
                 <li className="flex justify-between items-center border-b border-slate-100 pb-2">
-                  <span><span className="text-slate-900 font-black uppercase">Screen Charges:</span> $25 per color/location</span>
+                  <span><span className="text-slate-900 font-black uppercase">Screen Charges:</span> $20 per color/location</span>
                 </li>
                 <li className="flex justify-between items-center border-b border-slate-100 pb-2">
-                  <span><span className="text-slate-900 font-black uppercase">Artwork Charges:</span> $45/hour (1 hour min.)</span>
+                  <span><span className="text-slate-900 font-black uppercase">Artwork Charges:</span> $30/hour (1 hour min.)</span>
                 </li>
-                <li className="flex justify-between items-center border-b border-slate-100 pb-2">
+                {/* <li className="flex justify-between items-center border-b border-slate-100 pb-2">
                   <span><span className="text-slate-900 font-black uppercase">Digitizing Charges:</span> $45/hour (1 hour min.)</span>
                 </li>
                 <li className="flex justify-between items-center pb-2">
                   <span><span className="text-slate-900 font-black uppercase">Pantone Matching:</span> $50</span>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
