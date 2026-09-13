@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React from "react";
 
 interface SkeletonProps {
   className?: string;
@@ -7,10 +6,7 @@ interface SkeletonProps {
 
 const Skeleton: React.FC<SkeletonProps> = ({ className }) => {
   return (
-    <div 
-      className={`skeleton rounded-2xl ${className}`} 
-      aria-hidden="true"
-    />
+    <div className={`skeleton rounded-2xl ${className}`} aria-hidden="true" />
   );
 };
 

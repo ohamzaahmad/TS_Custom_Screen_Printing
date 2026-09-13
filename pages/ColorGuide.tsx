@@ -1,8 +1,7 @@
-
-import React, { useState, useEffect } from 'react';
-import Skeleton from '../components/Skeleton';
-import { fetchInks } from '../services/dataService';
-import { useSEO } from '../hooks/useSEO';
+import React, { useState, useEffect } from "react";
+import Skeleton from "../components/Skeleton";
+import { fetchInks } from "../services/dataService";
+import { useSEO } from "../hooks/useSEO";
 
 interface ColorSwatchProps {
   name: string;
@@ -11,18 +10,31 @@ interface ColorSwatchProps {
 }
 
 const ColorSwatch: React.FC<ColorSwatchProps> = ({ name, pantone, hex }) => {
-  const isWhite = name.toLowerCase() === 'white';
-  const isLight = ['white', 'lemon yellow', 'primrose', 'flesh', 'light gray', 'fluorescent yellow'].includes(name.toLowerCase());
+  const isWhite = name.toLowerCase() === "white";
+  const isLight = [
+    "white",
+    "lemon yellow",
+    "primrose",
+    "flesh",
+    "light gray",
+    "fluorescent yellow",
+  ].includes(name.toLowerCase());
 
   return (
     <div className="group flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100">
-      <div 
-        className={`h-24 md:h-32 w-full flex items-end p-4 transition-transform duration-500 group-hover:scale-[1.02] ${isWhite ? 'border-b border-slate-100' : ''}`}
+      <div
+        className={`h-24 md:h-32 w-full flex items-end p-4 transition-transform duration-500 group-hover:scale-[1.02] ${isWhite ? "border-b border-slate-100" : ""}`}
         style={{ backgroundColor: hex }}
       >
-        <div className={`flex flex-col ${isLight ? 'text-slate-900' : 'text-white'}`}>
-          <span className="text-sm md:text-lg font-black uppercase tracking-tighter leading-none mb-1">{name}</span>
-          <span className="text-[9px] md:text-[11px] font-bold opacity-80 uppercase tracking-widest">{pantone}</span>
+        <div
+          className={`flex flex-col ${isLight ? "text-slate-900" : "text-white"}`}
+        >
+          <span className="text-sm md:text-lg font-black uppercase tracking-tighter leading-none mb-1">
+            {name}
+          </span>
+          <span className="text-[9px] md:text-[11px] font-bold opacity-80 uppercase tracking-widest">
+            {pantone}
+          </span>
         </div>
       </div>
     </div>
@@ -31,11 +43,13 @@ const ColorSwatch: React.FC<ColorSwatchProps> = ({ name, pantone, hex }) => {
 
 const ColorGuide: React.FC = () => {
   useSEO({
-    title: 'Color Guide',
-    description: 'ST Custom Screen Printing ink color guide. Browse our stock and additional ink colors with Pantone references for your custom screen printing orders.',
-    canonical: '/colors',
-    ogTitle: 'Color Guide - ST Custom Screen Printing',
-    ogDescription: 'Browse our stock and additional ink colors with Pantone references for custom screen printing.',
+    title: "Color Guide",
+    description:
+      "ST Custom Screen Printing ink color guide. Browse our stock and additional ink colors with Pantone references for your custom screen printing orders.",
+    canonical: "/colors",
+    ogTitle: "Color Guide - ST Custom Screen Printing",
+    ogDescription:
+      "Browse our stock and additional ink colors with Pantone references for custom screen printing.",
   });
 
   const [inks, setInks] = useState<any>({ stock: [], additional: [] });
@@ -57,46 +71,52 @@ const ColorGuide: React.FC = () => {
           </h1>
           <div className="bg-orange-50 border border-orange-100 rounded-2xl p-6 max-w-4xl mx-auto">
             <p className="text-xs md:text-sm text-orange-800 font-bold uppercase tracking-widest leading-relaxed">
-              <span className="text-orange-600 mr-2">IMPORTANT:</span> 
-              The colors shown are only approximated on any monitor. Color appearance may vary from computer to computer depending on color, contrast, and brightness settings. We highly suggest referring to a Pantone Solid Coated book when picking final colors.
+              <span className="text-orange-600 mr-2">IMPORTANT:</span>
+              The colors shown are only approximated on any monitor. Color
+              appearance may vary from computer to computer depending on color,
+              contrast, and brightness settings. We highly suggest referring to
+              a Pantone Solid Coated book when picking final colors.
             </p>
           </div>
         </div>
 
         <section className="mb-24">
           <div className="flex items-center gap-6 mb-10">
-            <h2 className="text-3xl font-black uppercase tracking-tighter text-slate-900">STOCK COLORS</h2>
+            <h2 className="text-3xl font-black uppercase tracking-tighter text-slate-900">
+              STOCK COLORS
+            </h2>
             <div className="h-px flex-grow bg-slate-200"></div>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {isLoading ? (
-              [...Array(12)].map((_, i) => (
-                <Skeleton key={i} className="h-24 md:h-32 w-full shadow-sm" />
-              ))
-            ) : (
-              inks.stock.map((c: any, i: number) => (
-                <ColorSwatch key={i} {...c} />
-              ))
-            )}
+            {isLoading
+              ? [...Array(12)].map((_, i) => (
+                  <Skeleton key={i} className="h-24 md:h-32 w-full shadow-sm" />
+                ))
+              : inks.stock.map((c: any, i: number) => (
+                  <ColorSwatch key={i} {...c} />
+                ))}
           </div>
         </section>
 
         {(isLoading || inks.additional.length > 0) && (
           <section className="mb-24">
             <div className="flex items-center gap-6 mb-10">
-              <h2 className="text-3xl font-black uppercase tracking-tighter text-slate-900">ADDITIONAL COLORS</h2>
+              <h2 className="text-3xl font-black uppercase tracking-tighter text-slate-900">
+                ADDITIONAL COLORS
+              </h2>
               <div className="h-px flex-grow bg-slate-200"></div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {isLoading ? (
-                [...Array(8)].map((_, i) => (
-                  <Skeleton key={i} className="h-24 md:h-32 w-full shadow-sm" />
-                ))
-              ) : (
-                inks.additional.map((c: any, i: number) => (
-                  <ColorSwatch key={i} {...c} />
-                ))
-              )}
+              {isLoading
+                ? [...Array(8)].map((_, i) => (
+                    <Skeleton
+                      key={i}
+                      className="h-24 md:h-32 w-full shadow-sm"
+                    />
+                  ))
+                : inks.additional.map((c: any, i: number) => (
+                    <ColorSwatch key={i} {...c} />
+                  ))}
             </div>
           </section>
         )}

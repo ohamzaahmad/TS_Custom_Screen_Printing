@@ -1,5 +1,5 @@
-import React from 'react';
-import Skeleton from './Skeleton';
+import React from "react";
+import Skeleton from "./Skeleton";
 
 export const HomePageLoader: React.FC = () => (
   <div className="relative min-h-screen bg-brand-dark animate-in">
@@ -18,7 +18,7 @@ export const HomePageLoader: React.FC = () => (
             <Skeleton className="h-14 w-full sm:w-48 rounded-full skeleton-dark" />
           </div>
         </div>
-        
+
         {/* Grid Layout Skeleton */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
           {[1, 2, 3].map((i) => (
