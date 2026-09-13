@@ -1,282 +1,322 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React from 'react';
 
 interface TermsAndConditionsProps {
   onNavigate?: (page: string) => void;
 }
 
 const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ onNavigate }) => {
-  const [expandedSections, setExpandedSections] = useState<Set<number>>(new Set([0]));
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  const toggleSection = (index: number) => {
-    setExpandedSections((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(index)) {
-        newSet.delete(index);
-      } else {
-        newSet.add(index);
-      }
-      return newSet;
-    });
-  };
-
-  const sections = [
-    {
-      title: 'CONTENT',
-      content: `The information, materials and services contained in this website (the "Content") are provided on an "as is" basis without warranties of any kind, either express or implied. ST Custom Screen Printing makes no warranty that the Content is error-free or that access to the Content will be uninterrupted or error-free.`
-    },
-    {
-      title: 'COPYRIGHT AND TRADEMARKS',
-      content: `The Content on this website, including all text, graphics, logos, images, and software is protected by copyright, trademark, and other intellectual property laws. You may not reproduce, distribute, transmit, display, or create derivative works from the Content without prior written permission from ST Custom Screen Printing or the respective copyright holder.`
-    },
-    {
-      title: 'HOLD HARMLESS',
-      content: `You agree to hold harmless and indemnify ST Custom Screen Printing, its owners, employees, and agents from any and all claims, damages, liabilities, costs, and expenses (including legal fees) arising from your use of this website or any Content therein, or from your violation of these Terms and Conditions.`
-    },
-    {
-      title: 'TURNAROUND TIME',
-      content: `Turnaround times are estimates only and not guaranteed. Rush orders may be available upon request with additional charges. ST Custom Screen Printing is not responsible for delays caused by factors beyond its control, including but not limited to material delays, equipment failures, or acts of God.`
-    },
-    {
-      title: 'LIABILITY WAIVER',
-      content: `To the fullest extent permitted by law, ST Custom Screen Printing shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of this website or any services provided.`
-    },
-    {
-      title: 'PRICING AND PAYMENT',
-      content: `All prices are subject to change without notice. Payment is due upon invoice unless other arrangements have been made. Late payments may incur additional charges or suspension of services.`
-    },
-    {
-      title: 'PRODUCT SPECIFICATIONS',
-      content: `ST Custom Screen Printing provides specifications and samples based on available materials. Color matching is approximate and subject to variations in materials and printing processes. Custom orders are non-refundable once production has begun.`
-    },
-    {
-      title: 'USER CONDUCT',
-      content: `You agree not to use this website for any unlawful purposes or in any way that violates these Terms and Conditions. Prohibited conduct includes, but is not limited to: harassment, threats, defamation, copyright infringement, and transmission of viruses or malware.`
-    },
-    {
-      title: 'INTELLECTUAL PROPERTY',
-      content: `Any designs, artwork, or intellectual property you submit to ST Custom Screen Printing for production remain your property. However, you grant ST Custom Screen Printing a non-exclusive license to reproduce your work for fulfillment purposes and may authorize ST Custom Screen Printing to retain samples for portfolio or reference purposes.`
-    },
-    {
-      title: 'THIRD-PARTY LINKS',
-      content: `This website may contain links to third-party websites. ST Custom Screen Printing is not responsible for the content, accuracy, or practices of third-party websites. Your use of third-party websites is governed by their respective terms and conditions.`
-    },
-    {
-      title: 'LIMITATION OF LIABILITY',
-      content: `In no event shall ST Custom Screen Printing's total liability exceed the amount paid by you for the product or service in question. This limitation applies even if ST Custom Screen Printing has been advised of the possibility of such damages.`
-    },
-    {
-      title: 'MODIFICATIONS TO TERMS',
-      content: `ST Custom Screen Printing reserves the right to modify these Terms and Conditions at any time. Changes will be effective immediately upon posting to the website. Your continued use of the website constitutes acceptance of any modified terms.`
-    },
-    {
-      title: 'DISPUTE RESOLUTION',
-      content: `Any disputes arising from these Terms and Conditions or your use of this website shall be governed by the laws of the State of New Jersey, without regard to conflicts of law principles. You agree to submit to the jurisdiction of the courts located in New Jersey.`
-    },
-    {
-      title: 'CONFIDENTIALITY',
-      content: `ST Custom Screen Printing will maintain the confidentiality of any proprietary information or trade secrets you provide, except as required by law or as necessary to fulfill your order.`
-    },
-    {
-      title: 'WARRANTIES DISCLAIMER',
-      content: `EXCEPT AS EXPRESSLY STATED IN THESE TERMS AND CONDITIONS, ST Custom Screen Printing MAKES NO OTHER WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.`
-    },
-    {
-      title: 'CANCELLATION POLICY',
-      content: `Orders may be cancelled within 24 hours of placement at no charge. After 24 hours, a cancellation fee may apply. Orders in production or completed cannot be cancelled.`
-    },
-    {
-      title: 'QUALITY ASSURANCE',
-      content: `ST Custom Screen Printing performs quality control checks on all products. Minor variations in color, placement, or print density may occur and are considered normal and acceptable. Claims must be submitted within 7 days of delivery.`
-    },
-    {
-      title: 'RETURNS AND EXCHANGES',
-      content: `Defective products may be returned within 7 days of delivery with photographic evidence. Returns are subject to inspection and approval. Approved returns will be replaced at no charge; shipping costs are the responsibility of the customer.`
-    },
-    {
-      title: 'ENVIRONMENTAL COMPLIANCE',
-      content: `ST Custom Screen Printing is committed to environmentally responsible practices in our manufacturing processes. We comply with all applicable environmental regulations and encourage customers to properly dispose of packaging materials.`
-    },
-    {
-      title: 'ACCESSIBILITY',
-      content: `ST Custom Screen Printing is committed to ensuring this website is accessible to all users. If you encounter accessibility issues, please contact us at info@stcsprinting.com or (732) 347-0101.`
-    },
-    {
-      title: 'BULK ORDERS',
-      content: `Bulk orders of 100+ units may qualify for volume discounts. Quote requests for bulk orders should include quantity, specifications, and timeline. Custom pricing will be provided upon review.`
-    },
-    {
-      title: 'CUSTOM ARTWORK',
-      content: `ST Custom Screen Printing can assist with artwork creation and modification. Design services are quoted separately. Final artwork approval by the customer is required before production begins.`
-    },
-    {
-      title: 'SHIPPING',
-      content: `Shipping costs are calculated based on destination, weight, and service level selected. Delivery times are estimates only. ST Custom Screen Printing is not liable for delays or loss of shipments once handed off to carriers. Customers may purchase shipping insurance at checkout.`
-    },
-    {
-      title: 'PRIVACY POLICY',
-      content: `Your use of this website is also governed by our Privacy Policy. Please review our Privacy Policy to understand our practices regarding the collection and use of your personal information.`
-    },
-    {
-      title: 'CONTACT FOR DISPUTES',
-      content: `If you have questions or concerns about these Terms and Conditions, please contact ST Custom Screen Printing at info@stcsprinting.com or (732) 347-0101. We will make reasonable efforts to resolve any disputes promptly.`
-    },
-    {
-      title: 'SEVERABILITY',
-      content: `If any provision of these Terms and Conditions is found to be invalid or unenforceable, the remaining provisions shall remain in full force and effect. The invalid provision shall be modified to the minimum extent necessary to make it valid and enforceable.`
-    },
-    {
-      title: 'ENTIRE AGREEMENT',
-      content: `These Terms and Conditions, along with any other agreements or policies referenced herein, constitute the entire agreement between you and ST Custom Screen Printing regarding your use of this website and services provided. Any prior negotiations, representations, or agreements are superseded by these Terms and Conditions.`
-    },
-    {
-      title: 'FORCE MAJEURE',
-      content: `ST Custom Screen Printing shall not be held liable for any failure or delay in performance under these Terms and Conditions due to circumstances beyond its reasonable control, including acts of God, natural disasters, war, terrorism, labor strikes, or government action.`
-    },
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.05, delayChildren: 0.1 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-  };
-
   return (
-    <div ref={contentRef} className="min-h-screen bg-linear-to-b from-brand-dark to-[#1a0f2e] pt-36 pb-20 px-6 sm:px-8 lg:px-12">
-      <div className="max-w-4xl mx-auto">
-        {/* Hero Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
-        >
-          <p className="text-orange-500 font-black uppercase tracking-[0.4em] text-[10px] block mb-4">Legal</p>
-          <h1 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">
-            <span className="text-orange-500">Terms </span>
-            <span className="text-purple-500">&amp; </span>
-            <span className="text-white">Conditions</span>
-          </h1>
-          <p className="text-white/60 text-lg font-medium max-w-2xl mx-auto">
-            Please review these terms carefully. By using our services, you agree to be bound by these conditions.
-          </p>
-        </motion.div>
+    <div className="min-h-screen bg-slate-50 animate-in pt-24 md:pt-28 lg:pt-32">
 
-        {/* Last Updated */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.4 }}
-          className="mb-12 p-4 bg-white/5 border border-white/10 rounded-xl text-white/60 text-sm font-medium text-center"
-        >
+      {/* Hero */}
+      <section className="relative z-10 px-6 sm:px-8 lg:px-12 max-w-4xl mx-auto mb-12">
+        <span className="text-orange-500 font-black uppercase tracking-[0.5em] text-[10px] mb-4 block">
+          Legal
+        </span>
+        <h1 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-slate-900 mb-3">
+          <span className="text-gradient-orange">Terms</span> &amp; Conditions
+        </h1>
+        <p className="text-slate-500 font-medium leading-relaxed text-base mb-2">
+          Please review these terms carefully. By using our services, you agree to be bound by these conditions.
+        </p>
+        <p className="text-slate-400 text-xs font-medium">
           Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-        </motion.div>
+        </p>
+      </section>
 
-        {/* Accordion Sections */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-3"
-        >
-          {sections.map((section, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              className="border border-white/10 rounded-xl overflow-hidden bg-white/3 hover:bg-white/6 transition-colors"
-            >
-              <button
-                onClick={() => toggleSection(index)}
-                className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
-              >
-                <span className="font-black uppercase tracking-[0.2em] text-white text-sm flex items-center gap-3">
-                  <span className="text-[10px] font-black text-orange-500 bg-white/10 px-2 py-1 rounded-full">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  {section.title}
-                </span>
-                <motion.div
-                  animate={{ rotate: expandedSections.has(index) ? 180 : 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="text-purple-500 shrink-0"
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                  </svg>
-                </motion.div>
-              </button>
+      {/* Content */}
+      <section className="relative z-10 px-6 sm:px-8 lg:px-12 max-w-4xl mx-auto pb-20">
+        <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-12 shadow-[0_8px_40px_rgba(15,23,42,0.06)]">
+        <div className="text-base leading-relaxed text-slate-600 space-y-0">
 
-              <motion.div
-                animate={{
-                  height: expandedSections.has(index) ? 'auto' : 0,
-                  opacity: expandedSections.has(index) ? 1 : 0,
-                }}
-                transition={{ duration: 0.3 }}
-                className="overflow-hidden"
-              >
-                <div className="px-6 pb-5 text-white/70 text-sm font-medium leading-relaxed border-t border-white/5">
-                  {section.content}
-                </div>
-              </motion.div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          className="mt-16 p-8 bg-linear-to-r from-orange-500/10 to-purple-500/10 border border-white/10 rounded-2xl text-center"
-        >
-          <h3 className="text-xl font-black text-white mb-3 uppercase tracking-[0.2em]">Questions?</h3>
-          <p className="text-white/60 text-sm font-medium mb-6">
-            If you have any questions about these terms, please don't hesitate to contact us.
+          <p className="pb-6">
+            The Terms and Conditions contained herein are the exclusive terms and conditions for the sale of products and services from ST Custom Screen Printing ("Company") to the Customer. The Customer agrees that these terms constitute the final, complete, and exclusive expression of the agreement between the Company and Customer. Hereafter, the "Customer" refers to the individual(s) or entity submitting an order or request for services from the Company.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="mailto:info@stcsprinting.com"
-              className="px-6 py-3 bg-linear-to-r from-orange-500 to-orange-600 text-white font-black uppercase tracking-[0.2em] text-xs rounded-full hover:shadow-lg hover:shadow-orange-500/30 transition-all duration-300 hover:scale-105"
-            >
-              Email Us
-            </a>
-            <a
-              href="tel:+17323470101"
-              className="px-6 py-3 bg-linear-to-r from-purple-500 to-purple-600 text-white font-black uppercase tracking-[0.2em] text-xs rounded-full hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-300 hover:scale-105"
-            >
-              Call Us
-            </a>
-          </div>
-        </motion.div>
 
-        {/* Footer Navigation */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.4 }}
-          className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4"
-        >
-          <p className="text-white/40 text-xs font-black uppercase tracking-[0.3em]">
-            © {new Date().getFullYear()} ST Custom Screen Printing
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">1. Content</h2>
+            <p>
+              The Customer shall not submit any content (including electronic files, photos, or graphic images) that is unlawful, defamatory, obscene, pornographic, or otherwise objectionable, nor any content that incites criminal activity. The Company reserves the right to refuse any design, including those promoting hate groups, terrorism, foreign political groups, or bullying.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">2. Copyright and Trademarks</h2>
+            <p>
+              The Customer assumes full responsibility for all trademark or copyright issues relating to submitted designs. The Company does not verify the legal rights of submitted materials. Customers indemnify the Company from any claims related to trademark infringement. Authorization may be requested for certain designs.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">3. Hold Harmless</h2>
+            <p>
+              The Customer agrees to hold the Company, its owners, officers, employees, and agents harmless from liability related to content submitted. This includes all damages, legal fees, and expenses arising from the reproduction of submitted content.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">4. Turnaround Time</h2>
+            <p>
+              Standard turnaround is 10–15 business days from the date of artwork approval and order confirmation. Production will not begin until artwork is approved and the required deposit is received. Rush services may be available at an additional fee. National holidays and fulfillment services may extend this timeframe. Turnaround times are estimates only and not guaranteed.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">5. Minimums</h2>
+            <p>
+              Screen printing orders require a minimum of 12 garments per design. Orders below this minimum may be subject to an additional charge. The Company reserves the right to combine compatible orders to meet minimum requirements where appropriate.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">6. Payments</h2>
+            <p>
+              Private orders require 100% payment prior to production. Payment is due upon invoice unless other arrangements have been made in writing. Late payments may incur additional charges or suspension of services. The Company does not accept partial payments for private orders.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">7. Artwork &amp; Design Services</h2>
+            <p>
+              All artwork must be submitted at 300dpi or higher and sized to actual print dimensions. Preferred file types include EPS, PSD, AI, CDR, and PDF. Artwork submitted in unusable formats may incur additional design charges. If the Company provides artwork creation or modification services, fees will be quoted separately and must be paid in full prior to the release of any artwork or production of the order.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">8. Setup Charges</h2>
+            <p>
+              Design setup charges apply for screen creation and other production preparation. Reorders may receive discounted setup charges. Any change to an existing design will result in a new setup fee.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">9. Art Approval</h2>
+            <p>
+              Proofs will be provided for each order. The Customer is responsible for checking all details, including spelling, color, and placement. The Company is not liable for errors in approved artwork. Once artwork is approved, any changes may incur a change fee as outlined in Section 14.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">10. Color Matching</h2>
+            <p>
+              Pantone matches or non-stock inks incur a fee per color. Stock colors are available upon request at no additional charge. The Company can only guarantee the ink colors used, not a match to colors displayed on screen.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">11. Placement &amp; Sizing</h2>
+            <p>
+              If placement or sizing details are not specified, standard industry sizes and locations will be used at the Company's discretion. Customers should specify exact placement and sizing requirements at the time of order.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">12. Over/Under Policy</h2>
+            <p>
+              Up to 2% spoilage or 3 pieces (whichever is greater) is considered acceptable. Exact quantities must be requested in advance, and extra garments should be ordered accordingly. The Company is not liable for shortages within this tolerance.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">13. Difficult Items or Placement</h2>
+            <p>
+              Items or placements deemed "difficult" may require pre-testing and could incur additional production charges. The Customer will be notified of any additional charges before production begins.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">14. Order Changes</h2>
+            <p>
+              Changes after artwork approval may incur a $100.00 change fee and could result in a revised production timeline. The Company reserves the right to reject changes that would significantly alter the scope of the original order.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">15. All Sales Final</h2>
+            <p>
+              Custom-decorated items are not eligible for refunds, returns, or exchanges unless the error is determined to be on the part of the Company. See our Refund &amp; Returns Policy for details.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">16. Order Cancellation</h2>
+            <p>
+              Orders may be cancelled within 24 hours of placement at no charge. After 24 hours, a cancellation fee of 20% may apply for any materials already procured. Artwork and design charges are non-refundable. No refunds will be issued once production is complete.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">17. Returns</h2>
+            <p>
+              We do not offer refunds, but will remake any order if the error is determined to be our fault. Issues must be reported within 48 hours of delivery. Replacement shipping is covered via ground method only unless expedited shipping is requested and paid for by the Customer.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">18. Out-of-Stock Items</h2>
+            <p>
+              The Company is not responsible for supplier inventory shortages. Alternatives will be offered if a requested item is backordered or discontinued. The Customer may choose to wait for restocking or accept an alternative at no additional cost.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">19. Manufacturer Defects</h2>
+            <p>
+              The Company is not liable for garment inconsistencies including size, color, or construction variations. Customers are advised to order extras to accommodate for manufacturer defects. The Company will assist in facilitating claims with the garment supplier when applicable.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">20. Bank Charges &amp; Fees</h2>
+            <p>
+              Chargebacks and returned checks are not permitted. The Customer agrees to reimburse any penalties or fees incurred as a result of disputed charges without valid cause.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">21. Customer-Supplied Goods</h2>
+            <p>
+              Customer-supplied garments must be new and unused. The Company is not liable for defects or inconsistencies in Customer-provided items. Spoilage policies still apply to Customer-supplied goods. The Customer assumes all risk for items provided for printing.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">22. Shipping</h2>
+            <p>
+              Shipping costs are calculated based on destination, weight, and service level selected. Delivery times are estimates only. Tracking numbers will be provided. Final charges may differ from quoted rates due to package dimensions and weight. The Company is not liable for delays or loss of shipments once handed off to carriers.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">23. Blind Shipping</h2>
+            <p>
+              Blind shipments (shipping under the Customer's name and return address) incur a $20.00 handling fee in addition to standard shipping costs.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">24. Split Shipments</h2>
+            <p>
+              Split shipments to multiple locations incur a $20.00 handling fee per additional shipment location.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">25. Care &amp; Washing Instructions</h2>
+            <p>
+              To maximize the life of your printed apparel: turn garments inside out, wash in cold water, and air dry. Do not bleach or iron directly over embellishment. Following these instructions will help maintain print quality and durability.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">26. Customer Relations</h2>
+            <p>
+              The Company reserves the right to refuse service to individuals who are abusive, disrespectful, or otherwise uncooperative. All communication will be conducted in a professional manner.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">27. Promotions</h2>
+            <p>
+              Promotions are automatically applied when available and are limited to one per Customer per month unless otherwise stated. Promotions have no cash value and cannot be combined with other offers.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">28. Limitation of Liability</h2>
+            <p>
+              In no event shall ST Custom Screen Printing's total liability exceed the amount paid by the Customer for the product or service in question. The Company shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from the use of products or services provided.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">29. Force Majeure</h2>
+            <p>
+              ST Custom Screen Printing shall not be held liable for any failure or delay in performance due to circumstances beyond its reasonable control, including acts of God, natural disasters, war, terrorism, labor strikes, or government action.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">30. Governing Law</h2>
+            <p>
+              Any disputes arising from these Terms and Conditions or the use of services shall be governed by the laws of the State of New Jersey, without regard to conflicts of law principles. The Customer agrees to submit to the jurisdiction of the courts located in New Jersey.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">31. Severability</h2>
+            <p>
+              If any provision of these Terms and Conditions is found to be invalid or unenforceable, the remaining provisions shall remain in full force and effect.
+            </p>
+          </div>
+
+          <div className="border-b border-slate-100 pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">32. Entire Agreement</h2>
+            <p>
+              These Terms and Conditions, along with any other agreements or policies referenced herein, constitute the entire agreement between the Customer and ST Custom Screen Printing regarding the sale of products and services. Any prior negotiations, representations, or agreements are superseded by these Terms and Conditions.
+            </p>
+          </div>
+
+          <div className="pb-6">
+            <h2 className="text-base font-black uppercase tracking-tight text-slate-900 mb-2">33. Acknowledgement</h2>
+            <p>
+              By placing an order or requesting a quote, the Customer acknowledges and agrees to all terms and conditions outlined herein.
+            </p>
+          </div>
+
+        </div>
+        </div>
+
+        {/* CTA */}
+        <div className="mt-16 pt-12 border-t border-slate-100">
+          <div className="text-center mb-8">
+            <span className="text-orange-500 font-black uppercase tracking-[0.5em] text-[10px] mb-4 block">
+              Questions?
+            </span>
+            <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-slate-900 mb-3">
+              Contact Us
+            </h2>
+            <p className="text-slate-500 font-medium max-w-lg mx-auto">
+              If you have any questions about these terms, please don't hesitate to contact us.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="relative">
+              <div className="absolute inset-0 bg-orange-500 rounded-full translate-x-1.5 translate-y-1.5" aria-hidden="true"></div>
+              <a
+                href="mailto:info@stcsprinting.com"
+                className="relative bg-slate-900 text-white px-8 py-4 rounded-full font-black uppercase tracking-[0.2em] text-sm hover:-translate-y-0.5 transition-all active:scale-95"
+              >
+                Email Us
+              </a>
+            </div>
+            <div className="relative">
+              <div className="absolute inset-0 bg-purple-600 rounded-full translate-x-1.5 translate-y-1.5" aria-hidden="true"></div>
+              <a
+                href="tel:+17323470101"
+                className="relative bg-white text-slate-900 border-2 border-slate-900 px-8 py-4 rounded-full font-black uppercase tracking-[0.2em] text-sm hover:-translate-y-0.5 transition-all active:scale-95"
+              >
+                Call Us
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="mt-12 pt-8 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-slate-400 text-xs font-black uppercase tracking-[0.2em]">
+            &copy; {new Date().getFullYear()} ST Custom Screen Printing
           </p>
           {onNavigate && (
             <button
               onClick={() => onNavigate('home')}
-              className="text-orange-400 hover:text-orange-300 text-xs font-black uppercase tracking-[0.2em] transition-colors"
+              className="text-orange-500 hover:text-orange-600 text-xs font-black uppercase tracking-[0.2em] transition-colors"
             >
               Back to Home
             </button>
           )}
-        </motion.div>
-      </div>
+        </div>
+      </section>
     </div>
   );
 };

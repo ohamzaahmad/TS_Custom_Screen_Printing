@@ -75,7 +75,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
   }, [isOpen]);
 
   // Pages that have a dark header background by default
-  const darkHeaderPages = ['home', 'terms', 'refund', 'privacy'];
+  const darkHeaderPages = ['home'];
   const isDarkBg = !scrolled && darkHeaderPages.includes(currentPage);
 
   const navItems = [
