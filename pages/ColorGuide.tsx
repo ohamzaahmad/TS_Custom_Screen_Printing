@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Skeleton from '../components/Skeleton';
 import { fetchInks } from '../services/dataService';
+import { useSEO } from '../hooks/useSEO';
 
 interface ColorSwatchProps {
   name: string;
@@ -29,6 +30,14 @@ const ColorSwatch: React.FC<ColorSwatchProps> = ({ name, pantone, hex }) => {
 };
 
 const ColorGuide: React.FC = () => {
+  useSEO({
+    title: 'Color Guide',
+    description: 'ST Custom Screen Printing ink color guide. Browse our stock and additional ink colors with Pantone references for your custom screen printing orders.',
+    canonical: '/colors',
+    ogTitle: 'Color Guide - ST Custom Screen Printing',
+    ogDescription: 'Browse our stock and additional ink colors with Pantone references for custom screen printing.',
+  });
+
   const [inks, setInks] = useState<any>({ stock: [], additional: [] });
   const [isLoading, setIsLoading] = useState(true);
 

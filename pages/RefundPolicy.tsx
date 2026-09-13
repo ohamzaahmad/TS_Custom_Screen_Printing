@@ -1,10 +1,18 @@
 import React from 'react';
+import { useSEO } from '../hooks/useSEO';
 
 interface RefundPolicyProps {
   onNavigate?: (page: string) => void;
 }
 
 const RefundPolicy: React.FC<RefundPolicyProps> = ({ onNavigate }) => {
+  useSEO({
+    title: 'Refund & Returns Policy',
+    description: 'ST Custom Screen Printing refund and returns policy for custom screen printing orders. Review our claim process, time limits, and reprint policies.',
+    canonical: '/refund',
+    ogTitle: 'Refund & Returns Policy',
+    ogDescription: 'Review ST Custom Screen Printing refund and reprint policy for custom screen printing orders.',
+  });
   return (
     <div className="min-h-screen bg-slate-50 animate-in pt-24 md:pt-28 lg:pt-32">
 

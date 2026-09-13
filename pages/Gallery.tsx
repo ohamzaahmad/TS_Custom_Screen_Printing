@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { createPortal } from 'react-dom';
+import { useSEO } from '../hooks/useSEO';
 
 interface GalleryProps {
   onNavigate: (page: string) => void;
@@ -19,6 +20,14 @@ const PROJECT_DETAILS = [
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
 const Gallery: React.FC<GalleryProps> = ({ onNavigate }) => {
+  useSEO({
+    title: 'Gallery',
+    description: 'View our custom screen printing portfolio. Browse examples of t-shirts, hoodies, sweatshirts, and custom apparel we have produced for brands and events.',
+    canonical: '/gallery',
+    ogTitle: 'Gallery - ST Custom Screen Printing',
+    ogDescription: 'Browse our custom screen printing portfolio. T-shirts, hoodies, sweatshirts, and custom apparel.',
+  });
+
   const reduceMotion = useReducedMotion();
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);

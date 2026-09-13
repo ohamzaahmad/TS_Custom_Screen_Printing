@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
 import { createPortal } from 'react-dom';
+import { useSEO } from '../hooks/useSEO';
 
 interface HomeProps {
   onNavigate: (page: string) => void;
@@ -21,6 +22,14 @@ const PROJECT_DETAILS = [
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
 const Home: React.FC<HomeProps> = ({ onNavigate }) => {
+  useSEO({
+    title: 'Home',
+    description: 'ST Custom Screen Printing — high-fidelity apparel solutions for modern brands. Industrial-grade screen printing with artisanal attention to detail in Manahawkin, NJ.',
+    canonical: '/',
+    ogTitle: 'ST Custom Screen Printing',
+    ogDescription: 'High-fidelity apparel solutions for modern brands. Industrial-grade screen printing with artisanal attention to detail.',
+  });
+
   const reduceMotion = useReducedMotion();
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);

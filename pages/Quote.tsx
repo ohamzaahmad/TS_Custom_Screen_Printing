@@ -1,11 +1,19 @@
 
 import React, { useEffect } from 'react';
+import { useSEO } from '../hooks/useSEO';
 
 interface QuoteProps {
   initialProduct?: string;
 }
 
 const Quote: React.FC<QuoteProps> = () => {
+  useSEO({
+    title: 'Request a Quote',
+    description: 'Request a custom screen printing quote from ST Custom Screen Printing. Get pricing for t-shirts, hoodies, sweatshirts, and custom apparel orders.',
+    canonical: '/quote',
+    ogTitle: 'Request a Quote - ST Custom Screen Printing',
+    ogDescription: 'Get pricing for custom screen printing orders. T-shirts, hoodies, sweatshirts, and more.',
+  });
 
   useEffect(() => {
     const id = 'cognito-embed';

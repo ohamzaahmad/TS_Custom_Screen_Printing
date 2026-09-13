@@ -2,8 +2,17 @@
 import React, { useState, useEffect } from 'react';
 import Skeleton from '../components/Skeleton';
 import { fetchPricing } from '../services/dataService';
+import { useSEO } from '../hooks/useSEO';
 
 const Pricing: React.FC = () => {
+  useSEO({
+    title: 'Pricing',
+    description: 'ST Custom Screen Printing pricing for custom screen printing orders. Transparent per-shirt pricing for t-shirts, hoodies, sweatshirts, and more.',
+    canonical: '/pricing',
+    ogTitle: 'Pricing - ST Custom Screen Printing',
+    ogDescription: 'Transparent per-shirt pricing for custom screen printing orders. T-shirts, hoodies, sweatshirts, and more.',
+  });
+
   const [pricingData, setPricingData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 

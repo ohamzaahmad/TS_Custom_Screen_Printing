@@ -1,10 +1,18 @@
 import React from 'react';
+import { useSEO } from '../hooks/useSEO';
 
 interface TermsAndConditionsProps {
   onNavigate?: (page: string) => void;
 }
 
 const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({ onNavigate }) => {
+  useSEO({
+    title: 'Terms & Conditions',
+    description: 'ST Custom Screen Printing terms and conditions for custom screen printing orders. Review payment, production, shipping, and cancellation policies.',
+    canonical: '/terms',
+    ogTitle: 'Terms & Conditions',
+    ogDescription: 'Review ST Custom Screen Printing terms and conditions for custom screen printing orders.',
+  });
   return (
     <div className="min-h-screen bg-slate-50 animate-in pt-24 md:pt-28 lg:pt-32">
 

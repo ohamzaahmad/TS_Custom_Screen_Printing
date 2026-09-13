@@ -1,10 +1,18 @@
 import React from 'react';
+import { useSEO } from '../hooks/useSEO';
 
 interface PrivacyPolicyProps {
   onNavigate?: (page: string) => void;
 }
 
 const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onNavigate }) => {
+  useSEO({
+    title: 'Privacy Policy',
+    description: 'ST Custom Screen Printing privacy policy. Learn how we collect, use, and protect your personal information when you visit our website or place an order.',
+    canonical: '/privacy',
+    ogTitle: 'Privacy Policy',
+    ogDescription: 'Learn how ST Custom Screen Printing collects, uses, and protects your personal information.',
+  });
   return (
     <div className="min-h-screen bg-slate-50 animate-in pt-24 md:pt-28 lg:pt-32">
 

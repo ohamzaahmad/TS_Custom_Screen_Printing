@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useSEO } from '../hooks/useSEO';
 
 const popularPlacements = [
   { src: '/size-guide/assets/centered-chest.png', title: 'Center Chest', note: '2½" down from bottom of collar' },
@@ -28,6 +29,14 @@ const measurements = [
 ];
 
 const PrintGuide: React.FC = () => {
+  useSEO({
+    title: 'Print Placement Guide',
+    description: 'ST Custom Screen Printing placement guide. Standard print locations and sizes for t-shirts, hoodies, sweatshirts, and custom apparel.',
+    canonical: '/guide',
+    ogTitle: 'Print Placement Guide - ST Custom Screen Printing',
+    ogDescription: 'Standard print locations and sizes for t-shirts, hoodies, sweatshirts, and custom apparel.',
+  });
+
   return (
     <div className="min-h-screen pt-28 pb-24 bg-slate-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

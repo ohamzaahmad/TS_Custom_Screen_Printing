@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { useSEO } from '../hooks/useSEO';
 
 interface AboutProps {
   onNavigate: (page: string) => void;
@@ -10,6 +11,14 @@ const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 const SPLASH_COLORS = ['bg-orange-500', 'bg-purple-600', 'bg-yellow-400', 'bg-cyan-400', 'bg-pink-500', 'bg-lime-400'];
 
 const About: React.FC<AboutProps> = ({ onNavigate }) => {
+  useSEO({
+    title: 'About',
+    description: 'Learn about ST Custom Screen Printing — 40+ years of screen printing expertise in New Jersey. Custom apparel for businesses, events, and personal use.',
+    canonical: '/about',
+    ogTitle: 'About ST Custom Screen Printing',
+    ogDescription: '40+ years of screen printing expertise in New Jersey. Custom apparel for businesses, events, and personal use.',
+  });
+
   const reduceMotion = useReducedMotion();
 
   const revealProps = reduceMotion

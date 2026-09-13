@@ -1,10 +1,19 @@
 
 import React, { useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { useSEO } from '../hooks/useSEO';
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
 const Contact: React.FC = () => {
+  useSEO({
+    title: 'Contact',
+    description: 'Contact ST Custom Screen Printing for custom apparel orders, quotes, and inquiries. Located in Manahawkin, NJ. Call (732) 347-0101 or email info@stcsprinting.com.',
+    canonical: '/contact',
+    ogTitle: 'Contact ST Custom Screen Printing',
+    ogDescription: 'Get in touch for custom apparel orders, quotes, and inquiries. Located in Manahawkin, NJ.',
+  });
+
   const reduceMotion = useReducedMotion();
 
   const revealProps = reduceMotion

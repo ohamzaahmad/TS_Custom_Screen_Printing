@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
+import { useSEO } from '../hooks/useSEO';
 
 interface CatalogueProps {
   onNavigate: (page: string) => void;
@@ -9,6 +10,14 @@ interface CatalogueProps {
 const EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
 const Catalogue: React.FC<CatalogueProps> = ({ onNavigate }) => {
+  useSEO({
+    title: 'Catalogue',
+    description: 'Browse the ST Custom Screen Printing apparel catalogue. T-shirts, hoodies, sweatshirts, trousers, bags, and specialty garments available for custom screen printing.',
+    canonical: '/catalogue',
+    ogTitle: 'Catalogue - ST Custom Screen Printing',
+    ogDescription: 'Browse our apparel catalogue. T-shirts, hoodies, sweatshirts, and more for custom screen printing.',
+  });
+
   const reduceMotion = useReducedMotion();
 
   const revealProps = reduceMotion
