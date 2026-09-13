@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, AnimatePresence } from 'framer-motion';
 import { createPortal } from 'react-dom';
 
 interface HomeProps {
@@ -8,6 +8,7 @@ interface HomeProps {
 }
 
 const PROJECT_IMAGES = ['/1.jpg', '/2.jpg', '/3.png', '/4.png', '/5.jpg', '/6.jpg'];
+const HERO_CAROUSEL_IMAGES = ['/1.jpg', '/2.jpg', '/3.png', '/4.png', '/5.jpg', '/6.jpg'];
 const PROJECT_DETAILS = [
   { label: 'Drop 01', title: 'Oversized Streetwear Set', subtitle: 'Soft-hand print with tight registration and consistent opacity.' },
   { label: 'Drop 02', title: 'Athletic Club Series', subtitle: 'Durable team graphics engineered for repeat wash cycles.' },
@@ -23,9 +24,18 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   const reduceMotion = useReducedMotion();
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [carouselIndex, setCarouselIndex] = useState(0);
   const lastActiveElementRef = useRef<HTMLElement | null>(null);
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
   const lockedScrollYRef = useRef(0);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const timer = setInterval(() => {
+      setCarouselIndex((prev) => (prev + 1) % HERO_CAROUSEL_IMAGES.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [reduceMotion]);
 
   const revealProps = reduceMotion
     ? {}
@@ -209,119 +219,146 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* Studio Standard */}
-      <motion.section {...revealProps} className="py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-            <div>
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-purple-600 block mb-4">Studio Standard</span>
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 leading-[0.95] mb-5">
-                Minimal process.
-                <br />
-                Maximum consistency.
-              </h2>
-              <p className="text-slate-500 text-lg font-medium leading-relaxed mb-8">
-                Every order follows a focused production system designed to reduce errors, protect detail, and keep delivery predictable.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl">
-                <button
-                  onClick={() => onNavigate('quote')}
-                  className="bg-slate-900 text-white px-6 py-3 rounded-full font-black uppercase tracking-[0.2em] text-xs border-2 border-slate-900 shadow-[3px_3px_0_#fb923c] hover:-translate-y-0.5 transition-transform"
-                >
-                  Start Your Order
-                </button>
-                <button
-                  onClick={() => onNavigate('guide')}
-                  className="bg-slate-100 text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.2em] text-xs border-2 border-slate-200 hover:bg-slate-200 transition-colors"
-                >
-                  Print Guide
-                </button>
-                <button
-                  onClick={() => onNavigate('pricing')}
-                  className="bg-white text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.2em] text-xs border-2 border-slate-900 hover:bg-slate-900 hover:text-white transition-colors"
-                >
-                  Pricing
-                </button>
-                <button
-                  onClick={() => onNavigate('colors')}
-                  className="bg-white text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.2em] text-xs border-2 border-orange-400 hover:bg-orange-400 hover:text-slate-950 transition-colors"
-                >
-                  Color Guide
-                </button>
-              </div>
+      {/* Order Custom Apparel */}
+      <motion.section {...revealProps} className="py-24 bg-slate-900 relative overflow-hidden">
+        <div className="absolute -top-32 -left-32 w-80 h-80 bg-orange-500/15 rounded-full blur-[100px]" aria-hidden="true"></div>
+        <div className="absolute -bottom-32 -right-32 w-80 h-80 bg-purple-600/15 rounded-full blur-[100px]" aria-hidden="true"></div>
 
-              <div className="mt-6 flex flex-wrap gap-2">
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-700 bg-slate-100 border border-slate-200 rounded-full px-3 py-1">Fast Turnarounds</span>
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-700 bg-slate-100 border border-slate-200 rounded-full px-3 py-1">Color Consistency</span>
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-700 bg-slate-100 border border-slate-200 rounded-full px-3 py-1">Quality Checks</span>
+        <div className="relative max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-400 block mb-4">What We Do</span>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[0.95] mb-6">
+                Order custom<br />
+                apparel and merch<br />
+                <span className="text-gradient-orange">today.</span>
+              </h2>
+              <p className="text-white/50 text-lg font-medium leading-relaxed mb-8 max-w-lg">
+                We specialize in custom screen printing, branded apparel, and promotional products for businesses, organizations, teams, and events.
+              </p>
+              <div className="flex flex-wrap gap-3 mb-10">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-orange-500 rounded-full translate-x-1 translate-y-1" aria-hidden="true"></div>
+                  <button
+                    onClick={() => onNavigate('quote')}
+                    className="relative bg-white text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.18em] text-[11px] border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
+                  >
+                    Start Your Order
+                  </button>
+                </div>
+                <div className="relative">
+                  <div className="absolute inset-0 bg-purple-600 rounded-full translate-x-1 translate-y-1" aria-hidden="true"></div>
+                  <button
+                    onClick={() => onNavigate('guide')}
+                    className="relative bg-white text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.18em] text-[11px] border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
+                  >
+                    Print Guide
+                  </button>
+                </div>
+                <div className="relative">
+                  <div className="absolute inset-0 bg-yellow-400 rounded-full translate-x-1 translate-y-1" aria-hidden="true"></div>
+                  <button
+                    onClick={() => onNavigate('pricing')}
+                    className="relative bg-white text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.18em] text-[11px] border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
+                  >
+                    Pricing
+                  </button>
+                </div>
+                <div className="relative">
+                  <div className="absolute inset-0 bg-cyan-400 rounded-full translate-x-1 translate-y-1" aria-hidden="true"></div>
+                  <button
+                    onClick={() => onNavigate('colors')}
+                    className="relative bg-white text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.18em] text-[11px] border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
+                  >
+                    Color Guide
+                  </button>
+                </div>
               </div>
+              <ul className="space-y-4">
+                {[
+                  'Screen printing on t-shirts, hoodies, jackets & more',
+                  'Quality inks and durable, long-lasting prints',
+                  'Fast turnaround and reliable service',
+                ].map((item) => (
+                  <li key={item} className="flex items-center gap-3">
+                    <span className="w-2.5 h-2.5 rounded-full bg-orange-500 shrink-0 shadow-[0_0_10px_rgba(255,103,32,0.5)]"></span>
+                    <span className="text-white/80 font-bold text-sm">{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div className="space-y-4">
-              {[
-                {
-                  title: 'Pre-Press Accuracy',
-                  metric: 'Color Locked',
-                  desc: 'Artwork and separations are validated before production starts.',
-                },
-                {
-                  title: 'Controlled Print Run',
-                  metric: 'QC Checks',
-                  desc: 'Registration and cure are monitored from first pull to final pack.',
-                },
-                {
-                  title: 'Reliable Turnaround',
-                  metric: '10-12 Days',
-                  desc: 'Clear timelines built for launches, drops, and repeat orders.',
-                },
-              ].map((item) => (
-                <motion.article
-                  key={item.title}
-                  whileHover={reduceMotion ? undefined : { y: -3 }}
-                  className="bg-slate-50 border-2 border-slate-200 rounded-3rem p-6 shadow-[4px_4px_0_#e2e8f0] hover:shadow-[6px_6px_0_#cbd5e1] transition-all"
-                >
-                  <div className="flex items-start justify-between gap-5">
-                    <div>
-                      <h3 className="text-xl font-black text-slate-900 tracking-tight mb-2">{item.title}</h3>
-                      <p className="text-slate-500 font-medium leading-relaxed">{item.desc}</p>
-                    </div>
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-orange-500 whitespace-nowrap mt-1 border border-orange-300 bg-orange-50 rounded-full px-3 py-1">{item.metric}</span>
-                  </div>
-                </motion.article>
-              ))}
+            <div className="relative">
+              <div className="relative rounded-3rem overflow-hidden aspect-[4/5] bg-white/5 border border-white/10 shadow-[8px_8px_0_#FF6720]">
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={carouselIndex}
+                    src={HERO_CAROUSEL_IMAGES[carouselIndex]}
+                    alt="Custom screen printing work"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8, ease: EASE_OUT }}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </AnimatePresence>
+              </div>
+              <div className="flex items-center justify-center gap-2 mt-5">
+                {HERO_CAROUSEL_IMAGES.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCarouselIndex(idx)}
+                    className={`h-1.5 rounded-full transition-all duration-500 ${
+                      idx === carouselIndex
+                        ? 'w-8 bg-orange-500'
+                        : 'w-1.5 bg-white/20 hover:bg-white/40'
+                    }`}
+                    aria-label={`Go to image ${idx + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </motion.section>
 
       {/* Curated Projects */}
-      <motion.section {...revealProps} className="py-20 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-8">
-            <div className="border-2 border-slate-900 bg-white rounded-3rem p-5 shadow-[6px_6px_0_#0f172a]">
-              <span className="inline-flex items-center border-2 border-slate-900 rounded-full px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.34em] text-slate-900 mb-3">
-                Curated Projects
-              </span>
-              <h3 className="text-4xl md:text-5xl font-black tracking-tight leading-[0.95] text-slate-950 uppercase">
+      <motion.section {...revealProps} className="py-24 bg-white relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-slate-200 to-transparent"></div>
+
+        {/* Splash decorations */}
+        <div className="absolute top-8 right-[15%] w-40 h-16 bg-orange-500 rounded-[2rem] rotate-[-6deg] opacity-90" aria-hidden="true"></div>
+        <div className="absolute top-6 right-[14%] w-40 h-16 border-2 border-slate-900 rounded-[2rem] rotate-[-6deg]" aria-hidden="true"></div>
+        <div className="absolute bottom-12 left-[8%] w-32 h-14 bg-purple-600 rounded-[2rem] rotate-[4deg] opacity-90" aria-hidden="true"></div>
+        <div className="absolute bottom-10 left-[7%] w-32 h-14 border-2 border-slate-900 rounded-[2rem] rotate-[4deg]" aria-hidden="true"></div>
+        <div className="absolute top-1/2 right-[5%] w-20 h-20 bg-yellow-400 rounded-full opacity-80" aria-hidden="true"></div>
+
+        <div className="relative max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-12">
+            <div>
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-500 block mb-4">Our Work</span>
+              <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-[0.95] text-slate-900 uppercase mb-4">
                 Recent Production Work
-              </h3>
-              <div className="mt-4 flex items-center gap-2">
-                <span className="h-1.5 w-20 rounded-full bg-slate-900"></span>
-                <span className="h-1.5 w-14 rounded-full bg-orange-500"></span>
-              </div>
+              </h2>
+              <p className="text-slate-500 font-medium leading-relaxed max-w-lg">
+                Every project represents our commitment to precision, color, and quality across every print run.
+              </p>
             </div>
-            <button onClick={() => openLightbox(0)} className="text-sm bg-slate-950 text-white border-2 border-slate-950 px-5 py-3 rounded-full font-black uppercase tracking-[0.2em] w-full md:w-auto shadow-[4px_4px_0_#fb923c] hover:-translate-y-0.5 transition-transform">
-              View Gallery
-            </button>
+            <div className="relative shrink-0">
+              <div className="absolute inset-0 bg-orange-500 rounded-full translate-x-1 translate-y-1" aria-hidden="true"></div>
+              <button onClick={() => openLightbox(0)} className="relative text-sm bg-white text-slate-950 border-2 border-slate-950 px-6 py-3 rounded-full font-black uppercase tracking-[0.2em] w-full md:w-auto hover:-translate-y-0.5 hover:shadow-lg transition-all">
+                View Gallery
+              </button>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-2 gap-5">
-            {PROJECT_IMAGES.slice(0, 4).map((src, idx) => (
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+            {PROJECT_IMAGES.slice(0, 6).map((src, idx) => (
               <motion.button
-                whileHover={reduceMotion ? undefined : { y: -3 }}
-                key={src}
+                whileHover={reduceMotion ? undefined : { y: -4 }}
+                key={`${src}-${idx}`}
                 onClick={() => openLightbox(idx)}
-                className={`group relative text-left overflow-hidden border-2 border-slate-900 shadow-[6px_6px_0_#0f172a] focus:outline-none focus:ring-4 focus:ring-orange-300 rounded-3rem bg-white transition-transform hover:-translate-y-1 ${idx === 0 ? 'lg:col-span-2 lg:row-span-2 h-96 lg:h-full' : 'h-64 lg:h-full'}`}
+                className={`group relative text-left overflow-hidden border border-slate-200 hover:border-orange-400 focus:outline-none focus:ring-4 focus:ring-orange-300 rounded-3rem bg-white shadow-lg hover:shadow-xl transition-all duration-300 ${idx === 0 ? 'col-span-2 row-span-2 min-h-[33rem]' : 'min-h-[16rem]'}`}
               >
                 <img
                   src={src}
@@ -330,13 +367,12 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/15 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                  <div className="inline-flex flex-col items-start border-2 border-white/75 bg-black/45 backdrop-blur-sm rounded-2xl px-3.5 py-3 shadow-[0_12px_24px_rgba(0,0,0,0.35)] max-w-[92%]">
-                    <p className="inline-block text-[10px] font-black uppercase tracking-[0.3em] text-white border border-white/70 bg-black/45 rounded-full px-3 py-1 mb-2">{PROJECT_DETAILS[idx]?.label ?? `Project ${idx + 1}`}</p>
-                    <p className="font-black text-xl leading-tight tracking-tight text-white [text-shadow:0_2px_10px_rgba(0,0,0,0.55)]">{PROJECT_DETAILS[idx]?.title ?? 'Premium Screen Print'}</p>
-                    <p className="text-[12px] text-white/95 font-bold mt-1.5 leading-relaxed [text-shadow:0_1px_6px_rgba(0,0,0,0.45)]">{PROJECT_DETAILS[idx]?.subtitle ?? 'A recent screen print run showcasing pigment and texture on blanks.'}</p>
-                  </div>
+                <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 to-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <div className="inline-block bg-orange-500 text-white text-[10px] font-black uppercase tracking-[0.3em] px-4 py-1.5 rounded-full mb-2 -rotate-2">{PROJECT_DETAILS[idx]?.label ?? `Project ${idx + 1}`}</div>
+                  <p className="font-black text-xl md:text-2xl leading-tight tracking-tight text-white mb-1">{PROJECT_DETAILS[idx]?.title ?? 'Premium Screen Print'}</p>
+                  <p className="text-[12px] text-white/70 font-bold leading-relaxed">{PROJECT_DETAILS[idx]?.subtitle ?? 'A recent screen print run showcasing pigment and texture on blanks.'}</p>
                 </div>
               </motion.button>
             ))}
