@@ -17,6 +17,10 @@ import {
   ParticlesBackground,
 } from "../components/ui";
 
+const InteractiveShirt3D = React.lazy(
+  () => import("../components/InteractiveShirt3D")
+);
+
 interface HomeProps {
   onNavigate: (page: string) => void;
 }
@@ -228,7 +232,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/20 to-black/75"></div>
         </div>
 
-        <div className="relative z-10 container-breakout w-full pt-6 md:pt-10">
+        <div className="relative z-10 container-breakout max-w-breakout 2xl:max-w-[1680px] w-full pt-6 md:pt-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-14 2xl:gap-20 items-center">
             {/* Left Content Column */}
             <div className="flex flex-col items-start lg:col-span-7 xl:col-span-7">
@@ -354,7 +358,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               </motion.div>
             </div>
 
-            {/* Right Showcase Column (Fulfills the side area on desktop & large screens) */}
+            {/* Right Showcase Column (Floating 3D Designed Shirt with Scroll-Interactive 3D Motion) */}
             <motion.div
               initial={reduceMotion ? false : { opacity: 0, scale: 0.95 }}
               animate={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
@@ -363,79 +367,17 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   ? undefined
                   : { duration: 0.8, delay: 0.25, ease: EASE_OUT }
               }
-              className="hidden lg:flex flex-col items-center justify-center lg:col-span-5 xl:col-span-5 relative"
+              className="hidden lg:flex flex-col items-center justify-center lg:col-span-5 xl:col-span-5 relative lg:-mt-4 xl:-mt-6 2xl:-mt-8"
             >
-              {/* Ambient backdrop glow */}
-              <div
-                className="absolute -inset-4 bg-gradient-to-tr from-purple-600/30 via-orange-500/20 to-transparent rounded-3rem blur-2xl -z-10"
-                aria-hidden="true"
-              />
-
-              <div className="w-full glass-dark rounded-3rem p-6 xl:p-8 border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.6)] backdrop-blur-xl">
-                {/* Header status */}
-                <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
-                  <div className="flex items-center gap-2">
-                    <span className="relative flex h-2.5 w-2.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                    </span>
-                    <span className="text-[11px] font-black uppercase tracking-[0.2em] text-white/90">
-                      Print Floor Live
-                    </span>
+              <React.Suspense
+                fallback={
+                  <div className="w-full lg:w-[460px] xl:w-[520px] 2xl:w-[580px] h-[640px] xl:h-[700px] 2xl:h-[760px] flex items-center justify-center">
+                    <div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
                   </div>
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-orange-400 font-bold bg-orange-400/10 px-2.5 py-1 rounded-full border border-orange-400/20">
-                    Precision Press 2026
-                  </span>
-                </div>
-
-                {/* Visual Apparel Display */}
-                <div className="relative rounded-2xl overflow-hidden aspect-[4/3] xl:aspect-[16/11] bg-black/40 border border-white/10 group mb-5">
-                  <AnimatePresence mode="wait">
-                    <motion.img
-                      key={carouselIndex}
-                      src={HERO_CAROUSEL_IMAGES[carouselIndex]}
-                      alt="Featured screen printed garment"
-                      initial={{ opacity: 0, scale: 1.05 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.7, ease: EASE_OUT }}
-                      className="w-full h-full object-cover"
-                    />
-                  </AnimatePresence>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
-                  
-                  {/* Floating badges on image */}
-                  <div className="absolute top-3 left-3">
-                    <span className="bg-black/60 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md border border-white/20">
-                      Sample #{carouselIndex + 1}
-                    </span>
-                  </div>
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white">
-                    <span className="text-xs font-black uppercase tracking-wider text-white">
-                      6-Color Plastisol Run
-                    </span>
-                    <span className="text-[10px] font-bold text-white/70 uppercase">
-                      Direct-to-Screen
-                    </span>
-                  </div>
-                </div>
-
-                {/* Live spec badges below image */}
-                <div className="grid grid-cols-3 gap-2.5 pt-1">
-                  <div className="bg-white/5 rounded-xl p-3 border border-white/5 text-center">
-                    <p className="text-[10px] font-bold text-white/50 uppercase tracking-wider">Tolerance</p>
-                    <p className="text-sm font-black text-white mt-0.5">0.1 mm</p>
-                  </div>
-                  <div className="bg-white/5 rounded-xl p-3 border border-white/5 text-center">
-                    <p className="text-[10px] font-bold text-white/50 uppercase tracking-wider">Capacity</p>
-                    <p className="text-sm font-black text-white mt-0.5">5K / Day</p>
-                  </div>
-                  <div className="bg-white/5 rounded-xl p-3 border border-white/5 text-center">
-                    <p className="text-[10px] font-bold text-white/50 uppercase tracking-wider">Matching</p>
-                    <p className="text-sm font-black text-orange-400 mt-0.5">Pantone®</p>
-                  </div>
-                </div>
-              </div>
+                }
+              >
+                <InteractiveShirt3D />
+              </React.Suspense>
             </motion.div>
           </div>
         </div>
@@ -465,7 +407,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           aria-hidden="true"
         ></div>
 
-        <div className="relative container-breakout">
+        <div className="relative container-breakout max-w-breakout 2xl:max-w-[1680px]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 xl:gap-20 items-center">
             <div className="lg:col-span-7">
               <span className="text-[11px] xl:text-xs font-black uppercase tracking-[0.4em] text-orange-400 block mb-4">
@@ -590,7 +532,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       >
         <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-slate-200 to-transparent"></div>
 
-        <div className="relative container-breakout">
+        <div className="relative container-breakout max-w-breakout 2xl:max-w-[1680px]">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
             <div>
               <span className="text-[11px] font-black uppercase tracking-[0.4em] text-orange-500 block mb-4">

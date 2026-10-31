@@ -20,10 +20,10 @@ export const Logo: React.FC<LogoProps> = ({
     <div
       className={`flex items-center gap-2.5 sm:gap-3.5 group select-none transition-transform duration-200 ${className}`}
     >
-      {/* High-Resolution TS Monogram Mark */}
+      {/* High-Resolution ST Monogram Mark */}
       <img
         src="/logo.png"
-        alt="TS Custom Screen Printing"
+        alt="ST Custom Screen Printing"
         className="site-logo shrink-0 transition-transform duration-300 group-hover:scale-105"
         loading="eager"
       />

@@ -56,7 +56,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div {...revealProps}>
             <span className="text-orange-500 font-black uppercase tracking-[0.5em] text-[10px] mb-8 block">
-              About TS Custom
+              About ST Custom
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tight leading-tight mb-8">
               40+ Years of{" "}
@@ -315,7 +315,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
         <div className="max-w-7xl mx-auto relative">
           <motion.div {...containerProps} className="mb-16">
             <span className="text-orange-400 font-black uppercase tracking-[0.5em] text-[10px] mb-6 block">
-              Why TS Custom
+              Why ST Custom
             </span>
             <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight">
               What Sets Us Apart
@@ -528,7 +528,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
             </h2>
             <p className="text-lg text-white/60 leading-relaxed font-medium mb-12">
               Get in touch with our team to discuss your custom apparel needs
-              and experience the TS Custom difference.
+              and experience the ST Custom difference.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <div className="relative">

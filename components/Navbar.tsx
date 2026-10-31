@@ -76,7 +76,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+      const currentScrollY =
+        window.scrollY ?? document.documentElement.scrollTop ?? window.pageYOffset ?? 0;
       const delta = currentScrollY - lastScrollY.current;
 
       setScrolled(currentScrollY > 20);
@@ -91,11 +92,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
       // Always show at the top of page
       if (currentScrollY <= 60) {
         setIsVisible(true);
-      } else if (delta > 8 && currentScrollY > 100) {
+      } else if (delta > 4 && currentScrollY > 80) {
         // Scrolling DOWN -> smoothly hide out of view
         setIsVisible(false);
-      } else if (delta < -8) {
-        // Scrolling UP even a little bit -> smoothly reveal
+      } else if (delta < -2 || currentScrollY < lastScrollY.current) {
+        // Scrolling UP -> smoothly reveal
         setIsVisible(true);
       }
 
@@ -212,7 +213,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
           <div
             onClick={() => handleNavigate("home")}
             className="flex items-center cursor-pointer transition-transform duration-200 hover:scale-[1.02] active:scale-95"
-            aria-label="TS Custom Screen Printing Home"
+            aria-label="ST Custom Screen Printing Home"
           >
             <Logo
               isDarkBg={isDarkBg}

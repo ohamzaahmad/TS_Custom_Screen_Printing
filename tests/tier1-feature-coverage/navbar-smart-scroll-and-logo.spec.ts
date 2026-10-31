@@ -7,7 +7,7 @@ test.describe('Navbar Smart Scroll & Logo Presentation', () => {
   });
 
   test('Logo displays prominently with high-contrast text lockup', async ({ page }) => {
-    const logoImg = page.locator('img[alt="TS Custom Screen Printing"]');
+    const logoImg = page.locator('img[alt="ST Custom Screen Printing"]');
     await expect(logoImg).toBeVisible();
 
     // Verify brand typography lockup
