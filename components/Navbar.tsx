@@ -207,7 +207,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
           : "bg-white/80 backdrop-blur-md border-b border-slate-200/50 py-3 sm:py-3.5"
       }`}
     >
-      <div className="container-breakout max-w-[1348px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
+      <div className="relative z-50 container-breakout max-w-[1348px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div
@@ -223,14 +223,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
           </div>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden md:flex lg:flex items-center gap-1.5" aria-label="Main Navigation">
+          <div className="hidden lg:flex items-center gap-1.5" aria-label="Main Navigation">
             {NAV_ITEMS.map((item) => {
               const isActive = currentPage === item.id;
+              // On medium desktop (1024px to 1279px), collapse secondary links into Project Resources
+              const isCollapsedOnLg = item.id === "about" || item.id === "gallery" || item.id === "catalogue";
+              const visibilityClass = isCollapsedOnLg ? "hidden xl:inline-flex" : "inline-flex";
+
               return (
                 <button
                   key={item.id}
                   onClick={() => handleNavigate(item.id)}
-                  className={`relative px-4 py-2 rounded-full font-display text-[13px] uppercase tracking-[0.14em] font-bold cursor-pointer transition-all duration-200 ${
+                  className={`relative ${visibilityClass} px-3.5 xl:px-4 py-2 rounded-full font-display text-[13px] uppercase tracking-[0.14em] font-bold cursor-pointer transition-all duration-200 ${
                     isDarkBg
                       ? isActive
                         ? "text-white bg-white/15 shadow-xs"
@@ -263,7 +267,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
                 aria-expanded={resourcesOpen}
                 aria-haspopup="true"
                 aria-label="Project Resources"
-                className={`flex items-center gap-1.5 px-4 py-2 rounded-full font-display text-[13px] uppercase tracking-[0.14em] font-bold cursor-pointer transition-all duration-200 ${
+                className={`flex items-center gap-1.5 px-3.5 xl:px-4 py-2 rounded-full font-display text-[13px] uppercase tracking-[0.14em] font-bold cursor-pointer transition-all duration-200 ${
                   isDarkBg
                     ? resourcesOpen
                       ? "text-white bg-white/20"
@@ -288,6 +292,40 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
                   className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 rounded-2xl bg-white border border-slate-200/90 shadow-[0_20px_60px_rgba(15,23,42,0.18)] p-2 z-50 animate-in fade-in zoom-in-95 duration-200"
                   role="menu"
                 >
+                  {/* Collapsed Secondary Nav Links (Cleanly moves About, Gallery, Catalogue into dropdown on smaller desktop) */}
+                  <div className="xl:hidden pb-1 mb-1 border-b border-slate-100">
+                    <div className="px-3 py-1">
+                      <p className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400">
+                        Navigation
+                      </p>
+                    </div>
+                    <div className="flex flex-col gap-0.5">
+                      {[
+                        { label: "About", id: "about", icon: "fa-users" },
+                        { label: "Gallery", id: "gallery", icon: "fa-images" },
+                        { label: "Catalogue", id: "catalogue", icon: "fa-tshirt" },
+                      ].map((item) => {
+                        const isActive = currentPage === item.id;
+                        return (
+                          <button
+                            key={item.id}
+                            onClick={() => handleNavigate(item.id)}
+                            className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-left cursor-pointer transition-colors ${
+                              isActive
+                                ? "bg-slate-900 text-white font-bold"
+                                : "text-slate-700 hover:bg-slate-50 hover:text-slate-950 font-semibold"
+                            }`}
+                          >
+                            <i className={`fas ${item.icon} text-xs w-4 text-center text-orange-500`} />
+                            <span className="font-display text-[13px] uppercase tracking-wider">
+                              {item.label}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
                   <div className="px-3 py-2 border-b border-slate-100 mb-1">
                     <p className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400">
                       Print &amp; Ordering Tools
@@ -351,13 +389,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
             </Magnetic>
 
             {/* Mobile Menu Toggle Button */}
-            <div className="md:hidden flex items-center">
+            <div className="lg:hidden flex items-center">
               <button
                 onClick={() => setIsOpen((prev) => !prev)}
                 aria-label={isOpen ? "Close menu" : "Open menu"}
                 aria-controls="mobile-menu"
                 aria-expanded={isOpen}
-                className={`w-11 h-11 flex items-center justify-center rounded-full border cursor-pointer transition-all duration-300 ${
+                className={`w-11 h-11 flex items-center justify-center rounded-full border cursor-pointer transition-all duration-300 relative z-50 ${
                   isOpen
                     ? "bg-slate-950 text-white border-slate-950"
                     : isDarkBg
@@ -390,7 +428,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
 
       {/* Mobile Drawer Overlay */}
       <div
-        className={`fixed inset-0 bg-slate-950/60 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
+        className={`fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
           isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsOpen(false)}
@@ -404,18 +442,32 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
         role="dialog"
         aria-modal="true"
         aria-hidden={!isOpen}
-        className={`lg:hidden fixed top-20 right-4 left-4 max-h-[calc(100vh-6rem)] rounded-3xl bg-white border border-slate-200/90 shadow-[0_25px_70px_rgba(15,23,42,0.3)] overflow-y-auto transition-all duration-300 ${
+        className={`lg:hidden fixed z-50 top-16 sm:top-20 right-3 left-3 sm:right-4 sm:left-4 max-h-[calc(100dvh-5.5rem)] rounded-3xl bg-white border border-slate-200/90 shadow-[0_25px_70px_rgba(15,23,42,0.3)] overflow-y-auto transition-all duration-300 ${
           isOpen
             ? "opacity-100 translate-y-0 visible"
             : "opacity-0 -translate-y-4 invisible pointer-events-none"
         }`}
       >
-        <div className="p-6 flex flex-col gap-6">
+        <div className="p-5 sm:p-6 flex flex-col gap-5">
+          {/* Header with Title and Explicit Close Button */}
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+              <p className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400">
+                Menu
+              </p>
+            </div>
+            <button
+              onClick={() => setIsOpen(false)}
+              aria-label="Close menu"
+              className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 flex items-center justify-center transition-all cursor-pointer"
+            >
+              <i className="fas fa-times text-sm" />
+            </button>
+          </div>
+
           {/* Main Navigation Links */}
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 mb-3 px-2">
-              Menu
-            </p>
             <div className="flex flex-col gap-1">
               {NAV_ITEMS.map((item) => {
                 const isActive = currentPage === item.id;
