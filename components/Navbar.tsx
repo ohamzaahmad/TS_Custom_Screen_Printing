@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Logo } from "../constants";
+import { Magnetic } from "./ui";
 
 interface NavbarProps {
   currentPage: string;
@@ -219,12 +220,14 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
               )}
             </div>
 
-            <button
-              onClick={() => onNavigate("quote")}
-              className="bg-slate-950 text-white border-2 border-slate-950 px-3 sm:px-6 py-2.5 rounded-full font-black text-[10px] lg:text-[13px] uppercase tracking-[0.14em] sm:tracking-[0.2em] shadow-lg hover:-translate-y-0.5 hover:shadow-xl transition-all active:translate-y-0 active:scale-95 whitespace-nowrap"
-            >
-              Start Order
-            </button>
+            <Magnetic range={70} intensity={0.25}>
+              <button
+                onClick={() => onNavigate("quote")}
+                className="bg-slate-950 text-white border-2 border-slate-950 px-3 sm:px-6 py-2.5 rounded-full font-black text-[10px] lg:text-[13px] uppercase tracking-[0.14em] sm:tracking-[0.2em] shadow-lg hover:-translate-y-0.5 hover:shadow-xl transition-all active:translate-y-0 active:scale-95 whitespace-nowrap"
+              >
+                Start Order
+              </button>
+            </Magnetic>
 
             {/* Mobile menu toggle */}
             <div className="md:hidden flex items-center">

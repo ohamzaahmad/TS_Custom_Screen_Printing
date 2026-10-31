@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { createPortal } from "react-dom";
 import { useSEO } from "../hooks/useSEO";
+import { BlurText } from "../components/ui";
 
 interface GalleryProps {
   onNavigate: (page: string) => void;
@@ -143,9 +144,15 @@ const Gallery: React.FC<GalleryProps> = ({ onNavigate }) => {
             Gallery
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase tracking-tight leading-tight mb-4">
-            <span className="text-orange-500">Our</span>{" "}
-            <span className="text-purple-500">Recent</span>{" "}
-            <span className="text-slate-900">Portfolio</span>
+            <span className="text-orange-500">
+              <BlurText text="Our" delay={0.04} />
+            </span>{" "}
+            <span className="text-purple-500">
+              <BlurText text="Recent" delay={0.04} />
+            </span>{" "}
+            <span className="text-slate-900">
+              <BlurText text="Portfolio" delay={0.04} />
+            </span>
           </h1>
           <p className="text-base text-slate-600 leading-snug font-medium max-w-2xl">
             Browse our finest screen print projects showcasing precision,

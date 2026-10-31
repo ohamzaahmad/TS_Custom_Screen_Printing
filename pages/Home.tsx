@@ -8,7 +8,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../components/ui/accordion";
-import { ShinyText } from "../components/ui/shiny-text";
+import {
+  ShinyText,
+  SpotlightCard,
+  BlurText,
+  Magnetic,
+  NumberTicker,
+  ParticlesBackground,
+} from "../components/ui";
 
 interface HomeProps {
   onNavigate: (page: string) => void;
@@ -207,13 +214,18 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               <div className="blob blob-3" aria-hidden="true" />
             </>
           )}
+          <ParticlesBackground
+            particleCount={45}
+            speed={0.4}
+            particleColors={["#BD00FF", "#FF8A00", "#ffffff"]}
+          />
           <img
             src="/loop.gif"
             alt=""
-            className="w-full h-full object-cover opacity-40 mix-blend-screen scale-110"
+            className="w-full h-full object-cover opacity-20 mix-blend-screen scale-110"
             aria-hidden="true"
           />
-          <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/50 to-black"></div>
+          <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/60 to-black"></div>
         </div>
 
         <div className="relative z-10 container-breakout w-full pt-8 md:pt-16">
@@ -240,10 +252,10 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               }
               className="fluid-h1 text-white leading-tight mb-8 tracking-tight uppercase select-none"
             >
-              CUSTOM SCREEN PRINTING
+              <BlurText text="CUSTOM SCREEN PRINTING" delay={0.03} />
               <br />
               <span className="text-gradient-orange italic font-extrabold">
-                BUILT FOR YOUR BRAND.
+                <BlurText text="BUILT FOR YOUR BRAND." delay={0.03} />
               </span>
             </motion.h1>
 
@@ -271,23 +283,27 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   ? undefined
                   : { duration: 0.6, delay: 0.24, ease: EASE_OUT }
               }
-              className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
+              className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
             >
-              <button
-                onClick={() => onNavigate("quote")}
-                className="bg-white text-black px-6 py-3 rounded-full font-black text-sm shadow-lg hover:scale-102 active:scale-95 transition-all duration-300 uppercase tracking-widest btn-pulse"
-              >
-                Start A Project
-              </button>
-              <button
-                onClick={() =>
-                  (window.location.href =
-                    "https://www.sportswearcollection.com/st-screen-printing")
-                }
-                className="glass-dark text-white px-6 py-3 rounded-full font-black text-sm hover:bg-white/10 transition-all uppercase tracking-widest border border-white/10 active:scale-95"
-              >
-                Browse Catalog
-              </button>
+              <Magnetic range={80} intensity={0.25}>
+                <button
+                  onClick={() => onNavigate("quote")}
+                  className="bg-white text-black px-6 py-3 rounded-full font-black text-sm shadow-lg hover:scale-102 active:scale-95 transition-all duration-300 uppercase tracking-widest btn-pulse"
+                >
+                  Start A Project
+                </button>
+              </Magnetic>
+              <Magnetic range={60} intensity={0.2}>
+                <button
+                  onClick={() =>
+                    (window.location.href =
+                      "https://www.sportswearcollection.com/st-screen-printing")
+                  }
+                  className="glass-dark text-white px-6 py-3 rounded-full font-black text-sm hover:bg-white/10 transition-all uppercase tracking-widest border border-white/10 active:scale-95"
+                >
+                  Browse Catalog
+                </button>
+              </Magnetic>
             </motion.div>
 
             <motion.div
@@ -300,24 +316,39 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               }
               className="mt-10 grid grid-cols-3 gap-4 w-full max-w-xl"
             >
-              <div className="glass-dark rounded-2xl p-4 border border-white/10">
-                <p className="text-white text-xl font-black">500K+</p>
+              <SpotlightCard
+                spotlightColor="rgba(255, 138, 0, 0.2)"
+                className="glass-dark rounded-2xl p-4 border border-white/10"
+              >
+                <p className="text-white text-xl font-black">
+                  <NumberTicker value={500} suffix="K+" />
+                </p>
                 <p className="text-white/50 text-[10px] uppercase tracking-[0.2em] font-black">
                   Prints YTD
                 </p>
-              </div>
-              <div className="glass-dark rounded-2xl p-4 border border-white/10">
-                <p className="text-white text-xl font-black">99.8%</p>
+              </SpotlightCard>
+              <SpotlightCard
+                spotlightColor="rgba(189, 0, 255, 0.2)"
+                className="glass-dark rounded-2xl p-4 border border-white/10"
+              >
+                <p className="text-white text-xl font-black">
+                  <NumberTicker value={99.8} decimalPlaces={1} suffix="%" />
+                </p>
                 <p className="text-white/50 text-[10px] uppercase tracking-[0.2em] font-black">
                   Repeat Clients
                 </p>
-              </div>
-              <div className="glass-dark rounded-2xl p-4 border border-white/10">
-                <p className="text-white text-xl font-black">10-12</p>
+              </SpotlightCard>
+              <SpotlightCard
+                spotlightColor="rgba(255, 138, 0, 0.2)"
+                className="glass-dark rounded-2xl p-4 border border-white/10"
+              >
+                <p className="text-white text-xl font-black">
+                  <NumberTicker value={10} suffix="–12" />
+                </p>
                 <p className="text-white/50 text-[10px] uppercase tracking-[0.2em] font-black">
                   Business Days
                 </p>
-              </div>
+              </SpotlightCard>
             </motion.div>
           </div>
         </div>
