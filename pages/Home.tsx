@@ -215,17 +215,17 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             </>
           )}
           <ParticlesBackground
-            particleCount={45}
-            speed={0.4}
+            particleCount={35}
+            speed={0.35}
             particleColors={["#BD00FF", "#FF8A00", "#ffffff"]}
           />
           <img
             src="/loop.gif"
             alt=""
-            className="w-full h-full object-cover opacity-20 mix-blend-screen scale-110"
+            className="w-full h-full object-cover opacity-50 mix-blend-screen scale-110"
             aria-hidden="true"
           />
-          <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/60 to-black"></div>
+          <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/20 to-black/75"></div>
         </div>
 
         <div className="relative z-10 container-breakout w-full pt-8 md:pt-16">
