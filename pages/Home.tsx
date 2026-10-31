@@ -169,7 +169,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   return (
     <div className="animate-in">
       {/* Cinematic Hero - Brand Entry */}
-      <section className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden bg-black">
+      <section className="relative min-h-screen flex items-center pt-24 lg:pt-28 pb-12 lg:pb-16 overflow-hidden bg-black">
         <div className="absolute inset-0 z-0">
           {!reduceMotion ? (
             <>
@@ -228,127 +228,214 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/20 to-black/75"></div>
         </div>
 
-        <div className="relative z-10 container-breakout w-full pt-8 md:pt-16">
-          <div className="flex flex-col items-start max-w-3xl">
-            <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={
-                reduceMotion ? undefined : { duration: 0.6, ease: EASE_OUT }
-              }
-              className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass-dark text-white/90 text-[9px] font-black uppercase tracking-[0.5em] mb-12 border border-white/5"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-purple-600 shadow-[0_0_12px_rgba(189,0,255,0.8)]"></span>
-              <ShinyText text="EST. 2018 | THE GOLD STANDARD" speed={5} />
-            </motion.div>
+        <div className="relative z-10 container-breakout w-full pt-6 md:pt-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-14 2xl:gap-20 items-center">
+            {/* Left Content Column */}
+            <div className="flex flex-col items-start lg:col-span-7 xl:col-span-7">
+              <motion.div
+                initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+                animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                transition={
+                  reduceMotion ? undefined : { duration: 0.6, ease: EASE_OUT }
+                }
+                className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass-dark text-white/90 text-[10px] xl:text-[11px] font-black uppercase tracking-[0.5em] mb-4 xl:mb-6 border border-white/10"
+              >
+                <span className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_12px_rgba(189,0,255,0.8)]"></span>
+                <ShinyText text="EST. 2018 | THE GOLD STANDARD" speed={5} />
+              </motion.div>
 
-            <motion.h1
-              initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={
-                reduceMotion
-                  ? undefined
-                  : { duration: 0.8, delay: 0.08, ease: EASE_OUT }
-              }
-              className="fluid-h1 text-white leading-tight mb-8 tracking-tight uppercase select-none"
-            >
-              <BlurText text="CUSTOM SCREEN PRINTING" delay={0.03} />
-              <br />
-              <span className="text-gradient-orange italic font-extrabold">
-                <BlurText text="BUILT FOR YOUR BRAND." delay={0.03} />
-              </span>
-            </motion.h1>
+              <motion.h1
+                initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+                animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                transition={
+                  reduceMotion
+                    ? undefined
+                    : { duration: 0.8, delay: 0.08, ease: EASE_OUT }
+                }
+                className="fluid-h1 text-white leading-tight mb-4 xl:mb-5 tracking-tight uppercase select-none"
+              >
+                CUSTOM SCREEN PRINTING
+                <br />
+                <span className="text-gradient-orange italic font-extrabold block mt-1">
+                  BUILT FOR YOUR BRAND.
+                </span>
+              </motion.h1>
 
-            <motion.p
-              initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={
-                reduceMotion
-                  ? undefined
-                  : { duration: 0.7, delay: 0.16, ease: EASE_OUT }
-              }
-              className="text-base md:text-lg text-white/40 mb-10 leading-relaxed font-medium max-w-xl border-l-2 border-purple-600/30 pl-6"
-            >
-              Premium custom apparel and merch, printed with industrial
-              precision and boutique attention to detail. Bold color, durable
-              inks, and fast turnaround — from your first mockup to the final
-              print run.
-            </motion.p>
+              <motion.p
+                initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+                animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                transition={
+                  reduceMotion
+                    ? undefined
+                    : { duration: 0.7, delay: 0.16, ease: EASE_OUT }
+                }
+                className="text-base sm:text-lg xl:text-xl text-white/50 mb-6 xl:mb-8 leading-relaxed font-medium max-w-2xl border-l-2 border-purple-600/40 pl-6"
+              >
+                Premium custom apparel and merch, printed with industrial
+                precision and boutique attention to detail. Bold color, durable
+                inks, and fast turnaround — from your first mockup to the final
+                print run.
+              </motion.p>
 
-            <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={
-                reduceMotion
-                  ? undefined
-                  : { duration: 0.6, delay: 0.24, ease: EASE_OUT }
-              }
-              className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
-            >
-              <Magnetic range={80} intensity={0.25}>
-                <button
-                  onClick={() => onNavigate("quote")}
-                  className="bg-white text-black px-6 py-3 rounded-full font-black text-sm shadow-lg hover:scale-102 active:scale-95 transition-all duration-300 uppercase tracking-widest btn-pulse"
+              <motion.div
+                initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+                animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                transition={
+                  reduceMotion
+                    ? undefined
+                    : { duration: 0.6, delay: 0.24, ease: EASE_OUT }
+                }
+                className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+              >
+                <Magnetic range={80} intensity={0.25}>
+                  <button
+                    onClick={() => onNavigate("quote")}
+                    className="bg-white text-black px-7 py-3.5 xl:px-8 xl:py-4 rounded-full font-black text-sm xl:text-base shadow-lg hover:scale-102 active:scale-95 transition-all duration-300 uppercase tracking-widest btn-pulse w-full sm:w-auto text-center"
+                  >
+                    Start A Project
+                  </button>
+                </Magnetic>
+                <Magnetic range={60} intensity={0.2}>
+                  <button
+                    onClick={() =>
+                      (window.location.href =
+                        "https://www.sportswearcollection.com/st-screen-printing")
+                    }
+                    className="glass-dark text-white px-7 py-3.5 xl:px-8 xl:py-4 rounded-full font-black text-sm xl:text-base hover:bg-white/10 transition-all uppercase tracking-widest border border-white/10 active:scale-95 w-full sm:w-auto text-center"
+                  >
+                    Browse Catalog
+                  </button>
+                </Magnetic>
+              </motion.div>
+
+              <motion.div
+                initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+                animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                transition={
+                  reduceMotion
+                    ? undefined
+                    : { duration: 0.6, delay: 0.32, ease: EASE_OUT }
+                }
+                className="mt-8 xl:mt-9 grid grid-cols-3 gap-4 xl:gap-5 w-full max-w-2xl"
+              >
+                <SpotlightCard
+                  spotlightColor="rgba(255, 138, 0, 0.2)"
+                  className="glass-dark rounded-2xl p-4 sm:p-5 xl:p-6 border border-white/10"
                 >
-                  Start A Project
-                </button>
-              </Magnetic>
-              <Magnetic range={60} intensity={0.2}>
-                <button
-                  onClick={() =>
-                    (window.location.href =
-                      "https://www.sportswearcollection.com/st-screen-printing")
-                  }
-                  className="glass-dark text-white px-6 py-3 rounded-full font-black text-sm hover:bg-white/10 transition-all uppercase tracking-widest border border-white/10 active:scale-95"
+                  <p className="text-white text-2xl sm:text-3xl xl:text-4xl 2xl:text-5xl font-black">
+                    <NumberTicker value={500} suffix="K+" />
+                  </p>
+                  <p className="text-white/60 text-[10px] xl:text-[11px] uppercase tracking-[0.2em] font-black mt-1">
+                    Prints YTD
+                  </p>
+                </SpotlightCard>
+                <SpotlightCard
+                  spotlightColor="rgba(189, 0, 255, 0.2)"
+                  className="glass-dark rounded-2xl p-4 sm:p-5 xl:p-6 border border-white/10"
                 >
-                  Browse Catalog
-                </button>
-              </Magnetic>
-            </motion.div>
+                  <p className="text-white text-2xl sm:text-3xl xl:text-4xl 2xl:text-5xl font-black">
+                    <NumberTicker value={99.8} decimalPlaces={1} suffix="%" />
+                  </p>
+                  <p className="text-white/60 text-[10px] xl:text-[11px] uppercase tracking-[0.2em] font-black mt-1">
+                    Repeat Clients
+                  </p>
+                </SpotlightCard>
+                <SpotlightCard
+                  spotlightColor="rgba(255, 138, 0, 0.2)"
+                  className="glass-dark rounded-2xl p-4 sm:p-5 xl:p-6 border border-white/10"
+                >
+                  <p className="text-white text-2xl sm:text-3xl xl:text-4xl 2xl:text-5xl font-black">
+                    <NumberTicker value={10} suffix="–12" />
+                  </p>
+                  <p className="text-white/60 text-[10px] xl:text-[11px] uppercase tracking-[0.2em] font-black mt-1">
+                    Business Days
+                  </p>
+                </SpotlightCard>
+              </motion.div>
+            </div>
 
+            {/* Right Showcase Column (Fulfills the side area on desktop & large screens) */}
             <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+              initial={reduceMotion ? false : { opacity: 0, scale: 0.95 }}
+              animate={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
               transition={
                 reduceMotion
                   ? undefined
-                  : { duration: 0.6, delay: 0.32, ease: EASE_OUT }
+                  : { duration: 0.8, delay: 0.25, ease: EASE_OUT }
               }
-              className="mt-10 grid grid-cols-3 gap-4 w-full max-w-xl"
+              className="hidden lg:flex flex-col items-center justify-center lg:col-span-5 xl:col-span-5 relative"
             >
-              <SpotlightCard
-                spotlightColor="rgba(255, 138, 0, 0.2)"
-                className="glass-dark rounded-2xl p-4 border border-white/10"
-              >
-                <p className="text-white text-xl font-black">
-                  <NumberTicker value={500} suffix="K+" />
-                </p>
-                <p className="text-white/50 text-[10px] uppercase tracking-[0.2em] font-black">
-                  Prints YTD
-                </p>
-              </SpotlightCard>
-              <SpotlightCard
-                spotlightColor="rgba(189, 0, 255, 0.2)"
-                className="glass-dark rounded-2xl p-4 border border-white/10"
-              >
-                <p className="text-white text-xl font-black">
-                  <NumberTicker value={99.8} decimalPlaces={1} suffix="%" />
-                </p>
-                <p className="text-white/50 text-[10px] uppercase tracking-[0.2em] font-black">
-                  Repeat Clients
-                </p>
-              </SpotlightCard>
-              <SpotlightCard
-                spotlightColor="rgba(255, 138, 0, 0.2)"
-                className="glass-dark rounded-2xl p-4 border border-white/10"
-              >
-                <p className="text-white text-xl font-black">
-                  <NumberTicker value={10} suffix="–12" />
-                </p>
-                <p className="text-white/50 text-[10px] uppercase tracking-[0.2em] font-black">
-                  Business Days
-                </p>
-              </SpotlightCard>
+              {/* Ambient backdrop glow */}
+              <div
+                className="absolute -inset-4 bg-gradient-to-tr from-purple-600/30 via-orange-500/20 to-transparent rounded-3rem blur-2xl -z-10"
+                aria-hidden="true"
+              />
+
+              <div className="w-full glass-dark rounded-3rem p-6 xl:p-8 border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.6)] backdrop-blur-xl">
+                {/* Header status */}
+                <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
+                  <div className="flex items-center gap-2">
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                    </span>
+                    <span className="text-[11px] font-black uppercase tracking-[0.2em] text-white/90">
+                      Print Floor Live
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-orange-400 font-bold bg-orange-400/10 px-2.5 py-1 rounded-full border border-orange-400/20">
+                    Precision Press 2026
+                  </span>
+                </div>
+
+                {/* Visual Apparel Display */}
+                <div className="relative rounded-2xl overflow-hidden aspect-[4/3] xl:aspect-[16/11] bg-black/40 border border-white/10 group mb-5">
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={carouselIndex}
+                      src={HERO_CAROUSEL_IMAGES[carouselIndex]}
+                      alt="Featured screen printed garment"
+                      initial={{ opacity: 0, scale: 1.05 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.7, ease: EASE_OUT }}
+                      className="w-full h-full object-cover"
+                    />
+                  </AnimatePresence>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
+                  
+                  {/* Floating badges on image */}
+                  <div className="absolute top-3 left-3">
+                    <span className="bg-black/60 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md border border-white/20">
+                      Sample #{carouselIndex + 1}
+                    </span>
+                  </div>
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white">
+                    <span className="text-xs font-black uppercase tracking-wider text-white">
+                      6-Color Plastisol Run
+                    </span>
+                    <span className="text-[10px] font-bold text-white/70 uppercase">
+                      Direct-to-Screen
+                    </span>
+                  </div>
+                </div>
+
+                {/* Live spec badges below image */}
+                <div className="grid grid-cols-3 gap-2.5 pt-1">
+                  <div className="bg-white/5 rounded-xl p-3 border border-white/5 text-center">
+                    <p className="text-[10px] font-bold text-white/50 uppercase tracking-wider">Tolerance</p>
+                    <p className="text-sm font-black text-white mt-0.5">0.1 mm</p>
+                  </div>
+                  <div className="bg-white/5 rounded-xl p-3 border border-white/5 text-center">
+                    <p className="text-[10px] font-bold text-white/50 uppercase tracking-wider">Capacity</p>
+                    <p className="text-sm font-black text-white mt-0.5">5K / Day</p>
+                  </div>
+                  <div className="bg-white/5 rounded-xl p-3 border border-white/5 text-center">
+                    <p className="text-[10px] font-bold text-white/50 uppercase tracking-wider">Matching</p>
+                    <p className="text-sm font-black text-orange-400 mt-0.5">Pantone®</p>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
@@ -367,7 +454,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       {/* Order Custom Apparel */}
       <motion.section
         {...revealProps}
-        className="py-24 bg-slate-900 relative overflow-hidden"
+        className="py-24 md:py-28 bg-slate-900 relative overflow-hidden"
       >
         <div
           className="absolute -top-32 -left-32 w-80 h-80 bg-orange-500/15 rounded-full blur-[100px]"
@@ -378,25 +465,25 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           aria-hidden="true"
         ></div>
 
-        <div className="relative container-standard">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div>
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-400 block mb-4">
+        <div className="relative container-breakout">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 xl:gap-20 items-center">
+            <div className="lg:col-span-7">
+              <span className="text-[11px] xl:text-xs font-black uppercase tracking-[0.4em] text-orange-400 block mb-4">
                 What We Do
               </span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[0.95] mb-6">
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight text-white leading-[0.95] mb-6">
                 Order custom
                 <br />
                 apparel and merch
                 <br />
                 <span className="text-gradient-orange">today.</span>
               </h2>
-              <p className="text-white/50 text-lg font-medium leading-relaxed mb-8 max-w-lg">
+              <p className="text-white/60 text-lg xl:text-xl 2xl:text-2xl font-medium leading-relaxed mb-8 max-w-2xl">
                 We specialize in custom screen printing, branded apparel, and
                 promotional products for businesses, organizations, teams, and
                 events.
               </p>
-              <div className="flex flex-wrap gap-3 mb-10">
+              <div className="flex flex-wrap gap-3.5 mb-10">
                 <div className="relative">
                   <div
                     className="absolute inset-0 bg-orange-500 rounded-full translate-x-1 translate-y-1"
@@ -404,7 +491,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   ></div>
                   <button
                     onClick={() => onNavigate("quote")}
-                    className="relative bg-white text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.18em] text-[11px] border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
+                    className="relative bg-white text-slate-900 px-6 sm:px-7 py-3.5 rounded-full font-black uppercase tracking-[0.18em] text-[11px] sm:text-xs border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
                   >
                     Start Your Order
                   </button>
@@ -416,7 +503,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   ></div>
                   <button
                     onClick={() => onNavigate("guide")}
-                    className="relative bg-white text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.18em] text-[11px] border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
+                    className="relative bg-white text-slate-900 px-6 sm:px-7 py-3.5 rounded-full font-black uppercase tracking-[0.18em] text-[11px] sm:text-xs border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
                   >
                     Print Guide
                   </button>
@@ -428,7 +515,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   ></div>
                   <button
                     onClick={() => onNavigate("pricing")}
-                    className="relative bg-white text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.18em] text-[11px] border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
+                    className="relative bg-white text-slate-900 px-6 sm:px-7 py-3.5 rounded-full font-black uppercase tracking-[0.18em] text-[11px] sm:text-xs border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
                   >
                     Pricing
                   </button>
@@ -440,21 +527,21 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   ></div>
                   <button
                     onClick={() => onNavigate("colors")}
-                    className="relative bg-white text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.18em] text-[11px] border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
+                    className="relative bg-white text-slate-900 px-6 sm:px-7 py-3.5 rounded-full font-black uppercase tracking-[0.18em] text-[11px] sm:text-xs border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
                   >
                     Color Guide
                   </button>
                 </div>
               </div>
-              <ul className="space-y-4">
+              <ul className="space-y-4 xl:space-y-5">
                 {[
                   "Screen printing on t-shirts, hoodies, jackets & more",
                   "Quality inks and durable, long-lasting prints",
                   "Fast turnaround and reliable service",
                 ].map((item) => (
-                  <li key={item} className="flex items-center gap-3">
-                    <span className="w-2.5 h-2.5 rounded-full bg-orange-500 shrink-0 shadow-[0_0_10px_rgba(255,103,32,0.5)]"></span>
-                    <span className="text-white/80 font-bold text-sm">
+                  <li key={item} className="flex items-center gap-3.5">
+                    <span className="w-3 h-3 rounded-full bg-orange-500 shrink-0 shadow-[0_0_12px_rgba(255,103,32,0.6)]"></span>
+                    <span className="text-white/90 font-bold text-sm sm:text-base xl:text-lg">
                       {item}
                     </span>
                   </li>
@@ -462,8 +549,8 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               </ul>
             </div>
 
-            <div className="relative">
-              <div className="relative rounded-3rem overflow-hidden aspect-[4/5] bg-white/5 border border-white/10 shadow-2xl">
+            <div className="relative lg:col-span-5">
+              <div className="relative rounded-3rem overflow-hidden aspect-[4/5] w-full max-w-md lg:max-w-none mx-auto bg-white/5 border border-white/10 shadow-2xl">
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={carouselIndex}
@@ -477,15 +564,15 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   />
                 </AnimatePresence>
               </div>
-              <div className="flex items-center justify-center gap-2 mt-5">
+              <div className="flex items-center justify-center gap-2.5 mt-6">
                 {HERO_CAROUSEL_IMAGES.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setCarouselIndex(idx)}
-                    className={`h-1.5 rounded-full transition-all duration-500 ${
+                    className={`h-2 rounded-full transition-all duration-500 ${
                       idx === carouselIndex
-                        ? "w-8 bg-orange-500"
-                        : "w-1.5 bg-white/20 hover:bg-white/40"
+                        ? "w-10 bg-orange-500"
+                        : "w-2 bg-white/20 hover:bg-white/40"
                     }`}
                     aria-label={`Go to image ${idx + 1}`}
                   />
@@ -499,20 +586,20 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       {/* Curated Projects */}
       <motion.section
         {...revealProps}
-        className="py-24 bg-white relative overflow-hidden"
+        className="py-24 md:py-28 bg-white relative overflow-hidden"
       >
         <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-slate-200 to-transparent"></div>
 
-        <div className="relative container-standard">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-12">
+        <div className="relative container-breakout">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
             <div>
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-500 block mb-4">
+              <span className="text-[11px] font-black uppercase tracking-[0.4em] text-orange-500 block mb-4">
                 Our Work
               </span>
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-[0.95] text-slate-900 uppercase mb-4">
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[0.95] text-slate-900 uppercase mb-4">
                 Recent Production Work
               </h2>
-              <p className="text-slate-500 font-medium leading-relaxed max-w-lg">
+              <p className="text-slate-500 text-base sm:text-lg font-medium leading-relaxed max-w-xl">
                 Every project represents our commitment to precision, color, and
                 quality across every print run.
               </p>
@@ -524,20 +611,24 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               ></div>
               <button
                 onClick={() => openLightbox(0)}
-                className="relative text-sm bg-white text-slate-950 border-2 border-slate-950 px-6 py-3 rounded-full font-black uppercase tracking-[0.2em] w-full md:w-auto hover:-translate-y-0.5 hover:shadow-lg transition-all"
+                className="relative text-sm sm:text-base bg-white text-slate-950 border-2 border-slate-950 px-7 py-3.5 rounded-full font-black uppercase tracking-[0.2em] w-full md:w-auto hover:-translate-y-0.5 hover:shadow-lg transition-all"
               >
                 View Gallery
               </button>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8">
             {PROJECT_IMAGES.slice(0, 6).map((src, idx) => (
               <motion.button
                 whileHover={reduceMotion ? undefined : { y: -4 }}
                 key={`${src}-${idx}`}
                 onClick={() => openLightbox(idx)}
-                className={`group relative text-left overflow-hidden border border-slate-200 hover:border-orange-400 focus:outline-none focus:ring-4 focus:ring-orange-300 rounded-3rem bg-white shadow-lg hover:shadow-xl transition-all duration-300 ${idx === 0 ? "col-span-2 row-span-2 min-h-[33rem]" : "min-h-[16rem]"}`}
+                className={`group relative text-left overflow-hidden border border-slate-200 hover:border-orange-400 focus:outline-none focus:ring-4 focus:ring-orange-300 rounded-3rem bg-white shadow-lg hover:shadow-xl transition-all duration-300 ${
+                  idx === 0
+                    ? "sm:col-span-2 lg:col-span-2 sm:row-span-2 min-h-[30rem] lg:min-h-[38rem] xl:min-h-[44rem]"
+                    : "min-h-[18rem] lg:min-h-[22rem] xl:min-h-[26rem]"
+                }`}
               >
                 <img
                   src={src}
@@ -548,14 +639,14 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 to-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <span className="inline-block text-orange-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-2">
+                <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 xl:p-10 text-white">
+                  <span className="inline-block text-orange-400 text-[11px] xl:text-xs font-bold uppercase tracking-[0.2em] mb-2">
                     {PROJECT_DETAILS[idx]?.label ?? `Project ${idx + 1}`}
                   </span>
-                  <p className="font-black text-xl md:text-2xl leading-tight tracking-tight text-white mb-1">
+                  <p className="font-black text-xl sm:text-2xl lg:text-3xl leading-tight tracking-tight text-white mb-2">
                     {PROJECT_DETAILS[idx]?.title ?? "Premium Screen Print"}
                   </p>
-                  <p className="text-[12px] text-white/70 font-bold leading-relaxed">
+                  <p className="text-xs sm:text-sm lg:text-base text-white/80 font-medium leading-relaxed max-w-xl">
                     {PROJECT_DETAILS[idx]?.subtitle ??
                       "A recent screen print run showcasing pigment and texture on blanks."}
                   </p>
@@ -637,29 +728,29 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         )}
 
       {/* FAQ — intentionally scoped to the homepage only */}
-      <motion.section {...revealProps} className="py-20 md:py-24 bg-slate-50">
+      <motion.section {...revealProps} className="py-24 md:py-28 bg-slate-50">
         <div className="container-standard">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-            <div className="lg:col-span-4">
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-500 block mb-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 xl:gap-20">
+            <div className="lg:col-span-5">
+              <span className="text-[11px] font-black uppercase tracking-[0.4em] text-orange-500 block mb-4">
                 Good To Know
               </span>
-              <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-slate-900 mb-4">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-900 mb-6">
                 Frequently Asked Questions
               </h2>
-              <p className="text-slate-600 font-medium leading-relaxed">
+              <p className="text-slate-600 text-base sm:text-lg font-medium leading-relaxed max-w-xl">
                 Quick answers about turnaround, minimums, artwork, and color
                 matching. Still unsure? Our team is one message away.
               </p>
               <button
                 onClick={() => onNavigate("quote")}
-                className="mt-8 inline-flex items-center gap-2 bg-slate-950 text-white px-6 py-3 rounded-full font-black text-xs uppercase tracking-[0.2em] hover:-translate-y-0.5 transition-all active:scale-95"
+                className="mt-8 inline-flex items-center gap-2 bg-slate-950 text-white px-7 py-3.5 rounded-full font-black text-xs sm:text-sm uppercase tracking-[0.2em] hover:-translate-y-0.5 transition-all active:scale-95"
               >
                 Request A Quote
               </button>
             </div>
-            <div className="lg:col-span-8">
-              <Accordion type="single" collapsible className="bg-white rounded-2xl border border-slate-200 px-6 md:px-8">
+            <div className="lg:col-span-7">
+              <Accordion type="single" collapsible className="bg-white rounded-3xl border border-slate-200/90 shadow-sm px-6 sm:px-8 xl:px-10 py-2">
                 {[
                   {
                     q: "What is your typical turnaround time?",
@@ -686,9 +777,9 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                     a: "Use the quote form, call (732) 347-0101, or email info@stcsprinting.com. Include garment style, quantity, print locations, and your artwork for the fastest response.",
                   },
                 ].map((item, idx) => (
-                  <AccordionItem key={item.q} value={`faq-${idx}`} className="last:border-b-0">
-                    <AccordionTrigger>{item.q}</AccordionTrigger>
-                    <AccordionContent>{item.a}</AccordionContent>
+                  <AccordionItem key={item.q} value={`faq-${idx}`} className="last:border-b-0 py-1">
+                    <AccordionTrigger className="text-base sm:text-lg font-bold text-left">{item.q}</AccordionTrigger>
+                    <AccordionContent className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">{item.a}</AccordionContent>
                   </AccordionItem>
                 ))}
               </Accordion>
@@ -698,9 +789,9 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       </motion.section>
 
       {/* Final CTA */}
-      <motion.section {...revealProps} className="py-20 bg-white">
+      <motion.section {...revealProps} className="py-24 bg-white">
         <div className="container-standard">
-          <div className="relative overflow-hidden bg-brand-dark rounded-4rem border border-white/10 p-8 md:p-12 text-white">
+          <div className="relative overflow-hidden bg-brand-dark rounded-4rem border border-white/10 p-8 sm:p-12 lg:p-16 text-white">
             <div
               className="absolute -top-24 -right-24 w-80 h-80 bg-purple-600/20 rounded-full blur-180"
               aria-hidden="true"
@@ -711,35 +802,35 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             ></div>
 
             <div className="relative">
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-400 block mb-4">
+              <span className="text-[11px] font-black uppercase tracking-[0.4em] text-orange-400 block mb-4">
                 Ready To Move
               </span>
-              <h3 className="text-3xl md:text-4xl font-black tracking-tight mb-4">
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight mb-6">
                 Let&apos;s build your next print run.
               </h3>
-              <p className="text-white/60 text-lg font-medium leading-relaxed mb-8 max-w-2xl">
+              <p className="text-white/70 text-lg sm:text-xl lg:text-2xl font-medium leading-relaxed mb-10 max-w-3xl">
                 Share your requirements and we&apos;ll respond with the cleanest
                 path to quality, speed, and consistency.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-3 mb-7">
+              <div className="flex flex-col sm:flex-row gap-3.5 mb-8">
                 <a
                   href="tel:+17323470101"
-                  className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-sm font-black"
+                  className="bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-sm sm:text-base font-black hover:bg-white/10 transition-colors inline-flex items-center gap-2"
                 >
-                  (732) 347-0101
+                  <span className="text-orange-400">📞</span> (732) 347-0101
                 </a>
                 <a
                   href="mailto:info@stcsprinting.com"
-                  className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-sm font-black"
+                  className="bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-sm sm:text-base font-black hover:bg-white/10 transition-colors inline-flex items-center gap-2"
                 >
-                  info@stcsprinting.com
+                  <span className="text-purple-400">✉️</span> info@stcsprinting.com
                 </a>
               </div>
 
               <button
                 onClick={() => onNavigate("quote")}
-                className="bg-white text-brand-dark px-7 py-3 rounded-full font-black uppercase tracking-[0.2em] text-xs"
+                className="bg-white text-brand-dark px-8 py-4 rounded-full font-black uppercase tracking-[0.2em] text-xs sm:text-sm hover:scale-102 transition-transform shadow-lg"
               >
                 Request A Quote
               </button>

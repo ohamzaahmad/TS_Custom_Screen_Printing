@@ -28,8 +28,8 @@ test.describe('Tier 2: Form Boundaries & Embed Resilience @tier2 @forms', () => 
     await expect(contactEmbed).toBeVisible();
 
     // Verify direct contact alternatives are available (phone, email, address)
-    const phoneLink = page.locator('a[href^="tel:"]').first();
-    const emailLink = page.locator('a[href^="mailto:"]').first();
+    const phoneLink = page.locator('main a[href^="tel:"]').first();
+    const emailLink = page.locator('main a[href^="mailto:"]').first();
 
     await expect(phoneLink).toBeVisible();
     await expect(emailLink).toBeVisible();

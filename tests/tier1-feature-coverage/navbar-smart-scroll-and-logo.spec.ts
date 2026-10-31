@@ -25,12 +25,18 @@ test.describe('Navbar Smart Scroll & Logo Presentation', () => {
     await expect(navbar).toHaveClass(/translate-y-0/);
 
     // Scroll down 500px -> navbar hides
-    await page.evaluate(() => window.scrollTo({ top: 500, behavior: 'instant' }));
+    await page.evaluate(() => {
+      window.scrollTo(0, 500);
+      window.dispatchEvent(new Event('scroll'));
+    });
     await page.waitForTimeout(400);
     await expect(navbar).toHaveClass(/-translate-y-full/);
 
     // Scroll up slightly by 120px -> navbar reveals smoothly with white glass styling
-    await page.evaluate(() => window.scrollTo({ top: 380, behavior: 'instant' }));
+    await page.evaluate(() => {
+      window.scrollTo(0, 380);
+      window.dispatchEvent(new Event('scroll'));
+    });
     await page.waitForTimeout(400);
     await expect(navbar).toHaveClass(/translate-y-0/);
     await expect(navbar).toHaveClass(/bg-white/);

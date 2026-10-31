@@ -7,9 +7,9 @@ test.describe('Tier 3: Cross-Feature Combination — Catalogue to Quote Funnel @
     await waitForAppMounted(page);
 
     // Verify 3-step explanation exists (01, 02, 03)
-    await expect(page.locator('text=/01|Step 1/').first()).toBeVisible();
-    await expect(page.locator('text=/02|Step 2/').first()).toBeVisible();
-    await expect(page.locator('text=/03|Step 3/').first()).toBeVisible();
+    await expect(page.locator('main').locator('text=/01|Step 1/').first()).toBeVisible();
+    await expect(page.locator('main').locator('text=/02|Step 2/').first()).toBeVisible();
+    await expect(page.locator('main').locator('text=/03|Step 3/').first()).toBeVisible();
 
     // Verify external catalogue link to Sportswear Collection
     const externalLink = page.locator('a[href*="sportswearcollection.com"]');

@@ -206,7 +206,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
           : "bg-white/80 backdrop-blur-md border-b border-slate-200/50 py-3 sm:py-3.5"
       }`}
     >
-      <div className="max-w-[1348px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container-breakout max-w-[1348px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div
@@ -222,7 +222,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
           </div>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center gap-1.5" aria-label="Main Navigation">
+          <div className="hidden md:flex lg:flex items-center gap-1.5" aria-label="Main Navigation">
             {NAV_ITEMS.map((item) => {
               const isActive = currentPage === item.id;
               return (
@@ -350,7 +350,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
             </Magnetic>
 
             {/* Mobile Menu Toggle Button */}
-            <div className="lg:hidden flex items-center">
+            <div className="md:hidden flex items-center">
               <button
                 onClick={() => setIsOpen((prev) => !prev)}
                 aria-label={isOpen ? "Close menu" : "Open menu"}
@@ -422,7 +422,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
                   <button
                     key={item.id}
                     onClick={() => handleNavigate(item.id)}
-                    className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl font-display text-base uppercase tracking-wider font-bold cursor-pointer transition-all text-left ${
+                    className={`w-full min-h-[48px] flex items-center justify-between px-4 py-3.5 rounded-2xl font-display text-base uppercase tracking-wider font-bold cursor-pointer transition-all text-left ${
                       isActive
                         ? "bg-slate-950 text-white"
                         : "text-slate-800 hover:bg-slate-100"
