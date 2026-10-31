@@ -1,11 +1,11 @@
-/* Global responsive helpers for ST Custom Screen Printing
+/* Global responsive helpers for TS Custom Screen Printing
    This uses Tailwind CSS v4 with custom theme configuration
 */
 
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600;700;800&family=Poppins:ital,wght@0,300;0,400;0,600;1,400&display=swap');
 
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@config "./tailwind.config.js";
 
 @theme {
   /* Custom color palette */
@@ -18,6 +18,18 @@
   --color-orange-400: #FF8A00;
   --color-orange-500: #FF8A00;
   --color-orange-600: #FF8A00;
+
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
   
   /* Font sizes */
   --font-size-7: 7px;
@@ -46,21 +58,142 @@
   /* Aspect ratios */
   --aspect-ratio-4\/5: 4 / 5;
   
-  /* Font family */
-  --font-family-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  /* Container widths */
+  --container-standard: 1068px;
+  --container-breakout: 1348px;
+  --max-width-standard: 1068px;
+  --max-width-breakout: 1348px;
+
+  /* Font families */
+  --font-display: 'Oswald', ui-sans-serif, sans-serif;
+  --font-heading: 'Oswald', ui-sans-serif, sans-serif;
+  --font-body: 'Poppins', ui-sans-serif, sans-serif;
+  --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  --font-oswald: 'Oswald', sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
+  --font-family-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
 }
 
-:root{
-  --max-content-width: 1200px;
+:root {
+  --container-standard: 1068px;
+  --container-breakout: 1348px;
+  --max-content-width: 1068px;
+  --max-breakout-width: 1348px;
+
+  /* Vertical section rhythm tokens */
+  --section-rhythm-mobile: 3rem;     /* 48px */
+  --section-rhythm-tablet: 4rem;     /* 64px */
+  --section-rhythm-desktop: 5rem;    /* 80px */
+  --section-rhythm-desktop-lg: 6rem; /* 96px */
+
+  --font-display: 'Oswald', ui-sans-serif, sans-serif;
+  --font-heading: 'Oswald', ui-sans-serif, sans-serif;
+  --font-body: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+
   --brand-purple: #BD00FF;
   --brand-orange: #FF8A00;
   --brand-dark: #0A0015;
 }
 
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
 body {
-  font-family: var(--font-family-sans);
+  font-family: var(--font-body, 'Poppins', sans-serif);
   background-color: #fcfcfc;
   color: var(--brand-dark);
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  /* ==========================================================================
+     Base Headings Hierarchy: Oswald Uppercase (Competitor Standard)
+     ========================================================================== */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading, 'Oswald', sans-serif);
+    text-transform: uppercase;
+    color: inherit;
+    letter-spacing: -0.01em;
+  }
+
+  h1 {
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+
+  h2 {
+    font-weight: 700;
+    line-height: 1.10;
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    font-weight: 700;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+  }
+
+  h4 {
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+  }
+
+  h5 {
+    font-weight: 600;
+    line-height: 1.30;
+    letter-spacing: 0.015em;
+  }
+
+  h6 {
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+  }
+
+  /* ==========================================================================
+     Interactive Elements: Buttons, Navigation Links & Badges
+     ========================================================================== */
+  button,
+  .btn,
+  .btn-gradient,
+  [role="button"] {
+    font-family: var(--font-heading, 'Oswald', sans-serif);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  nav a,
+  nav button,
+  .nav-link {
+    font-family: var(--font-heading, 'Oswald', sans-serif);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .badge,
+  .tag-badge,
+  [class*="badge"] {
+    font-family: var(--font-heading, 'Oswald', sans-serif);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Form inputs retain readable Poppins */
+  input,
+  textarea,
+  select {
+    font-family: var(--font-body, 'Poppins', sans-serif);
+    letter-spacing: normal;
+  }
 }
 
 /* Custom gradient text */
@@ -386,14 +519,146 @@ body {
   }
 }
 
-/* Make main container center and fluid */
-.container{
-  width:100%;
-  max-width:var(--max-content-width);
-  margin-left:auto;
-  margin-right:auto;
-  padding-left:1rem;
-  padding-right:1rem;
+/* ==========================================================================
+   CONTAINER & LAYOUT SYSTEM (Competitor Standard: blackdogapparelco.com)
+   - Standard Container: 1068px max-width with responsive fluid gutters
+   - Wide Breakout Container: 1348px max-width for expansive visual sections
+   ========================================================================== */
+
+/* Standard Content Container (1068px) - Turnkey with responsive gutters */
+.container,
+.container-standard {
+  width: 100%;
+  max-width: var(--container-standard, 1068px);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container,
+  .container-standard {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container,
+  .container-standard {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Wide Breakout Container (1348px) - Turnkey with responsive gutters */
+.container-breakout {
+  width: 100%;
+  max-width: var(--container-breakout, 1348px);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-breakout {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-breakout {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Max-Width Only Utilities (for elements managing their own gutters/alignment) */
+.max-w-standard,
+.max-w-\[1068px\] {
+  max-width: 1068px;
+}
+
+.max-w-breakout,
+.max-w-\[1348px\] {
+  max-width: 1348px;
+}
+
+/* ==========================================================================
+   VERTICAL SECTION RHYTHM SYSTEM
+   - Desktop: 80px–96px vertical padding (py-20 / py-24)
+   - Tablet:  64px–80px vertical padding (py-16 / py-20)
+   - Mobile:  48px–64px vertical padding (py-12 / py-16)
+   ========================================================================== */
+
+/* Standard section rhythm */
+.section-rhythm {
+  padding-top: var(--section-rhythm-mobile, 3rem);
+  padding-bottom: var(--section-rhythm-mobile, 3rem);
+}
+
+@media (min-width: 640px) {
+  .section-rhythm {
+    padding-top: var(--section-rhythm-tablet, 4rem);
+    padding-bottom: var(--section-rhythm-tablet, 4rem);
+  }
+}
+
+@media (min-width: 768px) {
+  .section-rhythm {
+    padding-top: var(--section-rhythm-desktop, 5rem);
+    padding-bottom: var(--section-rhythm-desktop, 5rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-rhythm {
+    padding-top: var(--section-rhythm-desktop-lg, 6rem);
+    padding-bottom: var(--section-rhythm-desktop-lg, 6rem);
+  }
+}
+
+/* Compact section rhythm (for tight secondary sections, cards, or notices) */
+.section-rhythm-compact {
+  padding-top: 2.5rem;   /* 40px mobile */
+  padding-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .section-rhythm-compact {
+    padding-top: 4rem;   /* 64px tablet */
+    padding-bottom: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-rhythm-compact {
+    padding-top: 5rem;   /* 80px desktop */
+    padding-bottom: 5rem;
+  }
+}
+
+/* Hero section rhythm (navbar clearance + vertical spacing) */
+.hero-rhythm {
+  padding-top: 6rem;     /* 96px mobile */
+  padding-bottom: 3rem;  /* 48px mobile */
+}
+
+@media (min-width: 768px) {
+  .hero-rhythm {
+    padding-top: 7.5rem; /* 120px tablet */
+    padding-bottom: 5rem;/* 80px tablet */
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-rhythm {
+    padding-top: 8.5rem; /* 136px desktop */
+    padding-bottom: 6rem;/* 96px desktop */
+  }
 }
 
 /* Ensure images and media scale down */
@@ -419,7 +684,7 @@ img, video, svg {
   .site-logo { max-height: 80px; } /* larger on wide screens */
 }
 
-/* Responsive typography scale */n
+/* Responsive typography scale */
 html{
   font-size:16px;
 }
@@ -793,46 +1058,159 @@ html, body{
 
 /* Fluid typography utilities */
 .fluid-h1 {
-  font-weight: 900;
-  line-height: 1.02;
-  font-size: clamp(2rem, 4vw + 0.5rem, 4.5rem);
+  font-family: var(--font-display, 'Oswald', sans-serif);
+  text-transform: uppercase;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  font-size: clamp(2.25rem, 4.5vw + 0.5rem, 4.75rem);
 }
 .fluid-h2 {
-  font-weight: 900;
-  line-height: 1.05;
-  font-size: clamp(1.5rem, 3vw + 0.25rem, 3rem);
+  font-family: var(--font-display, 'Oswald', sans-serif);
+  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 1.10;
+  letter-spacing: -0.01em;
+  font-size: clamp(1.75rem, 3vw + 0.25rem, 3rem);
 }
 .fluid-h3 {
-  font-weight: 800;
-  line-height: 1.15;
-  font-size: clamp(1.125rem, 2.2vw + 0.1rem, 1.75rem);
+  font-family: var(--font-display, 'Oswald', sans-serif);
+  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: 0.01em;
+  font-size: clamp(1.25rem, 2vw + 0.1rem, 1.85rem);
 }
 .lead {
-  font-size: clamp(1rem, 0.8vw + 0.9rem, 1.125rem);
-  color: #6b7280;
-  line-height: 1.6;
+  font-family: var(--font-body, 'Poppins', sans-serif);
+  font-weight: 400;
+  font-size: clamp(1rem, 0.8vw + 0.9rem, 1.2rem);
+  color: #64748b;
+  line-height: 1.65;
 }
 
 /* Harmonize section padding on small devices */
-section { padding-left: 1rem; padding-right: 1rem; }
+@layer base {
+  section { padding-left: 1rem; padding-right: 1rem; }
+}
 /* Refined Skeleton Shimmer Animation */
-@keyframes shimmer {
+
+
+/* ==========================================================================
+   shadcn/ui + ReactBits primitives
+   ========================================================================== */
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+.animate-accordion-down {
+  animation: accordion-down 0.22s ease-out;
+}
+
+.animate-accordion-up {
+  animation: accordion-up 0.22s ease-out;
+}
+
+@keyframes shiny-text-sweep {
   0% {
-    background-position: -1000px 0;
+    background-position: 200% center;
   }
   100% {
-    background-position: 1000px 0;
+    background-position: -200% center;
   }
 }
 
-.skeleton {
-  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
-  background-size: 1000px 100%;
-  animation: shimmer 2s infinite linear;
+.shiny-text {
+  display: inline-block;
+  background-image: linear-gradient(
+    110deg,
+    rgba(255, 255, 255, 0.55) 35%,
+    #ffffff 50%,
+    rgba(255, 255, 255, 0.55) 65%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation-name: shiny-text-sweep;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
-.skeleton-dark {
-  background: linear-gradient(90deg, #1f2937 25%, #374151 50%, #1f2937 75%);
-  background-size: 1000px 100%;
-  animation: shimmer 2s infinite linear;
+@media (prefers-reduced-motion: reduce) {
+  .animate-accordion-down,
+  .animate-accordion-up,
+  .shiny-text {
+    animation: none;
+  }
+  .shiny-text {
+    color: inherit;
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+/* ==========================================================================
+   Brand page loader (Suspense fallback)
+   ========================================================================== */
+@keyframes brand-loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes brand-loader-pulse {
+  0%,
+  100% {
+    transform: scale(0.85);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.15;
+  }
+}
+
+@keyframes brand-loader-mark {
+  0%,
+  100% {
+    transform: scale(0.94);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
+
+.brand-loader-ring {
+  animation: brand-loader-spin 1.8s linear infinite;
+}
+
+.brand-loader-pulse {
+  animation: brand-loader-pulse 2.4s ease-in-out infinite;
+}
+
+.brand-loader-mark {
+  animation: brand-loader-mark 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-loader-ring,
+  .brand-loader-pulse,
+  .brand-loader-mark {
+    animation: none;
+  }
 }

@@ -2,6 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
 import { useSEO } from "../hooks/useSEO";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../components/ui/accordion";
+import { ShinyText } from "../components/ui/shiny-text";
 
 interface HomeProps {
   onNavigate: (page: string) => void;
@@ -25,32 +32,32 @@ const HERO_CAROUSEL_IMAGES = [
 ];
 const PROJECT_DETAILS = [
   {
-    label: "Drop 01",
+    label: "Streetwear",
     title: "Oversized Streetwear Set",
     subtitle: "Soft-hand print with tight registration and consistent opacity.",
   },
   {
-    label: "Drop 02",
+    label: "Athletic",
     title: "Athletic Club Series",
     subtitle: "Durable team graphics engineered for repeat wash cycles.",
   },
   {
-    label: "Drop 03",
+    label: "Tour Merch",
     title: "Tour Merch Capsule",
     subtitle: "High-impact front and back prints built for launch day.",
   },
   {
-    label: "Drop 04",
+    label: "Retail",
     title: "Retail Essentials Batch",
     subtitle: "Clean, minimal branding optimized for premium shelf presence.",
   },
   {
-    label: "Drop 05",
+    label: "Festival",
     title: "Festival Graphic Run",
     subtitle: "Vibrant ink layering tuned for sharp detail under stage light.",
   },
   {
-    label: "Drop 06",
+    label: "Logo Program",
     title: "Core Logo Program",
     subtitle: "Reliable brand consistency across multiple garment styles.",
   },
@@ -209,7 +216,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/50 to-black"></div>
         </div>
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-12 w-full pt-8 md:pt-16">
+        <div className="relative z-10 container-breakout w-full pt-8 md:pt-16">
           <div className="flex flex-col items-start max-w-3xl">
             <motion.div
               initial={reduceMotion ? false : { opacity: 0, y: 18 }}
@@ -220,7 +227,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass-dark text-white/90 text-[9px] font-black uppercase tracking-[0.5em] mb-12 border border-white/5"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-purple-600 shadow-[0_0_12px_rgba(189,0,255,0.8)]"></span>
-              EST. 2018 | THE GOLD STANDARD
+              <ShinyText text="EST. 2018 | THE GOLD STANDARD" speed={5} />
             </motion.div>
 
             <motion.h1
@@ -233,10 +240,10 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               }
               className="fluid-h1 text-white leading-tight mb-8 tracking-tight uppercase select-none"
             >
-              A CULTURE OF
+              CUSTOM SCREEN PRINTING
               <br />
               <span className="text-gradient-orange italic font-extrabold">
-                PRECISION.
+                BUILT FOR YOUR BRAND.
               </span>
             </motion.h1>
 
@@ -250,9 +257,10 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               }
               className="text-base md:text-lg text-white/40 mb-10 leading-relaxed font-medium max-w-xl border-l-2 border-purple-600/30 pl-6"
             >
-              We don't just print garments. We manufacture physical brand
-              identity through a meticulous fusion of chemical engineering and
-              technical artistry.
+              Premium custom apparel and merch, printed with industrial
+              precision and boutique attention to detail. Bold color, durable
+              inks, and fast turnaround — from your first mockup to the final
+              print run.
             </motion.p>
 
             <motion.div
@@ -339,7 +347,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           aria-hidden="true"
         ></div>
 
-        <div className="relative max-w-7xl mx-auto px-6">
+        <div className="relative container-standard">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
               <span className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-400 block mb-4">
@@ -424,7 +432,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             </div>
 
             <div className="relative">
-              <div className="relative rounded-3rem overflow-hidden aspect-[4/5] bg-white/5 border border-white/10 shadow-[8px_8px_0_#FF6720]">
+              <div className="relative rounded-3rem overflow-hidden aspect-[4/5] bg-white/5 border border-white/10 shadow-2xl">
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={carouselIndex}
@@ -464,29 +472,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       >
         <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-slate-200 to-transparent"></div>
 
-        {/* Splash decorations */}
-        <div
-          className="absolute top-8 right-[15%] w-40 h-16 bg-orange-500 rounded-[2rem] rotate-[-6deg] opacity-90"
-          aria-hidden="true"
-        ></div>
-        <div
-          className="absolute top-6 right-[14%] w-40 h-16 border-2 border-slate-900 rounded-[2rem] rotate-[-6deg]"
-          aria-hidden="true"
-        ></div>
-        <div
-          className="absolute bottom-12 left-[8%] w-32 h-14 bg-purple-600 rounded-[2rem] rotate-[4deg] opacity-90"
-          aria-hidden="true"
-        ></div>
-        <div
-          className="absolute bottom-10 left-[7%] w-32 h-14 border-2 border-slate-900 rounded-[2rem] rotate-[4deg]"
-          aria-hidden="true"
-        ></div>
-        <div
-          className="absolute top-1/2 right-[5%] w-20 h-20 bg-yellow-400 rounded-full opacity-80"
-          aria-hidden="true"
-        ></div>
-
-        <div className="relative max-w-7xl mx-auto px-6">
+        <div className="relative container-standard">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-12">
             <div>
               <span className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-500 block mb-4">
@@ -532,9 +518,9 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                 <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 to-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                 <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <div className="inline-block bg-orange-500 text-white text-[10px] font-black uppercase tracking-[0.3em] px-4 py-1.5 rounded-full mb-2 -rotate-2">
+                  <span className="inline-block text-orange-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-2">
                     {PROJECT_DETAILS[idx]?.label ?? `Project ${idx + 1}`}
-                  </div>
+                  </span>
                   <p className="font-black text-xl md:text-2xl leading-tight tracking-tight text-white mb-1">
                     {PROJECT_DETAILS[idx]?.title ?? "Premium Screen Print"}
                   </p>
@@ -619,9 +605,70 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           document.body,
         )}
 
+      {/* FAQ — intentionally scoped to the homepage only */}
+      <motion.section {...revealProps} className="py-20 md:py-24 bg-slate-50">
+        <div className="container-standard">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+            <div className="lg:col-span-4">
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-500 block mb-4">
+                Good To Know
+              </span>
+              <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-slate-900 mb-4">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-slate-600 font-medium leading-relaxed">
+                Quick answers about turnaround, minimums, artwork, and color
+                matching. Still unsure? Our team is one message away.
+              </p>
+              <button
+                onClick={() => onNavigate("quote")}
+                className="mt-8 inline-flex items-center gap-2 bg-slate-950 text-white px-6 py-3 rounded-full font-black text-xs uppercase tracking-[0.2em] hover:-translate-y-0.5 transition-all active:scale-95"
+              >
+                Request A Quote
+              </button>
+            </div>
+            <div className="lg:col-span-8">
+              <Accordion type="single" collapsible className="bg-white rounded-2xl border border-slate-200 px-6 md:px-8">
+                {[
+                  {
+                    q: "What is your typical turnaround time?",
+                    a: "Standard turnaround is 10–12 business days after artwork approval and deposit. Rush production is available for time-sensitive launches — ask us for current capacity.",
+                  },
+                  {
+                    q: "Do you have a minimum order quantity?",
+                    a: "Screen printing starts at 12 garments per design. Embroidery and smaller specialty runs can be quoted separately, so reach out with your project details.",
+                  },
+                  {
+                    q: "What garments can you print on?",
+                    a: "T-shirts, hoodies, sweatshirts, jackets, caps, bags, and more. We work with premium blanks and can source specific styles and colors on request.",
+                  },
+                  {
+                    q: "How do I submit my artwork?",
+                    a: "Send vector files (AI, EPS, PDF) or high-resolution PNGs. Our art team can clean up, separate, and prepare your files for print if needed.",
+                  },
+                  {
+                    q: "Can you match Pantone or brand colors?",
+                    a: "Yes. We offer Pantone matching and can mix inks to hit your brand palette. Browse the Ink Color Lab for our stock and specialty palette.",
+                  },
+                  {
+                    q: "How do I get a quote?",
+                    a: "Use the quote form, call (732) 347-0101, or email info@stcsprinting.com. Include garment style, quantity, print locations, and your artwork for the fastest response.",
+                  },
+                ].map((item, idx) => (
+                  <AccordionItem key={item.q} value={`faq-${idx}`} className="last:border-b-0">
+                    <AccordionTrigger>{item.q}</AccordionTrigger>
+                    <AccordionContent>{item.a}</AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
       {/* Final CTA */}
       <motion.section {...revealProps} className="py-20 bg-white">
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="container-standard">
           <div className="relative overflow-hidden bg-brand-dark rounded-4rem border border-white/10 p-8 md:p-12 text-white">
             <div
               className="absolute -top-24 -right-24 w-80 h-80 bg-purple-600/20 rounded-full blur-180"
@@ -646,7 +693,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
 
               <div className="flex flex-col sm:flex-row gap-3 mb-7">
                 <a
-                  href="tel:+19053384034"
+                  href="tel:+17323470101"
                   className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-sm font-black"
                 >
                   (732) 347-0101

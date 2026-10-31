@@ -219,7 +219,7 @@ const Contact: React.FC = () => {
           {/* Right Column - Contact Form */}
           <div className="lg:col-span-3">
             <div className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm">
-              <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 mb-2">
+              <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-600 mb-2">
                 Send A Message
               </h3>
               <p className="text-slate-500 text-sm font-medium mb-6">

@@ -9,8 +9,10 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const lastActiveElementRef = useRef<HTMLElement | null>(null);
+  const resourcesRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,6 +20,17 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close resources dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (resourcesRef.current && !resourcesRef.current.contains(e.target as Node)) {
+        setResourcesOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   // Accessibility: trap focus in mobile nav when open, close on Escape, restore focus
@@ -90,6 +103,13 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
     { label: "Contact", id: "contact" },
   ];
 
+  const resourceItems = [
+    { label: "Pricing Guide", id: "pricing" },
+    { label: "Placement Guide", id: "guide" },
+    { label: "Ink Color Lab", id: "colors" },
+    { label: "Full Catalogue", id: "catalogue" },
+  ];
+
   return (
     <nav
       className={`fixed w-full top-0 z-50 transition-all duration-500 ${
@@ -100,7 +120,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
     >
       {/* Mobile Backdrop Blur */}
       <div
-        className={`fixed inset-0 bg-slate-950/20 backdrop-blur-md transition-opacity duration-500 lg:hidden ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        className={`fixed inset-0 bg-slate-950/20 backdrop-blur-md transition-opacity duration-500 md:hidden ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
         onClick={() => setIsOpen(false)}
       />
 
@@ -114,11 +134,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
               setIsOpen(false);
             }}
           >
-            <Logo className="h-13.5 md:h-17 lg:h-20 pr-2 lg:pr-3" />
+            <Logo className="h-12 md:h-12 lg:h-20 pr-2 lg:pr-3" />
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden md:flex lg:flex items-center gap-2 lg:gap-4">
             <div
               className={`flex items-center gap-1 rounded-full px-2 py-2 border transition-all ${
                 isDarkBg
@@ -145,7 +165,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
                       ? `${item.label} (opens in a new tab)`
                       : item.label
                   }
-                  className={`px-4 py-2 rounded-full text-[10px] lg:text-[12px] uppercase tracking-[0.24em] font-black transition-all duration-300 ${
+                  className={`px-2 lg:px-4 py-2 rounded-full text-[9px] lg:text-[12px] uppercase tracking-[0.12em] lg:tracking-[0.24em] font-black transition-all duration-300 ${
                     isDarkBg
                       ? currentPage === item.id
                         ? "bg-white text-slate-900"
@@ -159,46 +179,84 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* Actions — always visible so the resource menu and primary CTA are
+              reachable on mobile as well as desktop */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Resources Dropdown */}
+            <div ref={resourcesRef} className="relative">
+              <button
+                onClick={() => setResourcesOpen(!resourcesOpen)}
+                aria-haspopup="true"
+                aria-expanded={resourcesOpen}
+                className={`px-2.5 sm:px-4 py-2.5 rounded-full text-[9px] sm:text-[10px] lg:text-[12px] uppercase tracking-[0.16em] sm:tracking-[0.24em] font-black transition-all duration-300 flex items-center gap-1.5 border ${
+                  isDarkBg
+                    ? resourcesOpen
+                      ? "bg-white text-slate-900 border-white"
+                      : "text-white/75 hover:text-white border-white/20 bg-white/5"
+                    : resourcesOpen
+                      ? "bg-slate-900 text-white border-slate-900"
+                      : "text-slate-500 hover:text-slate-900 border-slate-200 bg-white/90"
+                }`}
+              >
+                <span className="hidden sm:inline">Project Resources</span>
+                <span className="sm:hidden">Resources</span>
+                <svg className={`w-3 h-3 transition-transform duration-200 ${resourcesOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" /></svg>
+              </button>
+              {resourcesOpen && (
+                <div className="absolute top-full right-0 mt-2 w-52 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50">
+                  {resourceItems.map((r) => (
+                    <button
+                      key={r.id}
+                      onClick={() => { onNavigate(r.id); setResourcesOpen(false); }}
+                      className="w-full text-left px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.15em] text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors"
+                    >
+                      {r.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
 
             <button
               onClick={() => onNavigate("quote")}
-              className="bg-slate-950 text-white border-2 border-slate-950 px-6 py-2.5 rounded-full font-black text-[11px] lg:text-[13px] uppercase tracking-[0.2em] shadow-[4px_4px_0_#fb923c] hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#fb923c] transition-all active:translate-y-0 active:scale-95"
+              className="bg-slate-950 text-white border-2 border-slate-950 px-3 sm:px-6 py-2.5 rounded-full font-black text-[10px] lg:text-[13px] uppercase tracking-[0.14em] sm:tracking-[0.2em] shadow-lg hover:-translate-y-0.5 hover:shadow-xl transition-all active:translate-y-0 active:scale-95 whitespace-nowrap"
             >
               Start Order
             </button>
-          </div>
 
-          {/* Mobile menu toggle */}
-          <div className="lg:hidden flex items-center gap-4">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label={isOpen ? "Close menu" : "Open menu"}
-              aria-controls="mobile-menu"
-              aria-expanded={isOpen}
-              className={`relative z-80 w-12 h-12 flex items-center justify-center rounded-2xl border transition-all duration-300 ${
-                isOpen
-                  ? "bg-slate-950 border-slate-900 text-white rotate-90 shadow-xl"
-                  : isDarkBg
-                    ? "text-white border-white/20 bg-white/5 backdrop-blur-lg"
-                    : "text-slate-900 border-slate-200 bg-white shadow-[0_6px_16px_rgba(15,23,42,0.08)]"
-              }`}
-            >
-              <div className="w-6 h-5 flex flex-col justify-between items-center overflow-hidden">
-                <span
-                  className={`h-0.5 bg-current transition-all duration-500 ease-out ${isOpen ? "w-6 rotate-45 translate-y-2.25" : "w-6"}`}
-                ></span>
-                <span
-                  className={`h-0.5 bg-current transition-all duration-500 ease-out ${isOpen ? "-translate-x-10 opacity-0" : "w-4 translate-x-1"}`}
-                ></span>
-                <span
-                  className={`h-0.5 bg-current transition-all duration-500 ease-out ${isOpen ? "w-6 -rotate-45 -translate-y-2.25" : "w-5 translate-x-0.5"}`}
-                ></span>
-              </div>
-            </button>
+            {/* Mobile menu toggle */}
+            <div className="md:hidden flex items-center">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+                aria-controls="mobile-menu"
+                aria-expanded={isOpen}
+                className={`relative z-80 w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center rounded-2xl border transition-all duration-300 ${
+                  isOpen
+                    ? "bg-slate-950 border-slate-900 text-white rotate-90 shadow-xl"
+                    : isDarkBg
+                      ? "text-white border-white/20 bg-white/5 backdrop-blur-lg"
+                      : "text-slate-900 border-slate-200 bg-white shadow-[0_6px_16px_rgba(15,23,42,0.08)]"
+                }`}
+              >
+                <div className="w-6 h-5 flex flex-col justify-between items-center overflow-hidden">
+                  <span
+                    className={`h-0.5 bg-current transition-all duration-500 ease-out ${isOpen ? "w-6 rotate-45 translate-y-2.25" : "w-6"}`}
+                  ></span>
+                  <span
+                    className={`h-0.5 bg-current transition-all duration-500 ease-out ${isOpen ? "-translate-x-10 opacity-0" : "w-4 translate-x-1"}`}
+                  ></span>
+                  <span
+                    className={`h-0.5 bg-current transition-all duration-500 ease-out ${isOpen ? "w-6 -rotate-45 -translate-y-2.25" : "w-5 translate-x-0.5"}`}
+                  ></span>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-
       {/* Mobile Nav Overlay */}
       <div
         id="mobile-menu"
@@ -206,7 +264,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
         role="dialog"
         aria-modal="true"
         aria-hidden={!isOpen}
-        className={`lg:hidden fixed right-4 left-4 top-24 rounded-[2.5rem] border border-slate-200/60 bg-white/98 backdrop-blur-2xl transition-all duration-500 cubic-bezier(0.3, 0, 0, 1) overflow-hidden z-70 ${
+        className={`md:hidden fixed right-4 left-4 top-24 rounded-[2.5rem] border border-slate-200/60 bg-white/98 backdrop-blur-2xl transition-all duration-500 cubic-bezier(0.3, 0, 0, 1) overflow-hidden z-70 ${
           isOpen
             ? "opacity-100 visible translate-y-0 shadow-[0_40px_100px_rgba(15,23,42,0.25)]"
             : "opacity-0 invisible -translate-y-4 pointer-events-none"
@@ -264,6 +322,28 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
           </div>
 
           <div
+            className={`transition-all duration-700 delay-300 ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+          >
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-4">
+              Project Resources
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              {resourceItems.map((r) => (
+                <button
+                  key={r.id}
+                  onClick={() => {
+                    onNavigate(r.id);
+                    setIsOpen(false);
+                  }}
+                  className="px-5 py-4 rounded-2xl text-[11px] font-black uppercase tracking-[0.18em] text-slate-600 bg-white/50 border border-transparent hover:border-slate-100 hover:text-slate-900 transition-all text-left"
+                >
+                  {r.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div
             className={`transition-all duration-700 delay-400 ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
           >
             <button
@@ -271,7 +351,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
                 onNavigate("quote");
                 setIsOpen(false);
               }}
-              className="w-full bg-slate-950 text-white border-2 border-slate-950 py-5 rounded-3xl font-black text-[12px] uppercase tracking-[0.3em] shadow-[6px_6px_0_#fb923c] transition-all hover:shadow-[8px_8px_0_#fb923c] active:translate-x-1 active:translate-y-1 active:shadow-none"
+              className="w-full bg-slate-950 text-white border-2 border-slate-950 py-5 rounded-3xl font-black text-[12px] uppercase tracking-[0.3em] shadow-lg transition-all hover:shadow-xl active:translate-x-0.5 active:translate-y-0.5 active:shadow-md"
             >
               Start Order
             </button>
@@ -284,16 +364,20 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
             <div className="flex justify-between items-center px-2">
               <div className="flex gap-6">
                 <a
-                  href="#"
+                  href="https://www.instagram.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label="Follow us on Instagram"
-                  className="text-slate-400 hover:text-slate-900 transition-colors"
+                  className="text-slate-500 hover:text-slate-900 transition-colors"
                 >
                   <i className="fab fa-instagram text-lg"></i>
                 </a>
                 <a
-                  href="#"
+                  href="https://www.facebook.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label="Follow us on Facebook"
-                  className="text-slate-400 hover:text-slate-900 transition-colors"
+                  className="text-slate-500 hover:text-slate-900 transition-colors"
                 >
                   <i className="fab fa-facebook text-lg"></i>
                 </a>

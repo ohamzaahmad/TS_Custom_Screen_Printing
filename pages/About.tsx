@@ -52,22 +52,6 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
     <div className="bg-white min-h-screen overflow-hidden">
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-6 sm:px-8 lg:px-12 max-w-7xl mx-auto relative">
-        <div
-          className="absolute top-20 right-[10%] w-36 h-14 bg-orange-500 rounded-[2rem] rotate-[-5deg] opacity-90"
-          aria-hidden="true"
-        ></div>
-        <div
-          className="absolute top-18 right-[9%] w-36 h-14 border-2 border-slate-900 rounded-[2rem] rotate-[-5deg]"
-          aria-hidden="true"
-        ></div>
-        <div
-          className="absolute bottom-10 left-[5%] w-28 h-12 bg-purple-600 rounded-[2rem] rotate-[3deg] opacity-90"
-          aria-hidden="true"
-        ></div>
-        <div
-          className="absolute bottom-8 left-[4%] w-28 h-12 border-2 border-slate-900 rounded-[2rem] rotate-[3deg]"
-          aria-hidden="true"
-        ></div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div {...revealProps}>
@@ -230,10 +214,6 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
 
       {/* Services Section */}
       <section className="py-20 px-6 sm:px-8 lg:px-12 bg-white relative overflow-hidden">
-        <div
-          className="absolute bottom-0 left-[10%] w-40 h-16 bg-yellow-400 rounded-[2rem] rotate-[2deg] opacity-80"
-          aria-hidden="true"
-        ></div>
         <div
           className="absolute top-10 right-[8%] w-24 h-24 bg-cyan-400 rounded-full opacity-60"
           aria-hidden="true"
@@ -540,14 +520,6 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
 
       {/* CTA Section */}
       <section className="py-20 px-6 sm:px-8 lg:px-12 bg-slate-900 text-white relative overflow-hidden">
-        <div
-          className="absolute top-8 right-[15%] w-32 h-12 bg-orange-500 rounded-[2rem] rotate-[-3deg] opacity-80"
-          aria-hidden="true"
-        ></div>
-        <div
-          className="absolute bottom-8 left-[12%] w-28 h-12 bg-purple-600 rounded-[2rem] rotate-[3deg] opacity-80"
-          aria-hidden="true"
-        ></div>
 
         <div className="max-w-4xl mx-auto text-center relative">
           <motion.div {...containerProps}>
@@ -571,18 +543,7 @@ const About: React.FC<AboutProps> = ({ onNavigate }) => {
                   Request Quote
                 </button>
               </div>
-              <div className="relative">
-                <div
-                  className="absolute inset-0 bg-purple-600 rounded-full translate-x-1.5 translate-y-1.5"
-                  aria-hidden="true"
-                ></div>
-                <button
-                  onClick={() => onNavigate("contact")}
-                  className="relative bg-white text-slate-950 border-2 border-white px-8 py-4 rounded-full font-black uppercase tracking-[0.2em] text-sm hover:-translate-y-0.5 transition-all active:scale-95"
-                >
-                  Contact Us
-                </button>
-              </div>
+
             </div>
           </motion.div>
         </div>

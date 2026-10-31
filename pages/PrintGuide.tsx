@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { Maximize2 } from "lucide-react";
 import { useSEO } from "../hooks/useSEO";
+import { Dialog, DialogContent } from "../components/ui/dialog";
 
 const popularPlacements = [
   {
@@ -108,6 +110,11 @@ const measurements = [
 ];
 
 const PrintGuide: React.FC = () => {
+  const [activeImage, setActiveImage] = useState<{
+    src: string;
+    title: string;
+  } | null>(null);
+
   useSEO({
     title: "Print Placement Guide",
     description:
@@ -131,33 +138,36 @@ const PrintGuide: React.FC = () => {
           </p>
         </div>
 
-        {/* Top placement guide image */}
-        {/* <div className="bg-white border border-slate-100 rounded-lg p-6 mb-10">
-          <img src="/size-guide/assets/placementguide.png" alt="Print placement guide" className="w-full h-auto object-contain rounded" />
-        </div> */}
-
         {/* Popular Placements */}
         <section className="mb-12">
           <h2 className="text-2xl font-black text-slate-900 mb-6">
             Popular Placements
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {popularPlacements.map((p) => (
               <div
                 key={p.title}
-                className="bg-white border border-slate-100 rounded-lg p-4 flex flex-col items-center"
+                className="bg-white border border-slate-100 rounded-xl p-4 md:p-5 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className="w-full h-44 bg-slate-50 rounded overflow-hidden flex items-center justify-center mb-4">
+                <button
+                  type="button"
+                  onClick={() => setActiveImage({ src: p.src, title: p.title })}
+                  className="group relative w-full aspect-[4/3] bg-slate-50 rounded-lg overflow-hidden flex items-center justify-center mb-4 cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2"
+                  aria-label={`Open ${p.title} placement diagram at full size`}
+                >
                   <img
                     src={p.src}
                     alt={p.title}
-                    className="max-h-full object-contain"
+                    className="w-full h-full object-contain p-2 md:p-3 transition-transform duration-300 group-hover:scale-105"
                   />
-                </div>
-                <h3 className="font-black text-sm text-slate-900 uppercase mb-1 text-center">
+                  <Maximize2 className="absolute bottom-2 right-2 h-4 w-4 text-slate-500 opacity-0 transition-opacity group-hover:opacity-100" />
+                </button>
+                <h3 className="font-black text-sm md:text-base text-slate-900 uppercase mb-1 text-center">
                   {p.title}
                 </h3>
-                <p className="text-xs text-slate-400 text-center">{p.note}</p>
+                <p className="text-xs md:text-sm text-slate-600 text-center">
+                  {p.note}
+                </p>
               </div>
             ))}
           </div>
@@ -168,23 +178,29 @@ const PrintGuide: React.FC = () => {
           <h2 className="text-2xl font-black text-slate-900 mb-6">
             Print Measurements
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {measurements.map((m) => (
               <div
                 key={m.title}
-                className="bg-white border border-slate-100 rounded-lg p-3 flex flex-col items-center"
+                className="bg-white border border-slate-100 rounded-xl p-4 md:p-5 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className="w-full h-32 bg-slate-50 rounded overflow-hidden flex items-center justify-center mb-3">
+                <button
+                  type="button"
+                  onClick={() => setActiveImage({ src: m.src, title: m.title })}
+                  className="group relative w-full aspect-[4/3] bg-slate-50 rounded-lg overflow-hidden flex items-center justify-center mb-3 cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2"
+                  aria-label={`Open ${m.title} measurement diagram at full size`}
+                >
                   <img
                     src={m.src}
                     alt={m.title}
-                    className="max-h-full object-contain"
+                    className="w-full h-full object-contain p-2 md:p-3 transition-transform duration-300 group-hover:scale-105"
                   />
-                </div>
-                <h4 className="font-black text-xs text-slate-900 uppercase mb-1 text-center">
+                  <Maximize2 className="absolute bottom-2 right-2 h-4 w-4 text-slate-500 opacity-0 transition-opacity group-hover:opacity-100" />
+                </button>
+                <h4 className="font-black text-xs md:text-sm text-slate-900 uppercase mb-1 text-center">
                   {m.title}
                 </h4>
-                <p className="text-[11px] text-slate-400 text-center">
+                <p className="text-[11px] md:text-xs text-slate-600 text-center">
                   {m.note}
                 </p>
               </div>
@@ -192,6 +208,29 @@ const PrintGuide: React.FC = () => {
           </div>
         </section>
       </div>
+
+      <Dialog
+        open={!!activeImage}
+        onOpenChange={(open) => {
+          if (!open) setActiveImage(null);
+        }}
+      >
+        <DialogContent aria-describedby={undefined}>
+          <span className="sr-only">{activeImage?.title ?? "Placement diagram"}</span>
+          {activeImage && (
+            <div className="max-h-[80vh] w-full overflow-auto">
+              <img
+                src={activeImage.src}
+                alt={`${activeImage.title} placement diagram enlarged`}
+                className="mx-auto h-auto w-auto max-w-full object-contain"
+              />
+              <p className="mt-3 text-center text-xs font-black uppercase tracking-[0.2em] text-slate-500">
+                {activeImage.title}
+              </p>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

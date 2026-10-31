@@ -17,32 +17,32 @@ const PROJECT_IMAGES = [
 ];
 const PROJECT_DETAILS = [
   {
-    label: "Drop 01",
+    label: "Streetwear",
     title: "Oversized Streetwear Set",
     subtitle: "Soft-hand print with tight registration and consistent opacity.",
   },
   {
-    label: "Drop 02",
+    label: "Athletic",
     title: "Athletic Club Series",
     subtitle: "Durable team graphics engineered for repeat wash cycles.",
   },
   {
-    label: "Drop 03",
+    label: "Tour Merch",
     title: "Tour Merch Capsule",
     subtitle: "High-impact front and back prints built for launch day.",
   },
   {
-    label: "Drop 04",
+    label: "Retail",
     title: "Retail Essentials Batch",
     subtitle: "Clean, minimal branding optimized for premium shelf presence.",
   },
   {
-    label: "Drop 05",
+    label: "Festival",
     title: "Festival Graphic Run",
     subtitle: "Vibrant ink layering tuned for sharp detail under stage light.",
   },
   {
-    label: "Drop 06",
+    label: "Logo Program",
     title: "Core Logo Program",
     subtitle: "Reliable brand consistency across multiple garment styles.",
   },
@@ -194,7 +194,7 @@ const Gallery: React.FC<GalleryProps> = ({ onNavigate }) => {
                   <div
                     className={`absolute top-4 right-4 ${badgeColors[idx % badgeColors.length]} text-white px-4 py-2 rounded-full text-xs font-black uppercase tracking-wider shadow-lg transform group-hover:scale-110 transition-transform duration-300`}
                   >
-                    {PROJECT_DETAILS[idx]?.label || `Drop ${idx + 1}`}
+                    {PROJECT_DETAILS[idx]?.label || `Project ${idx + 1}`}
                   </div>
 
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
