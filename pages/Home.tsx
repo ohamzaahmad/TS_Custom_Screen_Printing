@@ -2,6 +2,24 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
 import { useSEO } from "../hooks/useSEO";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../components/ui/accordion";
+import {
+  ShinyText,
+  SpotlightCard,
+  BlurText,
+  Magnetic,
+  NumberTicker,
+  ParticlesBackground,
+} from "../components/ui";
+
+const InteractiveShirt3D = React.lazy(
+  () => import("../components/InteractiveShirt3D")
+);
 
 interface HomeProps {
   onNavigate: (page: string) => void;
@@ -25,32 +43,32 @@ const HERO_CAROUSEL_IMAGES = [
 ];
 const PROJECT_DETAILS = [
   {
-    label: "Drop 01",
+    label: "Streetwear",
     title: "Oversized Streetwear Set",
     subtitle: "Soft-hand print with tight registration and consistent opacity.",
   },
   {
-    label: "Drop 02",
+    label: "Athletic",
     title: "Athletic Club Series",
     subtitle: "Durable team graphics engineered for repeat wash cycles.",
   },
   {
-    label: "Drop 03",
+    label: "Tour Merch",
     title: "Tour Merch Capsule",
     subtitle: "High-impact front and back prints built for launch day.",
   },
   {
-    label: "Drop 04",
+    label: "Retail",
     title: "Retail Essentials Batch",
     subtitle: "Clean, minimal branding optimized for premium shelf presence.",
   },
   {
-    label: "Drop 05",
+    label: "Festival",
     title: "Festival Graphic Run",
     subtitle: "Vibrant ink layering tuned for sharp detail under stage light.",
   },
   {
-    label: "Drop 06",
+    label: "Logo Program",
     title: "Core Logo Program",
     subtitle: "Reliable brand consistency across multiple garment styles.",
   },
@@ -155,7 +173,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   return (
     <div className="animate-in">
       {/* Cinematic Hero - Brand Entry */}
-      <section className="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden bg-black">
+      <section className="relative min-h-screen flex items-center pt-24 lg:pt-28 pb-12 lg:pb-16 overflow-hidden bg-black">
         <div className="absolute inset-0 z-0">
           {!reduceMotion ? (
             <>
@@ -200,116 +218,166 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               <div className="blob blob-3" aria-hidden="true" />
             </>
           )}
+          <ParticlesBackground
+            particleCount={35}
+            speed={0.35}
+            particleColors={["#BD00FF", "#FF8A00", "#ffffff"]}
+          />
           <img
             src="/loop.gif"
             alt=""
-            className="w-full h-full object-cover opacity-40 mix-blend-screen scale-110"
+            className="w-full h-full object-cover opacity-50 mix-blend-screen scale-110"
             aria-hidden="true"
           />
-          <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/50 to-black"></div>
+          <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/20 to-black/75"></div>
         </div>
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-12 w-full pt-8 md:pt-16">
-          <div className="flex flex-col items-start max-w-3xl">
-            <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={
-                reduceMotion ? undefined : { duration: 0.6, ease: EASE_OUT }
-              }
-              className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass-dark text-white/90 text-[9px] font-black uppercase tracking-[0.5em] mb-12 border border-white/5"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-purple-600 shadow-[0_0_12px_rgba(189,0,255,0.8)]"></span>
-              EST. 2018 | THE GOLD STANDARD
-            </motion.div>
-
-            <motion.h1
-              initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={
-                reduceMotion
-                  ? undefined
-                  : { duration: 0.8, delay: 0.08, ease: EASE_OUT }
-              }
-              className="fluid-h1 text-white leading-tight mb-8 tracking-tight uppercase select-none"
-            >
-              A CULTURE OF
-              <br />
-              <span className="text-gradient-orange italic font-extrabold">
-                PRECISION.
-              </span>
-            </motion.h1>
-
-            <motion.p
-              initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={
-                reduceMotion
-                  ? undefined
-                  : { duration: 0.7, delay: 0.16, ease: EASE_OUT }
-              }
-              className="text-base md:text-lg text-white/40 mb-10 leading-relaxed font-medium max-w-xl border-l-2 border-purple-600/30 pl-6"
-            >
-              We don't just print garments. We manufacture physical brand
-              identity through a meticulous fusion of chemical engineering and
-              technical artistry.
-            </motion.p>
-
-            <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-              transition={
-                reduceMotion
-                  ? undefined
-                  : { duration: 0.6, delay: 0.24, ease: EASE_OUT }
-              }
-              className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
-            >
-              <button
-                onClick={() => onNavigate("quote")}
-                className="bg-white text-black px-6 py-3 rounded-full font-black text-sm shadow-lg hover:scale-102 active:scale-95 transition-all duration-300 uppercase tracking-widest btn-pulse"
-              >
-                Start A Project
-              </button>
-              <button
-                onClick={() =>
-                  (window.location.href =
-                    "https://www.sportswearcollection.com/st-screen-printing")
+        <div className="relative z-10 container-breakout max-w-breakout 2xl:max-w-[1680px] w-full pt-6 md:pt-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-14 2xl:gap-20 items-center">
+            {/* Left Content Column */}
+            <div className="flex flex-col items-start lg:col-span-7 xl:col-span-7">
+              <motion.div
+                initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+                animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                transition={
+                  reduceMotion ? undefined : { duration: 0.6, ease: EASE_OUT }
                 }
-                className="glass-dark text-white px-6 py-3 rounded-full font-black text-sm hover:bg-white/10 transition-all uppercase tracking-widest border border-white/10 active:scale-95"
+                className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass-dark text-white/90 text-[10px] xl:text-[11px] font-black uppercase tracking-[0.5em] mb-4 xl:mb-6 border border-white/10"
               >
-                Browse Catalog
-              </button>
-            </motion.div>
+                <span className="w-2 h-2 rounded-full bg-purple-600 shadow-[0_0_12px_rgba(189,0,255,0.8)]"></span>
+                <ShinyText text="EST. 2018 | THE GOLD STANDARD" speed={5} />
+              </motion.div>
 
+              <motion.h1
+                initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+                animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                transition={
+                  reduceMotion
+                    ? undefined
+                    : { duration: 0.8, delay: 0.08, ease: EASE_OUT }
+                }
+                className="fluid-h1 text-white leading-tight mb-4 xl:mb-5 tracking-tight uppercase select-none"
+              >
+                CUSTOM SCREEN PRINTING
+                <br />
+                <span className="text-gradient-orange italic font-extrabold block mt-1">
+                  BUILT FOR YOUR BRAND.
+                </span>
+              </motion.h1>
+
+              <motion.p
+                initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+                animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                transition={
+                  reduceMotion
+                    ? undefined
+                    : { duration: 0.7, delay: 0.16, ease: EASE_OUT }
+                }
+                className="text-base sm:text-lg xl:text-xl text-white/50 mb-6 xl:mb-8 leading-relaxed font-medium max-w-2xl border-l-2 border-purple-600/40 pl-6"
+              >
+                Premium custom apparel and merch, printed with industrial
+                precision and boutique attention to detail. Bold color, durable
+                inks, and fast turnaround — from your first mockup to the final
+                print run.
+              </motion.p>
+
+              <motion.div
+                initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+                animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                transition={
+                  reduceMotion
+                    ? undefined
+                    : { duration: 0.6, delay: 0.24, ease: EASE_OUT }
+                }
+                className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+              >
+                <Magnetic range={80} intensity={0.25}>
+                  <button
+                    onClick={() => onNavigate("quote")}
+                    className="bg-white text-black px-7 py-3.5 xl:px-8 xl:py-4 rounded-full font-black text-sm xl:text-base shadow-lg hover:scale-102 active:scale-95 transition-all duration-300 uppercase tracking-widest btn-pulse w-full sm:w-auto text-center"
+                  >
+                    Start A Project
+                  </button>
+                </Magnetic>
+                <Magnetic range={60} intensity={0.2}>
+                  <button
+                    onClick={() =>
+                      (window.location.href =
+                        "https://www.sportswearcollection.com/st-screen-printing")
+                    }
+                    className="glass-dark text-white px-7 py-3.5 xl:px-8 xl:py-4 rounded-full font-black text-sm xl:text-base hover:bg-white/10 transition-all uppercase tracking-widest border border-white/10 active:scale-95 w-full sm:w-auto text-center"
+                  >
+                    Browse Catalog
+                  </button>
+                </Magnetic>
+              </motion.div>
+
+              <motion.div
+                initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+                animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                transition={
+                  reduceMotion
+                    ? undefined
+                    : { duration: 0.6, delay: 0.32, ease: EASE_OUT }
+                }
+                className="mt-8 xl:mt-9 grid grid-cols-3 gap-4 xl:gap-5 w-full max-w-2xl"
+              >
+                <SpotlightCard
+                  spotlightColor="rgba(255, 138, 0, 0.2)"
+                  className="glass-dark rounded-2xl p-4 sm:p-5 xl:p-6 border border-white/10"
+                >
+                  <p className="text-white text-2xl sm:text-3xl xl:text-4xl 2xl:text-5xl font-black">
+                    <NumberTicker value={500} suffix="K+" />
+                  </p>
+                  <p className="text-white/60 text-[10px] xl:text-[11px] uppercase tracking-[0.2em] font-black mt-1">
+                    Prints YTD
+                  </p>
+                </SpotlightCard>
+                <SpotlightCard
+                  spotlightColor="rgba(189, 0, 255, 0.2)"
+                  className="glass-dark rounded-2xl p-4 sm:p-5 xl:p-6 border border-white/10"
+                >
+                  <p className="text-white text-2xl sm:text-3xl xl:text-4xl 2xl:text-5xl font-black">
+                    <NumberTicker value={99.8} decimalPlaces={1} suffix="%" />
+                  </p>
+                  <p className="text-white/60 text-[10px] xl:text-[11px] uppercase tracking-[0.2em] font-black mt-1">
+                    Repeat Clients
+                  </p>
+                </SpotlightCard>
+                <SpotlightCard
+                  spotlightColor="rgba(255, 138, 0, 0.2)"
+                  className="glass-dark rounded-2xl p-4 sm:p-5 xl:p-6 border border-white/10"
+                >
+                  <p className="text-white text-2xl sm:text-3xl xl:text-4xl 2xl:text-5xl font-black">
+                    <NumberTicker value={10} suffix="–12" />
+                  </p>
+                  <p className="text-white/60 text-[10px] xl:text-[11px] uppercase tracking-[0.2em] font-black mt-1">
+                    Business Days
+                  </p>
+                </SpotlightCard>
+              </motion.div>
+            </div>
+
+            {/* Right Showcase Column (Floating 3D Designed Shirt with Scroll-Interactive 3D Motion) */}
             <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+              initial={reduceMotion ? false : { opacity: 0, scale: 0.95 }}
+              animate={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
               transition={
                 reduceMotion
                   ? undefined
-                  : { duration: 0.6, delay: 0.32, ease: EASE_OUT }
+                  : { duration: 0.8, delay: 0.25, ease: EASE_OUT }
               }
-              className="mt-10 grid grid-cols-3 gap-4 w-full max-w-xl"
+              className="hidden lg:flex flex-col items-center justify-center lg:col-span-5 xl:col-span-5 relative lg:-mt-4 xl:-mt-6 2xl:-mt-8"
             >
-              <div className="glass-dark rounded-2xl p-4 border border-white/10">
-                <p className="text-white text-xl font-black">500K+</p>
-                <p className="text-white/50 text-[10px] uppercase tracking-[0.2em] font-black">
-                  Prints YTD
-                </p>
-              </div>
-              <div className="glass-dark rounded-2xl p-4 border border-white/10">
-                <p className="text-white text-xl font-black">99.8%</p>
-                <p className="text-white/50 text-[10px] uppercase tracking-[0.2em] font-black">
-                  Repeat Clients
-                </p>
-              </div>
-              <div className="glass-dark rounded-2xl p-4 border border-white/10">
-                <p className="text-white text-xl font-black">10-12</p>
-                <p className="text-white/50 text-[10px] uppercase tracking-[0.2em] font-black">
-                  Business Days
-                </p>
-              </div>
+              <React.Suspense
+                fallback={
+                  <div className="w-full lg:w-[460px] xl:w-[520px] 2xl:w-[580px] h-[640px] xl:h-[700px] 2xl:h-[760px] flex items-center justify-center">
+                    <div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
+                  </div>
+                }
+              >
+                <InteractiveShirt3D />
+              </React.Suspense>
             </motion.div>
           </div>
         </div>
@@ -328,7 +396,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       {/* Order Custom Apparel */}
       <motion.section
         {...revealProps}
-        className="py-24 bg-slate-900 relative overflow-hidden"
+        className="py-24 md:py-28 bg-slate-900 relative overflow-hidden"
       >
         <div
           className="absolute -top-32 -left-32 w-80 h-80 bg-orange-500/15 rounded-full blur-[100px]"
@@ -339,25 +407,25 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           aria-hidden="true"
         ></div>
 
-        <div className="relative max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div>
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-400 block mb-4">
+        <div className="relative container-breakout max-w-breakout 2xl:max-w-[1680px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 xl:gap-20 items-center">
+            <div className="lg:col-span-7">
+              <span className="text-[11px] xl:text-xs font-black uppercase tracking-[0.4em] text-orange-400 block mb-4">
                 What We Do
               </span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[0.95] mb-6">
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight text-white leading-[0.95] mb-6">
                 Order custom
                 <br />
                 apparel and merch
                 <br />
                 <span className="text-gradient-orange">today.</span>
               </h2>
-              <p className="text-white/50 text-lg font-medium leading-relaxed mb-8 max-w-lg">
+              <p className="text-white/60 text-lg xl:text-xl 2xl:text-2xl font-medium leading-relaxed mb-8 max-w-2xl">
                 We specialize in custom screen printing, branded apparel, and
                 promotional products for businesses, organizations, teams, and
                 events.
               </p>
-              <div className="flex flex-wrap gap-3 mb-10">
+              <div className="flex flex-wrap gap-3.5 mb-10">
                 <div className="relative">
                   <div
                     className="absolute inset-0 bg-orange-500 rounded-full translate-x-1 translate-y-1"
@@ -365,7 +433,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   ></div>
                   <button
                     onClick={() => onNavigate("quote")}
-                    className="relative bg-white text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.18em] text-[11px] border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
+                    className="relative bg-white text-slate-900 px-6 sm:px-7 py-3.5 rounded-full font-black uppercase tracking-[0.18em] text-[11px] sm:text-xs border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
                   >
                     Start Your Order
                   </button>
@@ -377,7 +445,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   ></div>
                   <button
                     onClick={() => onNavigate("guide")}
-                    className="relative bg-white text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.18em] text-[11px] border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
+                    className="relative bg-white text-slate-900 px-6 sm:px-7 py-3.5 rounded-full font-black uppercase tracking-[0.18em] text-[11px] sm:text-xs border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
                   >
                     Print Guide
                   </button>
@@ -389,7 +457,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   ></div>
                   <button
                     onClick={() => onNavigate("pricing")}
-                    className="relative bg-white text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.18em] text-[11px] border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
+                    className="relative bg-white text-slate-900 px-6 sm:px-7 py-3.5 rounded-full font-black uppercase tracking-[0.18em] text-[11px] sm:text-xs border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
                   >
                     Pricing
                   </button>
@@ -401,21 +469,21 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   ></div>
                   <button
                     onClick={() => onNavigate("colors")}
-                    className="relative bg-white text-slate-900 px-6 py-3 rounded-full font-black uppercase tracking-[0.18em] text-[11px] border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
+                    className="relative bg-white text-slate-900 px-6 sm:px-7 py-3.5 rounded-full font-black uppercase tracking-[0.18em] text-[11px] sm:text-xs border-2 border-slate-900 hover:-translate-y-0.5 transition-all"
                   >
                     Color Guide
                   </button>
                 </div>
               </div>
-              <ul className="space-y-4">
+              <ul className="space-y-4 xl:space-y-5">
                 {[
                   "Screen printing on t-shirts, hoodies, jackets & more",
                   "Quality inks and durable, long-lasting prints",
                   "Fast turnaround and reliable service",
                 ].map((item) => (
-                  <li key={item} className="flex items-center gap-3">
-                    <span className="w-2.5 h-2.5 rounded-full bg-orange-500 shrink-0 shadow-[0_0_10px_rgba(255,103,32,0.5)]"></span>
-                    <span className="text-white/80 font-bold text-sm">
+                  <li key={item} className="flex items-center gap-3.5">
+                    <span className="w-3 h-3 rounded-full bg-orange-500 shrink-0 shadow-[0_0_12px_rgba(255,103,32,0.6)]"></span>
+                    <span className="text-white/90 font-bold text-sm sm:text-base xl:text-lg">
                       {item}
                     </span>
                   </li>
@@ -423,8 +491,8 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               </ul>
             </div>
 
-            <div className="relative">
-              <div className="relative rounded-3rem overflow-hidden aspect-[4/5] bg-white/5 border border-white/10 shadow-[8px_8px_0_#FF6720]">
+            <div className="relative lg:col-span-5">
+              <div className="relative rounded-3rem overflow-hidden aspect-[4/5] w-full max-w-md lg:max-w-none mx-auto bg-white/5 border border-white/10 shadow-2xl">
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={carouselIndex}
@@ -438,15 +506,15 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                   />
                 </AnimatePresence>
               </div>
-              <div className="flex items-center justify-center gap-2 mt-5">
+              <div className="flex items-center justify-center gap-2.5 mt-6">
                 {HERO_CAROUSEL_IMAGES.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setCarouselIndex(idx)}
-                    className={`h-1.5 rounded-full transition-all duration-500 ${
+                    className={`h-2 rounded-full transition-all duration-500 ${
                       idx === carouselIndex
-                        ? "w-8 bg-orange-500"
-                        : "w-1.5 bg-white/20 hover:bg-white/40"
+                        ? "w-10 bg-orange-500"
+                        : "w-2 bg-white/20 hover:bg-white/40"
                     }`}
                     aria-label={`Go to image ${idx + 1}`}
                   />
@@ -460,42 +528,20 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       {/* Curated Projects */}
       <motion.section
         {...revealProps}
-        className="py-24 bg-white relative overflow-hidden"
+        className="py-24 md:py-28 bg-white relative overflow-hidden"
       >
         <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-slate-200 to-transparent"></div>
 
-        {/* Splash decorations */}
-        <div
-          className="absolute top-8 right-[15%] w-40 h-16 bg-orange-500 rounded-[2rem] rotate-[-6deg] opacity-90"
-          aria-hidden="true"
-        ></div>
-        <div
-          className="absolute top-6 right-[14%] w-40 h-16 border-2 border-slate-900 rounded-[2rem] rotate-[-6deg]"
-          aria-hidden="true"
-        ></div>
-        <div
-          className="absolute bottom-12 left-[8%] w-32 h-14 bg-purple-600 rounded-[2rem] rotate-[4deg] opacity-90"
-          aria-hidden="true"
-        ></div>
-        <div
-          className="absolute bottom-10 left-[7%] w-32 h-14 border-2 border-slate-900 rounded-[2rem] rotate-[4deg]"
-          aria-hidden="true"
-        ></div>
-        <div
-          className="absolute top-1/2 right-[5%] w-20 h-20 bg-yellow-400 rounded-full opacity-80"
-          aria-hidden="true"
-        ></div>
-
-        <div className="relative max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-12">
+        <div className="relative container-breakout max-w-breakout 2xl:max-w-[1680px]">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
             <div>
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-500 block mb-4">
+              <span className="text-[11px] font-black uppercase tracking-[0.4em] text-orange-500 block mb-4">
                 Our Work
               </span>
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-[0.95] text-slate-900 uppercase mb-4">
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[0.95] text-slate-900 uppercase mb-4">
                 Recent Production Work
               </h2>
-              <p className="text-slate-500 font-medium leading-relaxed max-w-lg">
+              <p className="text-slate-500 text-base sm:text-lg font-medium leading-relaxed max-w-xl">
                 Every project represents our commitment to precision, color, and
                 quality across every print run.
               </p>
@@ -507,20 +553,24 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               ></div>
               <button
                 onClick={() => openLightbox(0)}
-                className="relative text-sm bg-white text-slate-950 border-2 border-slate-950 px-6 py-3 rounded-full font-black uppercase tracking-[0.2em] w-full md:w-auto hover:-translate-y-0.5 hover:shadow-lg transition-all"
+                className="relative text-sm sm:text-base bg-white text-slate-950 border-2 border-slate-950 px-7 py-3.5 rounded-full font-black uppercase tracking-[0.2em] w-full md:w-auto hover:-translate-y-0.5 hover:shadow-lg transition-all"
               >
                 View Gallery
               </button>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8">
             {PROJECT_IMAGES.slice(0, 6).map((src, idx) => (
               <motion.button
                 whileHover={reduceMotion ? undefined : { y: -4 }}
                 key={`${src}-${idx}`}
                 onClick={() => openLightbox(idx)}
-                className={`group relative text-left overflow-hidden border border-slate-200 hover:border-orange-400 focus:outline-none focus:ring-4 focus:ring-orange-300 rounded-3rem bg-white shadow-lg hover:shadow-xl transition-all duration-300 ${idx === 0 ? "col-span-2 row-span-2 min-h-[33rem]" : "min-h-[16rem]"}`}
+                className={`group relative text-left overflow-hidden border border-slate-200 hover:border-orange-400 focus:outline-none focus:ring-4 focus:ring-orange-300 rounded-3rem bg-white shadow-lg hover:shadow-xl transition-all duration-300 ${
+                  idx === 0
+                    ? "sm:col-span-2 lg:col-span-2 sm:row-span-2 min-h-[30rem] lg:min-h-[38rem] xl:min-h-[44rem]"
+                    : "min-h-[18rem] lg:min-h-[22rem] xl:min-h-[26rem]"
+                }`}
               >
                 <img
                   src={src}
@@ -531,14 +581,14 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 to-purple-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <div className="inline-block bg-orange-500 text-white text-[10px] font-black uppercase tracking-[0.3em] px-4 py-1.5 rounded-full mb-2 -rotate-2">
+                <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 xl:p-10 text-white">
+                  <span className="inline-block text-orange-400 text-[11px] xl:text-xs font-bold uppercase tracking-[0.2em] mb-2">
                     {PROJECT_DETAILS[idx]?.label ?? `Project ${idx + 1}`}
-                  </div>
-                  <p className="font-black text-xl md:text-2xl leading-tight tracking-tight text-white mb-1">
+                  </span>
+                  <p className="font-black text-xl sm:text-2xl lg:text-3xl leading-tight tracking-tight text-white mb-2">
                     {PROJECT_DETAILS[idx]?.title ?? "Premium Screen Print"}
                   </p>
-                  <p className="text-[12px] text-white/70 font-bold leading-relaxed">
+                  <p className="text-xs sm:text-sm lg:text-base text-white/80 font-medium leading-relaxed max-w-xl">
                     {PROJECT_DETAILS[idx]?.subtitle ??
                       "A recent screen print run showcasing pigment and texture on blanks."}
                   </p>
@@ -619,10 +669,71 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           document.body,
         )}
 
+      {/* FAQ — intentionally scoped to the homepage only */}
+      <motion.section {...revealProps} className="py-24 md:py-28 bg-slate-50">
+        <div className="container-standard">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 xl:gap-20">
+            <div className="lg:col-span-5">
+              <span className="text-[11px] font-black uppercase tracking-[0.4em] text-orange-500 block mb-4">
+                Good To Know
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-slate-900 mb-6">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-slate-600 text-base sm:text-lg font-medium leading-relaxed max-w-xl">
+                Quick answers about turnaround, minimums, artwork, and color
+                matching. Still unsure? Our team is one message away.
+              </p>
+              <button
+                onClick={() => onNavigate("quote")}
+                className="mt-8 inline-flex items-center gap-2 bg-slate-950 text-white px-7 py-3.5 rounded-full font-black text-xs sm:text-sm uppercase tracking-[0.2em] hover:-translate-y-0.5 transition-all active:scale-95"
+              >
+                Request A Quote
+              </button>
+            </div>
+            <div className="lg:col-span-7">
+              <Accordion type="single" collapsible className="bg-white rounded-3xl border border-slate-200/90 shadow-sm px-6 sm:px-8 xl:px-10 py-2">
+                {[
+                  {
+                    q: "What is your typical turnaround time?",
+                    a: "Standard turnaround is 10–12 business days after artwork approval and deposit. Rush production is available for time-sensitive launches — ask us for current capacity.",
+                  },
+                  {
+                    q: "Do you have a minimum order quantity?",
+                    a: "Screen printing starts at 12 garments per design. Embroidery and smaller specialty runs can be quoted separately, so reach out with your project details.",
+                  },
+                  {
+                    q: "What garments can you print on?",
+                    a: "T-shirts, hoodies, sweatshirts, jackets, caps, bags, and more. We work with premium blanks and can source specific styles and colors on request.",
+                  },
+                  {
+                    q: "How do I submit my artwork?",
+                    a: "Send vector files (AI, EPS, PDF) or high-resolution PNGs. Our art team can clean up, separate, and prepare your files for print if needed.",
+                  },
+                  {
+                    q: "Can you match Pantone or brand colors?",
+                    a: "Yes. We offer Pantone matching and can mix inks to hit your brand palette. Browse the Ink Color Lab for our stock and specialty palette.",
+                  },
+                  {
+                    q: "How do I get a quote?",
+                    a: "Use the quote form, call (732) 347-0101, or email info@stcsprinting.com. Include garment style, quantity, print locations, and your artwork for the fastest response.",
+                  },
+                ].map((item, idx) => (
+                  <AccordionItem key={item.q} value={`faq-${idx}`} className="last:border-b-0 py-1">
+                    <AccordionTrigger className="text-base sm:text-lg font-bold text-left">{item.q}</AccordionTrigger>
+                    <AccordionContent className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">{item.a}</AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
       {/* Final CTA */}
-      <motion.section {...revealProps} className="py-20 bg-white">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="relative overflow-hidden bg-brand-dark rounded-4rem border border-white/10 p-8 md:p-12 text-white">
+      <motion.section {...revealProps} className="py-24 bg-white">
+        <div className="container-standard">
+          <div className="relative overflow-hidden bg-brand-dark rounded-4rem border border-white/10 p-8 sm:p-12 lg:p-16 text-white">
             <div
               className="absolute -top-24 -right-24 w-80 h-80 bg-purple-600/20 rounded-full blur-180"
               aria-hidden="true"
@@ -633,35 +744,35 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             ></div>
 
             <div className="relative">
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-400 block mb-4">
+              <span className="text-[11px] font-black uppercase tracking-[0.4em] text-orange-400 block mb-4">
                 Ready To Move
               </span>
-              <h3 className="text-3xl md:text-4xl font-black tracking-tight mb-4">
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight mb-6">
                 Let&apos;s build your next print run.
               </h3>
-              <p className="text-white/60 text-lg font-medium leading-relaxed mb-8 max-w-2xl">
+              <p className="text-white/70 text-lg sm:text-xl lg:text-2xl font-medium leading-relaxed mb-10 max-w-3xl">
                 Share your requirements and we&apos;ll respond with the cleanest
                 path to quality, speed, and consistency.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-3 mb-7">
+              <div className="flex flex-col sm:flex-row gap-3.5 mb-8">
                 <a
-                  href="tel:+19053384034"
-                  className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-sm font-black"
+                  href="tel:+17323470101"
+                  className="bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-sm sm:text-base font-black hover:bg-white/10 transition-colors inline-flex items-center gap-2"
                 >
-                  (732) 347-0101
+                  <span className="text-orange-400">📞</span> (732) 347-0101
                 </a>
                 <a
                   href="mailto:info@stcsprinting.com"
-                  className="bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-sm font-black"
+                  className="bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-sm sm:text-base font-black hover:bg-white/10 transition-colors inline-flex items-center gap-2"
                 >
-                  info@stcsprinting.com
+                  <span className="text-purple-400">✉️</span> info@stcsprinting.com
                 </a>
               </div>
 
               <button
                 onClick={() => onNavigate("quote")}
-                className="bg-white text-brand-dark px-7 py-3 rounded-full font-black uppercase tracking-[0.2em] text-xs"
+                className="bg-white text-brand-dark px-8 py-4 rounded-full font-black uppercase tracking-[0.2em] text-xs sm:text-sm hover:scale-102 transition-transform shadow-lg"
               >
                 Request A Quote
               </button>

@@ -1,15 +1,7 @@
 import React, { lazy, Suspense, useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import {
-  HomePageLoader,
-  FormPageLoader,
-  GalleryPageLoader,
-  CataloguePageLoader,
-  AccordionPageLoader,
-  ColorGuidePageLoader,
-  PricingPageLoader,
-} from "./components/PageLoaders";
+import PageLoader from "./components/PageLoader";
 
 const Home = lazy(() => import("./pages/Home"));
 const Quote = lazy(() => import("./pages/Quote"));
@@ -47,32 +39,6 @@ const pathToPage = (pathname: string): string => {
   return match ? match[0] : "not-found";
 };
 
-const getPageLoader = (page: string) => {
-  switch (page) {
-    case "home":
-      return HomePageLoader;
-    case "quote":
-    case "contact":
-      return FormPageLoader;
-    case "gallery":
-      return GalleryPageLoader;
-    case "catalogue":
-      return CataloguePageLoader;
-    case "terms":
-    case "refund":
-    case "privacy":
-      return AccordionPageLoader;
-    case "colors":
-      return ColorGuidePageLoader;
-    case "pricing":
-      return PricingPageLoader;
-    case "guide":
-      return FormPageLoader;
-    default:
-      return HomePageLoader;
-  }
-};
-
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(
     pathToPage(window.location.pathname),
@@ -104,10 +70,11 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // Only provide a document title for routes that do not manage their own
+  // metadata. Each page sets a specific title through `useSEO`; overwriting it
+  // here for every route clobbered those titles (Feature 18).
   useEffect(() => {
-    if (currentPage !== "not-found") {
-      document.title = `ST Custom Screen Printing`;
-    } else {
+    if (currentPage === "not-found") {
       document.title = `Page Not Found | ST Custom Screen Printing`;
     }
   }, [currentPage]);
@@ -180,7 +147,7 @@ const App: React.FC = () => {
     <div className="flex flex-col min-h-screen bg-[#fcfcfc] selection:bg-purple-600 selection:text-white">
       {showNav && <Navbar currentPage={currentPage} onNavigate={navigate} />}
       <main key={currentPage} className="grow">
-        <Suspense fallback={React.createElement(getPageLoader(currentPage))}>
+        <Suspense fallback={<PageLoader />}>
           {renderPage()}
         </Suspense>
       </main>

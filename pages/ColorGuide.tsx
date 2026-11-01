@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Skeleton from "../components/Skeleton";
+import { InlineLoader } from "../components/PageLoader";
 import { fetchInks } from "../services/dataService";
 import { useSEO } from "../hooks/useSEO";
 
@@ -9,16 +9,26 @@ interface ColorSwatchProps {
   hex: string;
 }
 
+const isLightHex = (hex: string) => {
+  const normalized = hex.replace("#", "");
+  const full =
+    normalized.length === 3
+      ? normalized
+          .split("")
+          .map((c) => c + c)
+          .join("")
+      : normalized;
+  const r = parseInt(full.slice(0, 2), 16);
+  const g = parseInt(full.slice(2, 4), 16);
+  const b = parseInt(full.slice(4, 6), 16);
+  if ([r, g, b].some((v) => Number.isNaN(v))) return false;
+  // Perceived luminance (sRGB)
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.62;
+};
+
 const ColorSwatch: React.FC<ColorSwatchProps> = ({ name, pantone, hex }) => {
   const isWhite = name.toLowerCase() === "white";
-  const isLight = [
-    "white",
-    "lemon yellow",
-    "primrose",
-    "flesh",
-    "light gray",
-    "fluorescent yellow",
-  ].includes(name.toLowerCase());
+  const isLight = isLightHex(hex);
 
   return (
     <div className="group flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100">
@@ -52,7 +62,11 @@ const ColorGuide: React.FC = () => {
       "Browse our stock and additional ink colors with Pantone references for custom screen printing.",
   });
 
-  const [inks, setInks] = useState<any>({ stock: [], additional: [] });
+  const [inks, setInks] = useState<any>({
+    stock: [],
+    additional: [],
+    fluorescent: [],
+  });
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -88,13 +102,15 @@ const ColorGuide: React.FC = () => {
             <div className="h-px flex-grow bg-slate-200"></div>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {isLoading
-              ? [...Array(12)].map((_, i) => (
-                  <Skeleton key={i} className="h-24 md:h-32 w-full shadow-sm" />
-                ))
-              : inks.stock.map((c: any, i: number) => (
-                  <ColorSwatch key={i} {...c} />
-                ))}
+            {isLoading ? (
+              <div className="col-span-full">
+                <InlineLoader label="Loading inks" />
+              </div>
+            ) : (
+              inks.stock.map((c: any, i: number) => (
+                <ColorSwatch key={i} {...c} />
+              ))
+            )}
           </div>
         </section>
 
@@ -107,16 +123,37 @@ const ColorGuide: React.FC = () => {
               <div className="h-px flex-grow bg-slate-200"></div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {isLoading
-                ? [...Array(8)].map((_, i) => (
-                    <Skeleton
-                      key={i}
-                      className="h-24 md:h-32 w-full shadow-sm"
-                    />
-                  ))
-                : inks.additional.map((c: any, i: number) => (
-                    <ColorSwatch key={i} {...c} />
-                  ))}
+              {isLoading ? (
+                <div className="col-span-full">
+                  <InlineLoader label="Loading inks" />
+                </div>
+              ) : (
+                inks.additional.map((c: any, i: number) => (
+                  <ColorSwatch key={i} {...c} />
+                ))
+              )}
+            </div>
+          </section>
+        )}
+
+        {(isLoading || inks.fluorescent?.length > 0) && (
+          <section className="mb-24">
+            <div className="flex items-center gap-6 mb-10">
+              <h2 className="text-3xl font-black uppercase tracking-tighter text-slate-900">
+                FLUORESCENT &amp; SPECIALTY INKS
+              </h2>
+              <div className="h-px flex-grow bg-slate-200"></div>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {isLoading ? (
+                <div className="col-span-full">
+                  <InlineLoader label="Loading inks" />
+                </div>
+              ) : (
+                inks.fluorescent.map((c: any, i: number) => (
+                  <ColorSwatch key={i} {...c} />
+                ))
+              )}
             </div>
           </section>
         )}

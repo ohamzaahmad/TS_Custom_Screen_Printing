@@ -83,7 +83,7 @@ const Catalogue: React.FC<CatalogueProps> = ({ onNavigate }) => {
                         reduceMotion ? undefined : { scale: 1.03, y: -4 }
                       }
                       whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-                      className="flex flex-col gap-3 p-6 border-3 border-orange-500 rounded-2xl bg-linear-to-br from-orange-400 to-orange-600 hover:shadow-xl transition-all group cursor-pointer relative overflow-hidden"
+                      className="flex flex-col gap-3 p-6 border-3 border-orange-500 rounded-2xl bg-orange-500 bg-linear-to-br from-orange-400 to-orange-600 hover:shadow-xl transition-all group cursor-pointer relative overflow-hidden"
                     >
                       {/* Animated background pulse */}
                       <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
@@ -107,9 +107,9 @@ const Catalogue: React.FC<CatalogueProps> = ({ onNavigate }) => {
                             d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
                           />
                         </svg>
-                        <h3 className="font-black text-white uppercase tracking-tight text-lg">
+                        <p className="font-black text-white uppercase tracking-tight text-lg">
                           Browse our Catalogue Now
-                        </h3>
+                        </p>
                         {/* <p className="text-orange-50 text-sm leading-snug font-semibold">S&S Active Wear - Premium Blanks & Garments</p> */}
                       </div>
 
@@ -316,25 +316,6 @@ const Catalogue: React.FC<CatalogueProps> = ({ onNavigate }) => {
                       </svg>
                       Fill Quote Form
                     </button>
-                    <button
-                      onClick={() => onNavigate("contact")}
-                      className="w-full bg-linear-to-r from-orange-500 to-purple-500 text-white px-6 py-3 rounded-xl font-bold uppercase tracking-[0.2em] text-sm hover:opacity-95 transition-all active:scale-95 flex items-center justify-center gap-3"
-                    >
-                      <svg
-                        className="w-6 h-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                        />
-                      </svg>
-                      Contact Us
-                    </button>
                   </div>
                 </div>
               </div>
@@ -435,82 +416,6 @@ const Catalogue: React.FC<CatalogueProps> = ({ onNavigate }) => {
             </div>
           </motion.div>
         </div>
-      </section>
-
-      {/* Quick Support */}
-      <section className="py-20 px-6 sm:px-8 lg:px-12 bg-blue-50 border-t border-blue-200">
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: EASE_OUT }}
-          className="max-w-4xl mx-auto"
-        >
-          <div className="bg-white border-2 border-blue-300 rounded-3rem p-8 md:p-12 flex items-start gap-6">
-            <svg
-              className="w-10 h-10 shrink-0 text-blue-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-              />
-            </svg>
-            <div className="grow">
-              <h3 className="text-2xl font-black uppercase tracking-tight mb-3 text-slate-900">
-                Need Help?
-              </h3>
-              <p className="text-slate-600 leading-relaxed font-medium mb-6">
-                Our team is ready to guide you through the entire process. Call,
-                email, or chat with us anytime.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a
-                  href="tel:+17323470101"
-                  className="bg-slate-900 text-white px-6 py-3 rounded-full font-black uppercase tracking-[0.2em] text-sm hover:bg-slate-800 transition-all inline-flex items-center gap-2"
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 00.948.684l1.498 4.493a1 1 0 00.502.756l2.048 1.029a2.42 2.42 0 010 4.33l-2.048 1.029a1 1 0 00-.502.756l-1.498 4.493a1 1 0 00-.948.684H5a2 2 0 01-2-2V5z"
-                    />
-                  </svg>
-                  Call us
-                </a>
-                <a
-                  href="mailto:info@stcsprinting.com"
-                  className="bg-blue-600 text-white px-6 py-3 rounded-full font-black uppercase tracking-[0.2em] text-sm hover:bg-blue-700 transition-all inline-flex items-center gap-2"
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
-                  </svg>
-                  Email us
-                </a>
-              </div>
-            </div>
-          </div>
-        </motion.div>
       </section>
     </div>
   );

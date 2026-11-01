@@ -47,10 +47,38 @@ const INITIAL_INKS = {
     { name: 'Process Blue', pantone: 'Standard', hex: '#0085CA' },
     { name: 'Sky Blue', pantone: 'Pantone 283 C', hex: '#92C1E9' },
     { name: 'Teal', pantone: 'Pantone 320 C', hex: '#009CA6' },
-    { name: 'Reflex Blue', pantone: 'Pantone 2738 C', hex: '#00009C' },
-    { name: 'Lavender', pantone: 'Pantone 2635 C', hex: '#8D90B7' },
+    { name: 'Reflex Blue', pantone: 'Pantone 2738 C', hex: '#001489' },
+    { name: 'Lavender', pantone: 'Pantone 2635 C', hex: '#B5A8DC' },
     { name: 'Light Purple', pantone: 'Pantone 265 C', hex: '#9063CD' },
     { name: 'Purple', pantone: 'Pantone 268 C', hex: '#582C83' },
+    { name: 'Primrose', pantone: 'Pantone 108 C', hex: '#FEDD00' },
+    { name: 'Vegas Gold', pantone: 'Pantone 458 C', hex: '#DFD1A7' },
+    { name: 'Metallic Gold', pantone: 'Pantone 872 C', hex: '#85754E' },
+    { name: 'Brown', pantone: 'Pantone 168 C', hex: '#6C3020' },
+    { name: 'Chocolate Brown', pantone: 'Pantone 477 C', hex: '#46241E' },
+    { name: 'Khaki', pantone: 'Pantone 7501 C', hex: '#DACBA3' },
+    { name: 'Flesh', pantone: 'Pantone 475 C', hex: '#F5D6C6' },
+    { name: 'Spring Green', pantone: 'Pantone 368 C', hex: '#78BE20' },
+    { name: 'Forest Green', pantone: 'Pantone 357 C', hex: '#215732' },
+    { name: 'Awareness Pink', pantone: 'Pantone 232 C', hex: '#E83E8C' },
+    { name: 'Bubble Gum', pantone: 'Pantone 204 C', hex: '#E93CAC' },
+    { name: 'Watermelon', pantone: 'Pantone 191 C', hex: '#EF4A81' },
+    { name: 'Rubine Red', pantone: 'Pantone 1935 C', hex: '#D5006D' },
+    { name: 'Scarlet Red', pantone: 'Pantone 186 C', hex: '#C8102E' },
+    { name: 'Cardinal Red', pantone: 'Pantone 201 C', hex: '#9D2235' },
+    { name: 'Process Magenta', pantone: 'Standard', hex: '#D62598' },
+    { name: 'Maroon', pantone: 'Pantone 209 C', hex: '#6E2B44' },
+    { name: 'Harvest', pantone: 'Pantone 716 C', hex: '#F0A93B' },
+    { name: 'Light Gray', pantone: 'Pantone Cool Gray 4 C', hex: '#BBBCBC' },
+    { name: 'Dark Gray', pantone: 'Pantone Cool Gray 9 C', hex: '#75787B' },
+    { name: 'Metallic Silver', pantone: 'Pantone 877 C', hex: '#A7A8AA' },
+    { name: 'Charcoal', pantone: 'Pantone 425 C', hex: '#545859' },
+  ],
+  fluorescent: [
+    { name: 'Fluorescent Pink', pantone: 'Pantone 806 C', hex: '#FF3399' },
+    { name: 'Fluorescent Yellow', pantone: 'Pantone 803 C', hex: '#E8FF00' },
+    { name: 'Fluorescent Green', pantone: 'Pantone 802 C', hex: '#00FF66' },
+    { name: 'Fluorescent Purple', pantone: 'Pantone 253 C', hex: '#B026FF' },
   ]
 };
 
@@ -85,9 +113,10 @@ export const updatePricing = (pricing: any[]) => {
 };
 
 export const fetchInks = async () => {
-  return getStorage('inks', INITIAL_INKS);
+  // Versioned key so an updated brand palette replaces stale cached swatches.
+  return getStorage('inks_v2', INITIAL_INKS);
 };
 
 export const updateInks = (inks: any) => {
-  setStorage('inks', inks);
+  setStorage('inks_v2', inks);
 };

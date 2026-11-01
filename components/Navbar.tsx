@@ -1,26 +1,124 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Logo } from "../constants";
+import { Magnetic } from "./ui";
 
 interface NavbarProps {
   currentPage: string;
   onNavigate: (page: string) => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
+interface NavItem {
+  label: string;
+  id: string;
+  external?: string;
+}
+
+interface ResourceItem {
+  title: string;
+  description: string;
+  id: string;
+  icon: string;
+  badge?: string;
+}
+
+const NAV_ITEMS: NavItem[] = [
+  { label: "Home", id: "home" },
+  { label: "About", id: "about" },
+  { label: "Gallery", id: "gallery" },
+  { label: "Catalogue", id: "catalogue" },
+  { label: "Contact", id: "contact" },
+];
+
+const RESOURCE_ITEMS: ResourceItem[] = [
+  {
+    title: "Pricing Guide",
+    description: "Per-shirt breakdown for screen prints & bulk volumes",
+    id: "pricing",
+    icon: "fa-tags",
+    badge: "2026 Rates",
+  },
+  {
+    title: "Placement Guide",
+    description: "Standard chest, sleeve, nape, and back print dimensions",
+    id: "guide",
+    icon: "fa-ruler-combined",
+  },
+  {
+    title: "Ink Color Lab",
+    description: "Specialty plastisol inks, metallic, and Pantone matches",
+    id: "colors",
+    icon: "fa-palette",
+  },
+  {
+    title: "Full Catalogue",
+    description: "Premium blanks from S&S Activewear, tees, and hoodies",
+    id: "catalogue",
+    icon: "fa-book-open",
+  },
+];
+
+export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const lastActiveElementRef = useRef<HTMLElement | null>(null);
+  const resourcesRef = useRef<HTMLDivElement | null>(null);
+  const dropdownTimeoutRef = useRef<number | null>(null);
+  const lastScrollY = useRef(0);
+  const menuOpenRef = useRef(false);
+
+  // Sync menu state ref so scroll listener has latest value
+  useEffect(() => {
+    menuOpenRef.current = isOpen || resourcesOpen;
+  }, [isOpen, resourcesOpen]);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      const currentScrollY =
+        window.scrollY ?? document.documentElement.scrollTop ?? window.pageYOffset ?? 0;
+      const delta = currentScrollY - lastScrollY.current;
+
+      setScrolled(currentScrollY > 20);
+
+      // Keep navbar visible if mobile drawer or resources dropdown is open
+      if (menuOpenRef.current) {
+        setIsVisible(true);
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      // Always show at the top of page
+      if (currentScrollY <= 60) {
+        setIsVisible(true);
+      } else if (delta > 4 && currentScrollY > 80) {
+        // Scrolling DOWN -> smoothly hide out of view
+        setIsVisible(false);
+      } else if (delta < -2 || currentScrollY < lastScrollY.current) {
+        // Scrolling UP -> smoothly reveal
+        setIsVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
     };
-    window.addEventListener("scroll", handleScroll);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Accessibility: trap focus in mobile nav when open, close on Escape, restore focus
+  // Close resources dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (resourcesRef.current && !resourcesRef.current.contains(e.target as Node)) {
+        setResourcesOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Keyboard accessibility
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!isOpen) return;
@@ -36,9 +134,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
         if (!root) return;
         const focusable = Array.from(
           root.querySelectorAll<HTMLElement>(
-            'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
-          ),
-        ) as HTMLElement[];
+            'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+          )
+        );
         if (focusable.length === 0) return;
         const first = focusable[0];
         const last = focusable[focusable.length - 1];
@@ -59,249 +157,393 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate }) => {
 
   useEffect(() => {
     if (isOpen) {
-      // store last active element and lock scroll
-      lastActiveElementRef.current =
-        document.activeElement as HTMLElement | null;
+      lastActiveElementRef.current = document.activeElement as HTMLElement | null;
       document.body.classList.add("no-scroll");
-      // focus first focusable element inside overlay
       setTimeout(() => {
         const root = overlayRef.current;
         const first = root?.querySelector<HTMLElement>(
-          'button, a, input, [tabindex]:not([tabindex="-1"])',
+          'button, a, input, [tabindex]:not([tabindex="-1"])'
         );
         first?.focus();
       }, 50);
     } else {
       document.body.classList.remove("no-scroll");
-      // restore focus
       setTimeout(() => lastActiveElementRef.current?.focus(), 50);
     }
   }, [isOpen]);
 
-  // Pages that have a dark header background by default
-  const darkHeaderPages = ["home"];
-  const isDarkBg = !scrolled && darkHeaderPages.includes(currentPage);
+  // Dark header page detection (Home has a dark hero background)
+  const isDarkHeroPage = currentPage === "home";
+  const isDarkBg = !scrolled && isDarkHeroPage;
 
-  const navItems = [
-    { label: "Home", id: "home" },
-    { label: "About", id: "about" },
-    { label: "Gallery", id: "gallery" },
-    { label: "Catalogue", id: "catalogue" },
-    { label: "Contact", id: "contact" },
-  ];
+  const handleMouseEnterResources = () => {
+    if (dropdownTimeoutRef.current) {
+      window.clearTimeout(dropdownTimeoutRef.current);
+    }
+    setResourcesOpen(true);
+  };
+
+  const handleMouseLeaveResources = () => {
+    dropdownTimeoutRef.current = window.setTimeout(() => {
+      setResourcesOpen(false);
+    }, 150);
+  };
+
+  const handleNavigate = (pageId: string) => {
+    onNavigate(pageId);
+    setIsOpen(false);
+    setResourcesOpen(false);
+  };
 
   return (
     <nav
-      className={`fixed w-full top-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
+        isVisible ? "translate-y-0" : "-translate-y-full pointer-events-none"
+      } ${
         scrolled
-          ? "py-3 bg-white/95 nav-blur border-b border-slate-100 shadow-lg"
-          : "py-5 bg-transparent"
+          ? "bg-white/95 backdrop-blur-xl border-b border-slate-200/80 shadow-[0_4px_24px_rgba(15,23,42,0.08)] py-2.5 sm:py-3"
+          : isDarkBg
+          ? "bg-transparent py-4 sm:py-5"
+          : "bg-white/80 backdrop-blur-md border-b border-slate-200/50 py-3 sm:py-3.5"
       }`}
     >
-      {/* Mobile Backdrop Blur */}
-      <div
-        className={`fixed inset-0 bg-slate-950/20 backdrop-blur-md transition-opacity duration-500 lg:hidden ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-        onClick={() => setIsOpen(false)}
-      />
-
-      <div className="w-full px-6 sm:px-8 lg:px-12">
-        <div className="flex justify-between items-center">
-          {/* Logo Area */}
+      <div className="relative z-50 container-breakout max-w-[1348px] 2xl:max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
           <div
-            className={`flex items-center cursor-pointer transition-all duration-500 pr-4 lg:pr-8 lg:[&_.logo-subtitle-top]:text-[24px]! lg:[&_.logo-subtitle-bottom]:text-[24px]! hover:opacity-80 active:scale-95 ${isDarkBg ? "text-white" : "text-slate-900"}`}
-            onClick={() => {
-              onNavigate("home");
-              setIsOpen(false);
-            }}
+            onClick={() => handleNavigate("home")}
+            className="flex items-center cursor-pointer transition-transform duration-200 hover:scale-[1.02] active:scale-95"
+            aria-label="ST Custom Screen Printing Home"
           >
-            <Logo className="h-13.5 md:h-17 lg:h-20 pr-2 lg:pr-3" />
+            <Logo
+              isDarkBg={isDarkBg}
+              isScrolled={scrolled}
+              subtitleAlwaysVisible={true}
+            />
           </div>
 
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-4">
-            <div
-              className={`flex items-center gap-1 rounded-full px-2 py-2 border transition-all ${
-                isDarkBg
-                  ? "bg-white/5 border-white/15 backdrop-blur-xl"
-                  : "bg-white/90 border-slate-200 shadow-[0_6px_20px_rgba(15,23,42,0.08)]"
-              }`}
-            >
-              {navItems.map((item: any) => (
+          {/* Desktop Navigation Links */}
+          <div className="hidden lg:flex items-center gap-1.5" aria-label="Main Navigation">
+            {NAV_ITEMS.map((item) => {
+              const isActive = currentPage === item.id;
+              // On medium desktop (1024px to 1279px), collapse secondary links into Project Resources
+              const isCollapsedOnLg = item.id === "about" || item.id === "gallery" || item.id === "catalogue";
+              const visibilityClass = isCollapsedOnLg ? "hidden xl:inline-flex" : "inline-flex";
+
+              return (
                 <button
                   key={item.id}
-                  onClick={() => {
-                    if (item.external) {
-                      window.open(
-                        item.external,
-                        "_blank",
-                        "noopener,noreferrer",
-                      );
-                    } else {
-                      onNavigate(item.id);
-                    }
-                  }}
-                  aria-label={
-                    item.external
-                      ? `${item.label} (opens in a new tab)`
-                      : item.label
-                  }
-                  className={`px-4 py-2 rounded-full text-[10px] lg:text-[12px] uppercase tracking-[0.24em] font-black transition-all duration-300 ${
+                  onClick={() => handleNavigate(item.id)}
+                  className={`relative ${visibilityClass} px-3.5 xl:px-4 py-2 rounded-full font-display text-[13px] uppercase tracking-[0.14em] font-bold cursor-pointer transition-all duration-200 ${
                     isDarkBg
-                      ? currentPage === item.id
-                        ? "bg-white text-slate-900"
+                      ? isActive
+                        ? "text-white bg-white/15 shadow-xs"
                         : "text-white/75 hover:text-white hover:bg-white/10"
-                      : currentPage === item.id
-                        ? "bg-slate-900 text-white"
-                        : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+                      : isActive
+                      ? "text-slate-950 bg-slate-900/5 shadow-xs"
+                      : "text-slate-600 hover:text-slate-950 hover:bg-slate-100/70"
                   }`}
                 >
                   {item.label}
+                  {isActive && (
+                    <span
+                      className="absolute bottom-1 left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full bg-orange-500"
+                      aria-hidden="true"
+                    />
+                  )}
                 </button>
-              ))}
-            </div>
+              );
+            })}
 
-            <button
-              onClick={() => onNavigate("quote")}
-              className="bg-slate-950 text-white border-2 border-slate-950 px-6 py-2.5 rounded-full font-black text-[11px] lg:text-[13px] uppercase tracking-[0.2em] shadow-[4px_4px_0_#fb923c] hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#fb923c] transition-all active:translate-y-0 active:scale-95"
+            {/* Resources Dropdown */}
+            <div
+              ref={resourcesRef}
+              className="relative"
+              onMouseEnter={handleMouseEnterResources}
+              onMouseLeave={handleMouseLeaveResources}
             >
-              Start Order
-            </button>
+              <button
+                onClick={() => setResourcesOpen((prev) => !prev)}
+                aria-expanded={resourcesOpen}
+                aria-haspopup="true"
+                aria-label="Project Resources"
+                className={`flex items-center gap-1.5 px-3.5 xl:px-4 py-2 rounded-full font-display text-[13px] uppercase tracking-[0.14em] font-bold cursor-pointer transition-all duration-200 ${
+                  isDarkBg
+                    ? resourcesOpen
+                      ? "text-white bg-white/20"
+                      : "text-white/75 hover:text-white hover:bg-white/10"
+                    : resourcesOpen
+                    ? "text-slate-950 bg-slate-900/5"
+                    : "text-slate-600 hover:text-slate-950 hover:bg-slate-100/70"
+                }`}
+              >
+                <span>Project Resources</span>
+                <i
+                  className={`fas fa-chevron-down text-[10px] transition-transform duration-200 ${
+                    resourcesOpen ? "rotate-180" : ""
+                  }`}
+                  aria-hidden="true"
+                />
+              </button>
+
+              {/* Mega Dropdown Panel */}
+              {resourcesOpen && (
+                <div
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 rounded-2xl bg-white border border-slate-200/90 shadow-[0_20px_60px_rgba(15,23,42,0.18)] p-2 z-50 animate-in fade-in zoom-in-95 duration-200"
+                  role="menu"
+                >
+                  {/* Collapsed Secondary Nav Links (Cleanly moves About, Gallery, Catalogue into dropdown on smaller desktop) */}
+                  <div className="xl:hidden pb-1 mb-1 border-b border-slate-100">
+                    <div className="px-3 py-1">
+                      <p className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400">
+                        Navigation
+                      </p>
+                    </div>
+                    <div className="flex flex-col gap-0.5">
+                      {[
+                        { label: "About", id: "about", icon: "fa-users" },
+                        { label: "Gallery", id: "gallery", icon: "fa-images" },
+                        { label: "Catalogue", id: "catalogue", icon: "fa-tshirt" },
+                      ].map((item) => {
+                        const isActive = currentPage === item.id;
+                        return (
+                          <button
+                            key={item.id}
+                            onClick={() => handleNavigate(item.id)}
+                            className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-left cursor-pointer transition-colors ${
+                              isActive
+                                ? "bg-slate-900 text-white font-bold"
+                                : "text-slate-700 hover:bg-slate-50 hover:text-slate-950 font-semibold"
+                            }`}
+                          >
+                            <i className={`fas ${item.icon} text-xs w-4 text-center text-orange-500`} />
+                            <span className="font-display text-[13px] uppercase tracking-wider">
+                              {item.label}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="px-3 py-2 border-b border-slate-100 mb-1">
+                    <p className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400">
+                      Print &amp; Ordering Tools
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    {RESOURCE_ITEMS.map((item) => (
+                      <button
+                        key={item.id}
+                        onClick={() => handleNavigate(item.id)}
+                        className="group flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 cursor-pointer transition-all text-left"
+                        role="menuitem"
+                      >
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className="w-8 h-8 rounded-lg bg-orange-500/10 text-orange-600 flex items-center justify-center shrink-0 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                            <i className={`fas ${item.icon} text-xs`} />
+                          </div>
+                          <span className="font-display font-bold text-[13px] uppercase tracking-wide text-slate-900 group-hover:text-orange-600 transition-colors whitespace-nowrap">
+                            {item.title}
+                          </span>
+                        </div>
+                        {item.badge && (
+                          <span className="text-[9px] font-black uppercase tracking-wider bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded-full shrink-0">
+                            {item.badge}
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Mobile menu toggle */}
-          <div className="lg:hidden flex items-center gap-4">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label={isOpen ? "Close menu" : "Open menu"}
-              aria-controls="mobile-menu"
-              aria-expanded={isOpen}
-              className={`relative z-80 w-12 h-12 flex items-center justify-center rounded-2xl border transition-all duration-300 ${
-                isOpen
-                  ? "bg-slate-950 border-slate-900 text-white rotate-90 shadow-xl"
-                  : isDarkBg
-                    ? "text-white border-white/20 bg-white/5 backdrop-blur-lg"
-                    : "text-slate-900 border-slate-200 bg-white shadow-[0_6px_16px_rgba(15,23,42,0.08)]"
+          {/* Right Action Area */}
+          <div className="flex items-center gap-3">
+            {/* Direct Phone Number Link (B2B Standard) */}
+            <a
+              href="tel:+17323470101"
+              className={`hidden xl:inline-flex items-center gap-2 text-xs font-bold cursor-pointer transition-colors ${
+                isDarkBg
+                  ? "text-white/80 hover:text-white"
+                  : "text-slate-600 hover:text-slate-950"
               }`}
             >
-              <div className="w-6 h-5 flex flex-col justify-between items-center overflow-hidden">
-                <span
-                  className={`h-0.5 bg-current transition-all duration-500 ease-out ${isOpen ? "w-6 rotate-45 translate-y-2.25" : "w-6"}`}
-                ></span>
-                <span
-                  className={`h-0.5 bg-current transition-all duration-500 ease-out ${isOpen ? "-translate-x-10 opacity-0" : "w-4 translate-x-1"}`}
-                ></span>
-                <span
-                  className={`h-0.5 bg-current transition-all duration-500 ease-out ${isOpen ? "w-6 -rotate-45 -translate-y-2.25" : "w-5 translate-x-0.5"}`}
-                ></span>
-              </div>
-            </button>
+              <span className="w-7 h-7 rounded-full bg-orange-500/15 text-orange-500 flex items-center justify-center text-[11px]">
+                <i className="fas fa-phone-alt" />
+              </span>
+              <span>(732) 347-0101</span>
+            </a>
+
+            {/* Primary High-Converting CTA */}
+            <Magnetic range={60} intensity={0.25}>
+              <button
+                onClick={() => handleNavigate("quote")}
+                className="bg-slate-950 text-white font-display text-[11px] sm:text-[13px] font-bold uppercase tracking-[0.14em] sm:tracking-[0.16em] px-4 sm:px-6 py-2.5 rounded-full shadow-[0_4px_16px_rgba(15,23,42,0.25)] hover:bg-orange-600 hover:shadow-[0_6px_20px_rgba(255,138,0,0.35)] cursor-pointer transition-all duration-300 active:scale-95 whitespace-nowrap"
+              >
+                <span className="hidden sm:inline">Request A Quote</span>
+                <span className="sm:hidden">Get Quote</span>
+              </button>
+            </Magnetic>
+
+            {/* Mobile Menu Toggle Button */}
+            <div className="lg:hidden flex items-center">
+              <button
+                onClick={() => setIsOpen((prev) => !prev)}
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+                aria-controls="mobile-menu"
+                aria-expanded={isOpen}
+                className={`w-11 h-11 flex items-center justify-center rounded-full border cursor-pointer transition-all duration-300 relative z-50 ${
+                  isOpen
+                    ? "bg-slate-950 text-white border-slate-950"
+                    : isDarkBg
+                    ? "bg-white/10 text-white border-white/20 backdrop-blur-md hover:bg-white/20"
+                    : "bg-white text-slate-900 border-slate-200 shadow-xs hover:bg-slate-50"
+                }`}
+              >
+                <div className="w-5 h-4 flex flex-col justify-between items-center">
+                  <span
+                    className={`h-0.5 bg-current transition-all duration-300 ease-out ${
+                      isOpen ? "w-5 rotate-45 translate-y-1.75" : "w-5"
+                    }`}
+                  />
+                  <span
+                    className={`h-0.5 bg-current transition-all duration-200 ease-out ${
+                      isOpen ? "opacity-0" : "w-5"
+                    }`}
+                  />
+                  <span
+                    className={`h-0.5 bg-current transition-all duration-300 ease-out ${
+                      isOpen ? "w-5 -rotate-45 -translate-y-1.75" : "w-5"
+                    }`}
+                  />
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Mobile Nav Overlay */}
+      {/* Mobile Drawer Overlay */}
+      <div
+        className={`fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
+          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setIsOpen(false)}
+        aria-hidden="true"
+      />
+
+      {/* Mobile Drawer Panel */}
       <div
         id="mobile-menu"
         ref={overlayRef}
         role="dialog"
         aria-modal="true"
         aria-hidden={!isOpen}
-        className={`lg:hidden fixed right-4 left-4 top-24 rounded-[2.5rem] border border-slate-200/60 bg-white/98 backdrop-blur-2xl transition-all duration-500 cubic-bezier(0.3, 0, 0, 1) overflow-hidden z-70 ${
+        className={`lg:hidden fixed z-50 top-16 sm:top-20 right-3 left-3 sm:right-4 sm:left-4 max-h-[calc(100dvh-5.5rem)] rounded-3xl bg-white border border-slate-200/90 shadow-[0_25px_70px_rgba(15,23,42,0.3)] overflow-y-auto transition-all duration-300 ${
           isOpen
-            ? "opacity-100 visible translate-y-0 shadow-[0_40px_100px_rgba(15,23,42,0.25)]"
-            : "opacity-0 invisible -translate-y-4 pointer-events-none"
+            ? "opacity-100 translate-y-0 visible"
+            : "opacity-0 -translate-y-4 invisible pointer-events-none"
         }`}
       >
-        <div className="relative pt-10 pb-12 px-8 flex flex-col gap-8">
-          {/* Menu Branding Decoration */}
-          <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-48 h-48 bg-orange-500/10 blur-3xl rounded-full pointer-events-none"></div>
-          <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-48 h-48 bg-purple-500/10 blur-3xl rounded-full pointer-events-none"></div>
-
-          <div>
-            <p
-              className={`text-[10px] font-black uppercase tracking-[0.4em] mb-6 transition-all duration-500 delay-100 ${isOpen ? "opacity-40 translate-x-0" : "opacity-0 -translate-x-4"}`}
+        <div className="p-5 sm:p-6 flex flex-col gap-5">
+          {/* Header with Title and Explicit Close Button */}
+          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+              <p className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400">
+                Menu
+              </p>
+            </div>
+            <button
+              onClick={() => setIsOpen(false)}
+              aria-label="Close menu"
+              className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 flex items-center justify-center transition-all cursor-pointer"
             >
-              Navigation
+              <i className="fas fa-times text-sm" />
+            </button>
+          </div>
+
+          {/* Main Navigation Links */}
+          <div>
+            <div className="flex flex-col gap-1">
+              {NAV_ITEMS.map((item) => {
+                const isActive = currentPage === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => handleNavigate(item.id)}
+                    className={`w-full min-h-[48px] flex items-center justify-between px-4 py-3.5 rounded-2xl font-display text-base uppercase tracking-wider font-bold cursor-pointer transition-all text-left ${
+                      isActive
+                        ? "bg-slate-950 text-white"
+                        : "text-slate-800 hover:bg-slate-100"
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                    <i
+                      className={`fas fa-arrow-right text-xs transition-transform ${
+                        isActive ? "text-orange-500 translate-x-1" : "text-slate-400"
+                      }`}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Project Resources Grid */}
+          <div className="pt-4 border-t border-slate-100">
+            <p className="text-[10px] font-black uppercase tracking-[0.25em] text-slate-400 mb-3 px-2">
+              Project Resources
             </p>
-            <div className="flex flex-col gap-3">
-              {navItems.map((item: any, index: number) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {RESOURCE_ITEMS.map((item) => (
                 <button
                   key={item.id}
-                  onClick={() => {
-                    if (item.external) {
-                      window.open(
-                        item.external,
-                        "_blank",
-                        "noopener,noreferrer",
-                      );
-                    } else {
-                      onNavigate(item.id);
-                    }
-                    setIsOpen(false);
-                  }}
-                  className={`group w-full text-left flex items-center justify-between px-6 py-5 rounded-3xl text-[13px] font-black uppercase tracking-[0.22em] transition-all duration-500 border ${
-                    isOpen
-                      ? `menu-item-appear stagger-${index + 1}`
-                      : "opacity-0"
-                  } ${
-                    currentPage === item.id
-                      ? "text-slate-900 bg-slate-50 border-slate-200 shadow-sm"
-                      : "text-slate-500 hover:text-slate-900 bg-white/50 border-transparent hover:border-slate-100"
-                  }`}
+                  onClick={() => handleNavigate(item.id)}
+                  className="flex items-center justify-between gap-3 p-3 rounded-xl bg-slate-50 hover:bg-slate-100 cursor-pointer transition-colors text-left"
                 >
-                  <span className="flex items-center gap-3">
-                    {currentPage === item.id && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span>
-                    )}
-                    {item.label}
-                  </span>
-                  <i
-                    className={`fas fa-arrow-right text-[10px] transition-transform duration-300 group-hover:translate-x-1 ${currentPage === item.id ? "opacity-100" : "opacity-0"}`}
-                  ></i>
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-8 h-8 rounded-lg bg-orange-500/10 text-orange-600 flex items-center justify-center shrink-0">
+                      <i className={`fas ${item.icon} text-xs`} />
+                    </div>
+                    <span className="font-display font-bold text-xs uppercase tracking-wide text-slate-900 truncate">
+                      {item.title}
+                    </span>
+                  </div>
+                  {item.badge && (
+                    <span className="text-[9px] font-black uppercase tracking-wider bg-orange-100 text-orange-700 px-1.5 py-0.5 rounded-full shrink-0">
+                      {item.badge}
+                    </span>
+                  )}
                 </button>
               ))}
             </div>
           </div>
 
-          <div
-            className={`transition-all duration-700 delay-400 ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-          >
+          {/* Mobile CTA */}
+          <div className="pt-2">
             <button
-              onClick={() => {
-                onNavigate("quote");
-                setIsOpen(false);
-              }}
-              className="w-full bg-slate-950 text-white border-2 border-slate-950 py-5 rounded-3xl font-black text-[12px] uppercase tracking-[0.3em] shadow-[6px_6px_0_#fb923c] transition-all hover:shadow-[8px_8px_0_#fb923c] active:translate-x-1 active:translate-y-1 active:shadow-none"
+              onClick={() => handleNavigate("quote")}
+              className="w-full bg-slate-950 text-white font-display text-sm font-bold uppercase tracking-[0.2em] py-4 rounded-2xl shadow-lg hover:bg-orange-600 cursor-pointer transition-colors flex items-center justify-center gap-2"
             >
-              Start Order
+              <span>Request A Quote</span>
+              <i className="fas fa-arrow-right text-xs" />
             </button>
           </div>
 
-          {/* Menu Footer */}
-          <div
-            className={`mt-4 pt-8 border-t border-slate-100 flex flex-col gap-6 transition-all duration-700 delay-500 ${isOpen ? "opacity-100" : "opacity-0"}`}
-          >
-            <div className="flex justify-between items-center px-2">
-              <div className="flex gap-6">
-                <a
-                  href="#"
-                  aria-label="Follow us on Instagram"
-                  className="text-slate-400 hover:text-slate-900 transition-colors"
-                >
-                  <i className="fab fa-instagram text-lg"></i>
-                </a>
-                <a
-                  href="#"
-                  aria-label="Follow us on Facebook"
-                  className="text-slate-400 hover:text-slate-900 transition-colors"
-                >
-                  <i className="fab fa-facebook text-lg"></i>
-                </a>
-              </div>
-              <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
-                Manahawkin, NJ
-              </p>
-            </div>
+          {/* Contact Bar */}
+          <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 px-2">
+            <a
+              href="tel:+17323470101"
+              className="flex items-center gap-2 font-bold text-slate-700 hover:text-orange-600 cursor-pointer transition-colors"
+            >
+              <i className="fas fa-phone-alt text-orange-500" />
+              <span>(732) 347-0101</span>
+            </a>
+            <span className="text-slate-400 font-medium">Manahawkin, NJ</span>
           </div>
         </div>
       </div>

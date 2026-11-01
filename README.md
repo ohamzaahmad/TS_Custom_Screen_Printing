@@ -145,4 +145,4 @@ For support or handover, use your internal engineering contact process.
 
 ---
 
-For a complete, step-by-step Hostinger shared-hosting deployment guide, see `DEPLOY_HOSTINGER.md` in the project root.
+For a complete, step-by-step Hostinger shared-hosting deployment guide, see `docs/DEPLOY_HOSTINGER.md`.

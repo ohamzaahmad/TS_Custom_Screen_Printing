@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { createPortal } from "react-dom";
 import { useSEO } from "../hooks/useSEO";
+import { BlurText } from "../components/ui";
 
 interface GalleryProps {
   onNavigate: (page: string) => void;
@@ -17,32 +18,32 @@ const PROJECT_IMAGES = [
 ];
 const PROJECT_DETAILS = [
   {
-    label: "Drop 01",
+    label: "Streetwear",
     title: "Oversized Streetwear Set",
     subtitle: "Soft-hand print with tight registration and consistent opacity.",
   },
   {
-    label: "Drop 02",
+    label: "Athletic",
     title: "Athletic Club Series",
     subtitle: "Durable team graphics engineered for repeat wash cycles.",
   },
   {
-    label: "Drop 03",
+    label: "Tour Merch",
     title: "Tour Merch Capsule",
     subtitle: "High-impact front and back prints built for launch day.",
   },
   {
-    label: "Drop 04",
+    label: "Retail",
     title: "Retail Essentials Batch",
     subtitle: "Clean, minimal branding optimized for premium shelf presence.",
   },
   {
-    label: "Drop 05",
+    label: "Festival",
     title: "Festival Graphic Run",
     subtitle: "Vibrant ink layering tuned for sharp detail under stage light.",
   },
   {
-    label: "Drop 06",
+    label: "Logo Program",
     title: "Core Logo Program",
     subtitle: "Reliable brand consistency across multiple garment styles.",
   },
@@ -143,9 +144,15 @@ const Gallery: React.FC<GalleryProps> = ({ onNavigate }) => {
             Gallery
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase tracking-tight leading-tight mb-4">
-            <span className="text-orange-500">Our</span>{" "}
-            <span className="text-purple-500">Recent</span>{" "}
-            <span className="text-slate-900">Portfolio</span>
+            <span className="text-orange-500">
+              <BlurText text="Our" delay={0.04} />
+            </span>{" "}
+            <span className="text-purple-500">
+              <BlurText text="Recent" delay={0.04} />
+            </span>{" "}
+            <span className="text-slate-900">
+              <BlurText text="Portfolio" delay={0.04} />
+            </span>
           </h1>
           <p className="text-base text-slate-600 leading-snug font-medium max-w-2xl">
             Browse our finest screen print projects showcasing precision,
@@ -194,7 +201,7 @@ const Gallery: React.FC<GalleryProps> = ({ onNavigate }) => {
                   <div
                     className={`absolute top-4 right-4 ${badgeColors[idx % badgeColors.length]} text-white px-4 py-2 rounded-full text-xs font-black uppercase tracking-wider shadow-lg transform group-hover:scale-110 transition-transform duration-300`}
                   >
-                    {PROJECT_DETAILS[idx]?.label || `Drop ${idx + 1}`}
+                    {PROJECT_DETAILS[idx]?.label || `Project ${idx + 1}`}
                   </div>
 
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-white">

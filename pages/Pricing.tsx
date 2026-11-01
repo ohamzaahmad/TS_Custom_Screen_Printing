@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Skeleton from "../components/Skeleton";
+import { InlineLoader } from "../components/PageLoader";
 import { fetchPricing } from "../services/dataService";
 import { useSEO } from "../hooks/useSEO";
+import { SpotlightCard } from "../components/ui";
 
 const Pricing: React.FC = () => {
   useSEO({
@@ -32,7 +33,7 @@ const Pricing: React.FC = () => {
             SCREEN PRINT{" "}
             <span className="text-gradient-orange">PRICING 2026</span>
           </h1>
-          <h2 className="text-xl font-black text-slate-400 uppercase tracking-[0.3em]">
+          <h2 className="text-xl font-black text-slate-600 uppercase tracking-[0.3em]">
             PLASTISOL BASED INKS
           </h2>
         </div>
@@ -66,31 +67,13 @@ const Pricing: React.FC = () => {
             </thead>
             <tbody className="divide-y divide-slate-50">
               {isLoading
-                ? [...Array(6)].map((_, i) => (
-                    <tr key={i}>
-                      <td className="py-5 px-6">
-                        <Skeleton className="h-6 w-16" />
-                      </td>
-                      <td className="py-5 px-6">
-                        <Skeleton className="h-6 w-12" />
-                      </td>
-                      <td className="py-5 px-6">
-                        <Skeleton className="h-6 w-12" />
-                      </td>
-                      <td className="py-5 px-6">
-                        <Skeleton className="h-6 w-12" />
-                      </td>
-                      <td className="py-5 px-6">
-                        <Skeleton className="h-6 w-12" />
-                      </td>
-                      <td className="py-5 px-6">
-                        <Skeleton className="h-6 w-12" />
-                      </td>
-                      <td className="py-5 px-6">
-                        <Skeleton className="h-6 w-12" />
+                ? (
+                    <tr>
+                      <td colSpan={7}>
+                        <InlineLoader label="Loading pricing" />
                       </td>
                     </tr>
-                  ))
+                  )
                 : pricingData.map((row, idx) => (
                     <tr
                       key={idx}
@@ -128,34 +111,40 @@ const Pricing: React.FC = () => {
           Prices listed above do not include garment.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div className="space-y-6">
-            <h3 className="text-4xl font-black uppercase tracking-tighter text-slate-900">
+        <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-2">
+          <div className="space-y-4">
+            <h3 className="text-3xl font-black uppercase tracking-tighter text-slate-900 md:text-4xl">
               DEPOSITS
             </h3>
-            <div className="border-[3px] border-slate-900 p-10 md:p-14 min-h-[280px] flex flex-col justify-center">
-              <h4 className="text-2xl font-black mb-4 uppercase">
+            <SpotlightCard
+              spotlightColor="rgba(255, 138, 0, 0.12)"
+              className="flex flex-col justify-start border-2 border-slate-900 bg-white shadow-md p-6 md:p-8"
+            >
+              <h4 className="mb-3 text-xl font-black uppercase md:text-2xl text-slate-900">
                 EFFECTIVE 1/1/2026
               </h4>
-              <p className="text-xl font-bold text-slate-600 leading-relaxed">
+              <p className="text-lg font-bold leading-relaxed text-slate-700">
                 A minimum deposit of{" "}
-                <span className="text-slate-900 font-black underline decoration-orange-500">
+                <span className="font-black text-slate-950 underline decoration-orange-500">
                   100%
                 </span>{" "}
                 is required to start your order. No exceptions.
               </p>
-            </div>
+            </SpotlightCard>
           </div>
 
-          <div className="space-y-6">
-            <h3 className="text-4xl font-black uppercase tracking-tighter text-slate-900">
+          <div className="space-y-4">
+            <h3 className="text-3xl font-black uppercase tracking-tighter text-slate-900 md:text-4xl">
               CHARGES
             </h3>
-            <div className="border-[3px] border-slate-900 p-10 md:p-14 min-h-[280px]">
-              <ul className="space-y-6 text-lg font-bold text-slate-600">
+            <SpotlightCard
+              spotlightColor="rgba(189, 0, 255, 0.12)"
+              className="border-2 border-slate-900 bg-white shadow-md p-6 md:p-8"
+            >
+              <ul className="space-y-4 text-base font-bold text-slate-700 md:text-lg">
                 <li className="flex justify-between items-center border-b border-slate-100 pb-2">
                   <span>
-                    <span className="text-slate-900 font-black uppercase">
+                    <span className="text-slate-950 font-black uppercase">
                       Screen Charges:
                     </span>{" "}
                     $20 per color/location
@@ -163,20 +152,14 @@ const Pricing: React.FC = () => {
                 </li>
                 <li className="flex justify-between items-center border-b border-slate-100 pb-2">
                   <span>
-                    <span className="text-slate-900 font-black uppercase">
+                    <span className="text-slate-950 font-black uppercase">
                       Artwork Charges:
                     </span>{" "}
                     $30/hour (1 hour min.)
                   </span>
                 </li>
-                {/* <li className="flex justify-between items-center border-b border-slate-100 pb-2">
-                  <span><span className="text-slate-900 font-black uppercase">Digitizing Charges:</span> $45/hour (1 hour min.)</span>
-                </li>
-                <li className="flex justify-between items-center pb-2">
-                  <span><span className="text-slate-900 font-black uppercase">Pantone Matching:</span> $50</span>
-                </li> */}
               </ul>
-            </div>
+            </SpotlightCard>
           </div>
         </div>
       </div>

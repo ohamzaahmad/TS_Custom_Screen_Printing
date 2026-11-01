@@ -1,0 +1,182 @@
+--- a/index.css
++++ b/index.css
+@@ -100,86 +100,88 @@
+   -moz-osx-font-smoothing: grayscale;
+ }
+ 
+-/* ==========================================================================
+-   Base Headings Hierarchy: Oswald Uppercase (Competitor Standard)
+-   ========================================================================== */
+-h1, h2, h3, h4, h5, h6 {
+-  font-family: var(--font-heading, 'Oswald', sans-serif);
+-  text-transform: uppercase;
+-  color: inherit;
+-  letter-spacing: -0.01em;
+-}
+-
+-h1 {
+-  font-weight: 800;
+-  line-height: 1.05;
+-  letter-spacing: -0.01em;
+-}
+-
+-h2 {
+-  font-weight: 700;
+-  line-height: 1.10;
+-  letter-spacing: -0.01em;
+-}
+-
+-h3 {
+-  font-weight: 700;
+-  line-height: 1.18;
+-  letter-spacing: -0.01em;
+-}
+-
+-h4 {
+-  font-weight: 600;
+-  line-height: 1.25;
+-  letter-spacing: 0.01em;
+-}
+-
+-h5 {
+-  font-weight: 600;
+-  line-height: 1.30;
+-  letter-spacing: 0.015em;
+-}
+-
+-h6 {
+-  font-weight: 600;
+-  line-height: 1.35;
+-  letter-spacing: 0.02em;
+-}
+-
+-/* ==========================================================================
+-   Interactive Elements: Buttons, Navigation Links & Badges
+-   ========================================================================== */
+-button,
+-.btn,
+-.btn-gradient,
+-[role="button"] {
+-  font-family: var(--font-heading, 'Oswald', sans-serif);
+-  text-transform: uppercase;
+-  letter-spacing: 0.05em;
+-}
+-
+-nav a,
+-nav button,
+-.nav-link {
+-  font-family: var(--font-heading, 'Oswald', sans-serif);
+-  text-transform: uppercase;
+-  letter-spacing: 0.05em;
+-}
+-
+-.badge,
+-.tag-badge,
+-[class*="badge"] {
+-  font-family: var(--font-heading, 'Oswald', sans-serif);
+-  text-transform: uppercase;
+-  letter-spacing: 0.05em;
+-}
+-
+-/* Form inputs retain readable Poppins */
+-input,
+-textarea,
+-select {
+-  font-family: var(--font-body, 'Poppins', sans-serif);
+-  letter-spacing: normal;
++@layer base {
++  /* ==========================================================================
++     Base Headings Hierarchy: Oswald Uppercase (Competitor Standard)
++     ========================================================================== */
++  h1, h2, h3, h4, h5, h6 {
++    font-family: var(--font-heading, 'Oswald', sans-serif);
++    text-transform: uppercase;
++    color: inherit;
++    letter-spacing: -0.01em;
++  }
++
++  h1 {
++    font-weight: 800;
++    line-height: 1.05;
++    letter-spacing: -0.01em;
++  }
++
++  h2 {
++    font-weight: 700;
++    line-height: 1.10;
++    letter-spacing: -0.01em;
++  }
++
++  h3 {
++    font-weight: 700;
++    line-height: 1.18;
++    letter-spacing: -0.01em;
++  }
++
++  h4 {
++    font-weight: 600;
++    line-height: 1.25;
++    letter-spacing: 0.01em;
++  }
++
++  h5 {
++    font-weight: 600;
++    line-height: 1.30;
++    letter-spacing: 0.015em;
++  }
++
++  h6 {
++    font-weight: 600;
++    line-height: 1.35;
++    letter-spacing: 0.02em;
++  }
++
++  /* ==========================================================================
++     Interactive Elements: Buttons, Navigation Links & Badges
++     ========================================================================== */
++  button,
++  .btn,
++  .btn-gradient,
++  [role="button"] {
++    font-family: var(--font-heading, 'Oswald', sans-serif);
++    text-transform: uppercase;
++    letter-spacing: 0.05em;
++  }
++
++  nav a,
++  nav button,
++  .nav-link {
++    font-family: var(--font-heading, 'Oswald', sans-serif);
++    text-transform: uppercase;
++    letter-spacing: 0.05em;
++  }
++
++  .badge,
++  .tag-badge,
++  [class*="badge"] {
++    font-family: var(--font-heading, 'Oswald', sans-serif);
++    text-transform: uppercase;
++    letter-spacing: 0.05em;
++  }
++
++  /* Form inputs retain readable Poppins */
++  input,
++  textarea,
++  select {
++    font-family: var(--font-body, 'Poppins', sans-serif);
++    letter-spacing: normal;
++  }
+ }
+ 
+ /* Custom gradient text */
+@@ -1076,7 +1078,9 @@
+ }
+ 
+ /* Harmonize section padding on small devices */
+-section { padding-left: 1rem; padding-right: 1rem; }
++@layer base {
++  section { padding-left: 1rem; padding-right: 1rem; }
++}
+ /* Refined Skeleton Shimmer Animation */
+ @keyframes shimmer {
+   0% {
